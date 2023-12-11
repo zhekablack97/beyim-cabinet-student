@@ -1,3 +1,3 @@
-import Assessment from "./assessment";
+import Assessment from "./Assessment"
 
 export default Assessment
