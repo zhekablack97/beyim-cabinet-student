@@ -3,31 +3,30 @@ import { useTranslation } from 'react-i18next';
 import logo from './logo.svg';
 import './App.scss';
 
-const Tittle: React.FC = () => {
-    const { t } = useTranslation('translation');
+import Authorization from './pages/authorization';
 
-    return <h1>{t('authorization.title')}</h1>;
-};
+import {
+    Route,
+    Routes,
+    createBrowserRouter,
+    RouterProvider,
+} from 'react-router-dom';
 
 function App() {
     return (
-        <Suspense fallback="...loading">
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <Tittle />
-                    <p>aa</p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                </header>
-            </div>
-        </Suspense>
+        <Routes>
+            <Route path="/" >
+                <Route index element={<Authorization />} />
+                <Route path="/sss">
+                <Route index element={<div>sss</div>} />
+                    <Route path="aaaa" element={<div>aaaa11aa1</div>} />
+                    {/* Using path="*"" means "match anything", so this route
+          acts like a catch-all for URLs that we don't have explicit
+          routes for. */}
+                </Route>
+                <Route path="/about" element={<div>about</div>} />
+            </Route>
+        </Routes>
     );
 }
 
