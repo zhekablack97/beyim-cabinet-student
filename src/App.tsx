@@ -15,10 +15,10 @@ import {
 function App() {
     return (
         <Routes>
-            <Route path="/" >
+            <Route path="/">
                 <Route index element={<Authorization />} />
                 <Route path="/sss">
-                <Route index element={<div>sss</div>} />
+                    <Route index element={<div>sss</div>} />
                     <Route path="aaaa" element={<div>aaaa11aa1</div>} />
                     {/* Using path="*"" means "match anything", so this route
           acts like a catch-all for URLs that we don't have explicit

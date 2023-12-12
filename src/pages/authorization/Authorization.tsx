@@ -1,32 +1,38 @@
-import { Suspense } from "react";
+import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 
 const Tittle: React.FC = () => {
     const { t } = useTranslation('translation');
 
-    return <h1>{t('authorization.title')}</h1>;
+    return (
+        <h1 className="text-3xl font-bold underline">
+            {t('authorization.title')}
+        </h1>
+    );
 };
-
 
 const Authorization: React.FC = () => {
     return (
-        <Suspense fallback="...loading">
-            <div className="App">
-                <header className="App-header">
-                   
-                    <Tittle />
-                    <p>aa</p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                </header>
-            </div>
-        </Suspense>
+        <>
+            <Helmet>
+                <title>About - yoursite.com</title>
+                <meta name="description" content="Lorem ipsum dolor sit amet" />
+            </Helmet>
+            <Suspense fallback="...loading">
+                <div>
+                    <header className="App-header">
+                        <div>лого</div>
+                        <div>Переключение языка</div>
+                    </header>
+                    <main>
+                        <h1>Войти</h1>
+                        <p>Войдите используя запись Active Directory</p>
+                    </main>
+                    <footer>© 2023 Beyim Tech</footer>
+                </div>
+            </Suspense>
+        </>
     );
 };
 
