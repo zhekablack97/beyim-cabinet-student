@@ -1,5 +1,5 @@
-const Progress: React.FC =() => {
-    return <div>Progress</div>
-}
+const Progress: React.FC = () => {
+  return <div>Progress</div>;
+};
 
-export default Progress
+export default Progress;
