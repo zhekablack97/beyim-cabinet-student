@@ -5,12 +5,7 @@ import './App.scss';
 
 import Authorization from './pages/authorization';
 
-import {
-    Route,
-    Routes,
-    createBrowserRouter,
-    RouterProvider,
-} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
     return (
