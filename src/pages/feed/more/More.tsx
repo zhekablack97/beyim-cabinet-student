@@ -1,13 +1,5 @@
-const More: React.FC =() => {
-    return <div>
-        
-        
-        
-        
-        
-        
-        
-                                            More</div>
-}
+const More: React.FC = () => {
+  return <div>More</div>;
+};
 
-export default More
+export default More;
