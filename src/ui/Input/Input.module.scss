@@ -1,0 +1,36 @@
+.wrapper {
+    input {
+        color: #364954;
+
+        &::placeholder {
+            color: var(--text-placeholder, #a3c0d2);
+            /* Desktop/body */
+            font-family: Inter;
+            border-color: #b6d3e4;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+
+         &:focus-visible, &:active{
+            outline: none;
+            border: 1px solid var(--Red, #55BBEB);
+         }
+
+        &.error{
+            border: 2px solid var(--Red, #ed1e1e);
+            &:focus-visible{
+                outline: none;
+                border: 2px solid var(--Red, #ed1e1e);
+            }
+        }
+    }
+
+    .error-text {
+        span{
+            color: #ed1e1e;
+        }
+
+        
+    }
+}

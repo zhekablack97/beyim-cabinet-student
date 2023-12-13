@@ -1,0 +1,29 @@
+.subtitle {
+    color: var(--text-text-secondary, #6d828e);
+}
+.fogetPasword {
+    color: #55bbeb;
+}
+
+.enter {
+    background: var(--surface-surface-primary, #eaeff2);
+    &:hover {
+        background: #eef9fd;
+        color: #399cd3;
+    }
+
+    &:active {
+        background: #55bbeb;
+        color: #fff;
+    }
+}
+
+.ad {
+    border: 1px solid var(--color-gray-200, #cad7df);
+}
+
+.footer {
+    span {
+        color: var(--text-text-tertiary, #9aaebb);
+    }
+}
