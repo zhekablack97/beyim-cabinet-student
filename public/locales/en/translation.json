@@ -1,1 +1,26 @@
-{ "authorization": { "title": "title" } }
+{
+    "authorization": {
+        "title": "Sign in",
+        "subTitle": "Please enter your user cridentials        ",
+        "username": "Username",
+        "password": "Password",
+        "forgetPasword": "Forgot Password?",
+        "enter": "Sign in",
+        "enterAD": "Log in with AD",
+        "footer": "© 2023 Beyim Tech",
+        "placeholderUsername": "",
+        "placeholdePasword": "Құпия сөзді еңгізіңіз",
+        "slide1": {
+            "title": "Unique content in various formats",
+            "subTitle": "Texts, illustrations, video, and assignments with comprehensive solution explanation"
+        },
+        "slide2": {
+            "title": "Personal approach",
+            "subTitle": "Content delivery adapts to your studying progress. You'll see only what you're interested in"
+        },
+        "slide3": {
+            "title": "Analytics",
+            "subTitle": "Track your study records. Learn what content is more interesting"
+        }
+    }
+}

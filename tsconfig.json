@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "i18next.d.ts"  ]
 }

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,6 +10,11 @@ import { Input } from '../../ui';
 import style from './Authorization.module.scss';
 import classNames from 'classnames';
 
+// import required modules
+import { Pagination } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
+// Import Swiper styles
+
 const authSchema = yup
     .object({
         username: yup.string().required(),
@@ -19,6 +24,11 @@ const authSchema = yup
 
 const Authorization: React.FC = () => {
     const [postLogin] = usePostLoginMutation();
+    const { t, i18n } = useTranslation();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    const locale = i18n.translator.language;
 
     const {
         register,
@@ -32,17 +42,103 @@ const Authorization: React.FC = () => {
         postLogin(data);
     };
 
-    console.log(errors, 'errors');
+    const pagination = {
+        clickable: true,
+        renderBullet: function (index: number, className: string) {
+            return '<span class="' + className + '"></span>';
+        },
+    };
 
     return (
         <>
             <Helmet>
-                <title>About - yoursite.com</title>
+                <title>Authorization</title>
                 <meta name="description" content="Lorem ipsum dolor sit amet" />
             </Helmet>
             <Suspense fallback="...loading">
-                <div className="flex min-h-[100vh]">
-                    <div className="basis-6/12">слайд</div>
+                <div className="flex min-h-screen autorization">
+                    <div className="basis-6/12 grow-0  max-w-[50%] min-h-full">
+                        <Swiper
+                            className={style.wrapperSlider}
+                            slidesPerView={1}
+                            pagination={pagination}
+                            modules={[Pagination]}
+                            onSlideChange={() => console.log('slide change')}
+                            onSwiper={(swiper: any) => console.log(swiper)}
+                        >
+                            <SwiperSlide>
+                                <div
+                                    className={classNames(
+                                        style.slide,
+                                        style.slide1,
+                                        ' flex items-center',
+                                    )}
+                                >
+                                    <div className="max-w-md mx-auto">
+                                        <div className="max-w-[272px] mb-[103px]">
+                                            <img
+                                                className="block"
+                                                src={`/images/imgPlatform1${locale}.png`}
+                                            />
+                                        </div>
+                                        <span className="max-w-md text-[32px] leading-[normal] font-bold mb-2 block">
+                                            {t('authorization.slide1.title')}
+                                        </span>
+                                        <p className="max-w-md text-base">
+                                            {t('authorization.slide1.subTitle')}
+                                        </p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div
+                                    className={classNames(
+                                        style.slide,
+                                        style.slide2,
+                                        ' flex items-center',
+                                    )}
+                                >
+                                    <div className="max-w-md mx-auto">
+                                        <div className="max-w-[272px] mb-[103px]">
+                                            <img
+                                                src={`/images/sliderLogin2.png`}
+                                            />
+                                        </div>
+
+                                        <span className="max-w-md text-[32px] leading-[normal] font-bold mb-2 block">
+                                            {t('authorization.slide1.title')}
+                                        </span>
+                                        <p className="max-w-md text-base">
+                                            {t('authorization.slide1.subTitle')}
+                                        </p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div
+                                    className={classNames(
+                                        style.slide,
+                                        style.slide3,
+                                        ' flex items-center',
+                                    )}
+                                >
+                                    <div className="max-w-md mx-auto">
+                                        <div className="w-full mb-[103px]">
+                                            <img
+                                                src={`/images/sliderLogin3${locale}.png`}
+                                            />
+                                        </div>
+                                        <span className="max-w-md text-[32px] leading-[normal] font-bold mb-2 block">
+                                            {t('authorization.slide1.title')}
+                                        </span>
+                                        <p className="max-w-md text-base">
+                                            {t('authorization.slide1.subTitle')}
+                                        </p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        </Swiper>
+                    </div>
                     <div className="py-10 min-h-full basis-6/12 grow flex flex-col justify-between items-center px-4">
                         <header
                             className={classNames(
@@ -57,7 +153,30 @@ const Authorization: React.FC = () => {
                                     className="flex w-full"
                                 />
                             </div>
-                            <div>Переключение языка</div>
+                            <div>
+                                Переключение языка
+                                <button
+                                    onClick={() => {
+                                        i18n.changeLanguage('en');
+                                    }}
+                                >
+                                    En
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        i18n.changeLanguage('kk');
+                                    }}
+                                >
+                                    kk
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        i18n.changeLanguage('ru');
+                                    }}
+                                >
+                                    ru
+                                </button>
+                            </div>
                         </header>
                         <main
                             className={classNames(
@@ -65,39 +184,42 @@ const Authorization: React.FC = () => {
                                 'max-w-[361px] w-full',
                             )}
                         >
-                            <h1 className="text-2xl font-bold mb-1">Войти</h1>
+                            <h1 className="text-2xl font-bold mb-1">
+                                {t('authorization.title')}
+                            </h1>
                             <span
                                 className={classNames(
                                     'text-sm mb-6 block',
                                     style.subtitle,
                                 )}
                             >
-                                Войдите используя запись Active Directory
+                                {t('authorization.subTitle')}
                             </span>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <Input
                                     placeholder="malika@nis.edu.kz"
-                                    label="Введите логин"
+                                    label={t('authorization.username')}
                                     register={register}
                                     name="username"
                                     className="mb-4"
                                     error={errors.username?.message}
                                 />
                                 <Input
-                                    label="Пароль"
+                                    label={t('authorization.password')}
                                     type="password"
                                     name="password"
                                     register={register}
                                     className="mb-3"
+                                    placeholder={t('authorization.placeholdePasword')}
                                     error={errors.password?.message}
                                 />
                                 <button
                                     className={classNames(
-                                        style.fogetPasword,
+                                        style.forgetPasword,
                                         'text-sm block ml-auto mb-6 ',
                                     )}
                                 >
-                                    Забыли пароль?
+                                    {t('authorization.forgetPasword')}
                                 </button>
                                 <button
                                     type="submit"
@@ -106,7 +228,7 @@ const Authorization: React.FC = () => {
                                         style.enter,
                                     )}
                                 >
-                                    Войти
+                                    {t('authorization.enter')}
                                 </button>
                             </form>
                             <a
@@ -117,11 +239,16 @@ const Authorization: React.FC = () => {
                                 href={`https://beyim.auth.eu-central-1.amazoncognito.com/oauth2/authorize?identity_provider=NIS-AD&redirect_uri=${process.env.REACT_APP_PUBLIC_MAIN}/authorization/&response_type=CODE&client_id=${process.env.REACT_APP_AD_CLIENT_ID}`}
                             >
                                 <img src="/icons/microsoft.svg" />
-                                <span className=' font-medium '>Войти через AD</span>
+                                <span className=" font-medium ">
+                                    {t('authorization.enterAD')}
+                                </span>
                             </a>
                         </main>
                         <footer className={style.footer}>
-                            <span className="flex gap-x-1"><img src='/icons/nis.svg'/><span >© 2023 Beyim Tech</span></span>
+                            <span className="flex gap-x-1">
+                                <img src="/icons/nis.svg" />
+                                <span>© 2023 Beyim Tech</span>
+                            </span>
                         </footer>
                     </div>
                 </div>
