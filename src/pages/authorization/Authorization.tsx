@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import { Pagination } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
 import { ChangingLanguage } from '../../features/ChangingLanguage';
+import Cookies from 'js-cookie';
 // Import Swiper styles
 
 const authSchema = yup
@@ -31,16 +32,48 @@ const Authorization: React.FC = () => {
     //@ts-ignore
     const locale = i18n.translator.language;
 
+    useEffect(() => {
+        if (locale !== 'kk' || locale !== 'ru' || locale !== 'en') {
+            console.log('язык', locale);
+            // i18n.changeLanguage('kk');
+            const lngLocal = localStorage.getItem('i18next') as string;
+
+            //@ts-ignore
+            // if (lngLocal !== 'kk' || lngLocal !== 'ru' || lngLocal !== 'en') {
+            //     i18n.changeLanguage('kk');
+            // }
+        }
+    }, []);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setError,
     } = useForm<PostAuthRequestApiType>({
         resolver: yupResolver(authSchema),
     });
 
     const onSubmit = (data: PostAuthRequestApiType) => {
-        postLogin(data);
+        postLogin(data)
+            .unwrap()
+            .then(data => {
+                Cookies.set('access_token', data.data.tokenData.access_token, {
+                    expires: 1,
+                    secure: true,
+                });
+                console.log(data, 'data');
+            })
+            .catch(() => {
+                setError('username', {
+                    type: '400',
+                    message: '',
+                });
+                setError('password', {
+                    type: '400',
+                    message: t('authorization.invalidLogin'),
+                });
+            });
     };
 
     const pagination = {
@@ -58,7 +91,12 @@ const Authorization: React.FC = () => {
             </Helmet>
             <Suspense fallback="...loading">
                 <div className="flex min-h-screen autorization">
-                    <div className={classNames("basis-6/12 grow-0  max-w-[50%] min-h-full", style.slideBlock)}>
+                    <div
+                        className={classNames(
+                            'basis-6/12 grow-0  max-w-[50%] min-h-full',
+                            style.slideBlock,
+                        )}
+                    >
                         <Swiper
                             className={style.wrapperSlider}
                             slidesPerView={1}
@@ -155,9 +193,7 @@ const Authorization: React.FC = () => {
                                 />
                             </div>
                             <div>
-
                                 <ChangingLanguage />
-                                
                             </div>
                         </header>
                         <main
@@ -192,7 +228,9 @@ const Authorization: React.FC = () => {
                                     name="password"
                                     register={register}
                                     className="mb-3"
-                                    placeholder={t('authorization.placeholdePasword')}
+                                    placeholder={t(
+                                        'authorization.placeholdePasword',
+                                    )}
                                     error={errors.password?.message}
                                 />
                                 <button

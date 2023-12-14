@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
 import style from './ChangingLanguage.module.scss';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const ChangingLanguage: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -10,6 +10,33 @@ export const ChangingLanguage: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
+
+    const changeLng = (lng: 'kk' | 'en' | 'ru') => {
+        localStorage.setItem('i18nextLng', lng);
+        i18n.changeLanguage(lng);
+    };
+
+    useEffect(() => {
+        if (locale !== 'kk' || locale !== 'ru' || locale !== 'en') {
+
+            const lngLocal = String(
+                localStorage.getItem('i18nextLng'),
+            ) as string;
+
+            console.log('lngLocal', lngLocal);
+
+            //@ts-ignore
+            if (lngLocal === 'kk' || lngLocal === 'ru' || lngLocal === 'en') {
+                console.log('нашли в локал ');
+                localStorage.setItem('i18nextLng', lngLocal);
+                i18n.changeLanguage(lngLocal);
+            } else {
+                console.log('Попали на переключение ');
+                localStorage.setItem('i18nextLng', 'kk');
+                i18n.changeLanguage('kk');
+            }
+        }
+    }, []);
 
     return (
         <div>
@@ -52,7 +79,7 @@ export const ChangingLanguage: React.FC = () => {
                                 'flex h-10 items-center px-4 duration-200 text-sm justify-between',
                             )}
                             onClick={e => {
-                                i18n.changeLanguage('ru');
+                                changeLng('ru');
                             }}
                         >
                             <span>Русский</span>
@@ -65,7 +92,7 @@ export const ChangingLanguage: React.FC = () => {
                                 'flex h-10 items-center px-4 duration-200 text-sm justify-between',
                             )}
                             onClick={e => {
-                                i18n.changeLanguage('kk');
+                                changeLng('kk');
                             }}
                         >
                             <span>Қазақша</span>
@@ -78,7 +105,7 @@ export const ChangingLanguage: React.FC = () => {
                                 'flex h-10 items-center px-4 duration-200 text-sm justify-between',
                             )}
                             onClick={e => {
-                                i18n.changeLanguage('en');
+                                changeLng('en');
                             }}
                         >
                             <span>English</span>

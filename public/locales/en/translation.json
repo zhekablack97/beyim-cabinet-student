@@ -9,7 +9,7 @@
         "enterAD": "Log in with AD",
         "footer": "© 2023 Beyim Tech",
         "placeholderUsername": "",
-        "placeholdePasword": "Құпия сөзді еңгізіңіз",
+        "placeholdePasword": "Enter the password",
         "slide1": {
             "title": "Unique content in various formats",
             "subTitle": "Texts, illustrations, video, and assignments with comprehensive solution explanation"
@@ -21,6 +21,7 @@
         "slide3": {
             "title": "Analytics",
             "subTitle": "Track your study records. Learn what content is more interesting"
-        }
+        },
+        "invalidLogin": "Invalid username or password"
     }
 }
