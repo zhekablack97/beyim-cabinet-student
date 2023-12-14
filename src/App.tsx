@@ -1,6 +1,3 @@
-import React, { Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
-import logo from './logo.svg';
 import './App.scss';
 
 import Authorization from './pages/authorization';

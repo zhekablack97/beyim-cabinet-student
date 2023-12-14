@@ -7,6 +7,7 @@
 .slide {
     width: 100%;
     height: 100%;
+    background-size: 100% 100%;
 }
 
 .slide1 {
@@ -48,5 +49,15 @@
 .footer {
     span {
         color: var(--text-text-tertiary, #9aaebb);
+    }
+}
+
+.slideBlock{
+    display: block
+}
+
+@media screen and (max-width: 900px){
+    .slideBlock{
+        display: none
     }
 }

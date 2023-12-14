@@ -32,6 +32,7 @@
     "react-redux": "^9.0.3",
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
+    "react-tooltip": "^5.25.0",
     "sass": "^1.69.5",
     "sort-by": "^1.2.0",
     "source-map-explorer": "^2.5.3",

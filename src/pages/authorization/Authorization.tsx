@@ -13,6 +13,7 @@ import classNames from 'classnames';
 // import required modules
 import { Pagination } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
+import { ChangingLanguage } from '../../features/ChangingLanguage';
 // Import Swiper styles
 
 const authSchema = yup
@@ -57,7 +58,7 @@ const Authorization: React.FC = () => {
             </Helmet>
             <Suspense fallback="...loading">
                 <div className="flex min-h-screen autorization">
-                    <div className="basis-6/12 grow-0  max-w-[50%] min-h-full">
+                    <div className={classNames("basis-6/12 grow-0  max-w-[50%] min-h-full", style.slideBlock)}>
                         <Swiper
                             className={style.wrapperSlider}
                             slidesPerView={1}
@@ -71,7 +72,7 @@ const Authorization: React.FC = () => {
                                     className={classNames(
                                         style.slide,
                                         style.slide1,
-                                        ' flex items-center',
+                                        ' flex items-center px-4',
                                     )}
                                 >
                                     <div className="max-w-md mx-auto">
@@ -95,7 +96,7 @@ const Authorization: React.FC = () => {
                                     className={classNames(
                                         style.slide,
                                         style.slide2,
-                                        ' flex items-center',
+                                        ' flex items-center px-4',
                                     )}
                                 >
                                     <div className="max-w-md mx-auto">
@@ -119,7 +120,7 @@ const Authorization: React.FC = () => {
                                     className={classNames(
                                         style.slide,
                                         style.slide3,
-                                        ' flex items-center',
+                                        ' flex items-center px-4',
                                     )}
                                 >
                                     <div className="max-w-md mx-auto">
@@ -154,28 +155,9 @@ const Authorization: React.FC = () => {
                                 />
                             </div>
                             <div>
-                                Переключение языка
-                                <button
-                                    onClick={() => {
-                                        i18n.changeLanguage('en');
-                                    }}
-                                >
-                                    En
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        i18n.changeLanguage('kk');
-                                    }}
-                                >
-                                    kk
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        i18n.changeLanguage('ru');
-                                    }}
-                                >
-                                    ru
-                                </button>
+
+                                <ChangingLanguage />
+                                
                             </div>
                         </header>
                         <main
