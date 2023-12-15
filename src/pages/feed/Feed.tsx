@@ -1,5 +1,5 @@
-const Feed: React.FC =() => {
-    return <div>Feed</div>
-}
+const Feed: React.FC = () => {
+    return <div>Feed</div>;
+};
 
-export default Feed
+export default Feed;

@@ -32,19 +32,6 @@ const Authorization: React.FC = () => {
     //@ts-ignore
     const locale = i18n.translator.language;
 
-    useEffect(() => {
-        if (locale !== 'kk' || locale !== 'ru' || locale !== 'en') {
-            console.log('язык', locale);
-            // i18n.changeLanguage('kk');
-            const lngLocal = localStorage.getItem('i18next') as string;
-
-            //@ts-ignore
-            // if (lngLocal !== 'kk' || lngLocal !== 'ru' || lngLocal !== 'en') {
-            //     i18n.changeLanguage('kk');
-            // }
-        }
-    }, []);
-
     const {
         register,
         handleSubmit,
@@ -87,7 +74,7 @@ const Authorization: React.FC = () => {
         <>
             <Helmet>
                 <title>Authorization</title>
-                <meta name="description" content="Lorem ipsum dolor sit amet" />
+                <meta name="description" content="" />
             </Helmet>
             <Suspense fallback="...loading">
                 <div className="flex min-h-screen autorization">

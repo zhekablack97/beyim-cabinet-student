@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import './App.scss';
 
 import Authorization from './pages/authorization';
