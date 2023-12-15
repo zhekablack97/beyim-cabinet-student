@@ -3,17 +3,23 @@ import './App.scss';
 import Authorization from './pages/authorization';
 
 import { Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from './hooks';
+import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { login } from './features/slice/authSlice';
+import Feed from './pages/feed';
 
 function App() {
-    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    const dispatch = useAppDispatch();
+
+    console.log(isLogin, 'islogin');
 
     useEffect(() => {
-        const isLogin = Cookies.get('access_token');
+        const coocieData = Cookies.get('access_token');
 
-        if (isLogin) {
-            setIsLogin(true);
+        if (coocieData) {
+            dispatch(login());
         }
     }, []);
 
@@ -30,7 +36,7 @@ function App() {
       acts like a catch-all for URLs that we don't have explicit
       routes for. */}
                         </Route>
-                        <Route path="/about" element={<div>about</div>} />
+                        <Route path="/feed" element={<Feed />} />
                     </>
                 )}
                 <Route path="*" element={<div>страница ошибки </div>} />

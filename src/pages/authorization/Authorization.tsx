@@ -15,6 +15,9 @@ import { Pagination } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
 import { ChangingLanguage } from '../../features/ChangingLanguage';
 import Cookies from 'js-cookie';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { login } from '../../features/slice/authSlice';
+import { Navigate, redirect, useNavigate } from 'react-router-dom';
 // Import Swiper styles
 
 const authSchema = yup
@@ -26,8 +29,10 @@ const authSchema = yup
 
 const Authorization: React.FC = () => {
     const [postLogin] = usePostLoginMutation();
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    const dispatch = useAppDispatch();
     const { t, i18n } = useTranslation();
-
+    const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
@@ -51,10 +56,17 @@ const Authorization: React.FC = () => {
                 });
                 console.log(data, 'data');
             })
+            .then(() => {
+                dispatch(login());
+            })
+            .then(() => {
+                console.log('дошли сюда');
+                navigate('/feed');
+            })
             .catch(() => {
                 setError('username', {
                     type: '400',
-                    message: '',
+                    message: t('authorization.invalidLogin'),
                 });
                 setError('password', {
                     type: '400',
@@ -72,6 +84,7 @@ const Authorization: React.FC = () => {
 
     return (
         <>
+            {/* {isLogin && <Navigate to="/feed" />} */}
             <Helmet>
                 <title>Authorization</title>
                 <meta name="description" content="" />

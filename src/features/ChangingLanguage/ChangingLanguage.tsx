@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
 import style from './ChangingLanguage.module.scss';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const ChangingLanguage: React.FC = () => {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
@@ -27,11 +27,9 @@ export const ChangingLanguage: React.FC = () => {
 
             //@ts-ignore
             if (lngLocal === 'kk' || lngLocal === 'ru' || lngLocal === 'en') {
-                console.log('нашли в локал ');
                 localStorage.setItem('i18nextLng', lngLocal);
                 i18n.changeLanguage(lngLocal);
             } else {
-                console.log('Попали на переключение ');
                 localStorage.setItem('i18nextLng', 'kk');
                 i18n.changeLanguage('kk');
             }
