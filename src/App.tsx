@@ -27,18 +27,16 @@ function App() {
         <Routes>
             <Route path="/">
                 <Route index element={<Authorization />} />
-                {isLogin && (
-                    <>
-                        <Route path="/sss">
-                            <Route index element={<div>sss</div>} />
-                            <Route path="aaaa" element={<div>aaaa11aa1</div>} />
-                            {/* Using path="*"" means "match anything", so this route
+
+                <Route path="/sss">
+                    <Route index element={<div>sss</div>} />
+                    <Route path="aaaa" element={<div>aaaa11aa1</div>} />
+                    {/* Using path="*"" means "match anything", so this route
       acts like a catch-all for URLs that we don't have explicit
       routes for. */}
-                        </Route>
-                        <Route path="/feed" element={<Feed />} />
-                    </>
-                )}
+                </Route>
+                <Route path="/feed" element={<Feed />} />
+
                 <Route path="*" element={<div>страница ошибки </div>} />
             </Route>
         </Routes>

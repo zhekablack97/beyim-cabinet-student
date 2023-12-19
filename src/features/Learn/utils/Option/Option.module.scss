@@ -1,0 +1,13 @@
+.wrapper {
+    &:hover {
+        background: #e9f0f3;
+    }
+}
+
+.text {
+    color: var(--color-black-main, #364954);
+}
+
+.active {
+    background: #e9f0f3;
+}

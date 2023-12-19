@@ -54,7 +54,11 @@ const Authorization: React.FC = () => {
                     expires: 1,
                     secure: true,
                 });
-                console.log(data, 'data');
+                Cookies.set("id_token", data.data.tokenData.id_token, {
+                    expires: 1,
+                    secure: true,
+                });
+                
             })
             .then(() => {
                 dispatch(login());
@@ -84,7 +88,7 @@ const Authorization: React.FC = () => {
 
     return (
         <>
-            {/* {isLogin && <Navigate to="/feed" />} */}
+            {isLogin && <Navigate to="/feed" />}
             <Helmet>
                 <title>Authorization</title>
                 <meta name="description" content="" />

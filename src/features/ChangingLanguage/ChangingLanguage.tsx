@@ -39,7 +39,7 @@ export const ChangingLanguage: React.FC = () => {
     return (
         <div>
             <button
-                data-tooltip-id="my-tooltip-click"
+                data-tooltip-id="changing-language"
                 className="flex h-6 text-sm items-center gap-1"
                 data-tooltip-offset={24}
             >
@@ -48,7 +48,7 @@ export const ChangingLanguage: React.FC = () => {
             </button>
             <div className="z-10  relative	">
                 <Tooltip
-                    id="my-tooltip-click"
+                    id="changing-language"
                     className={classNames(
                         style.wrapperTooltip,
                         'drop-shadow-2xl',

@@ -23,5 +23,6 @@
             "subTitle": "Track your study records. Learn what content is more interesting"
         },
         "invalidLogin": "Invalid username or password"
-    }
+    },
+    "header": {"learn": "Learn"}
 }

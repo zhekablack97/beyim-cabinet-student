@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authServiceApi } from './api/authService';
 import authReducer from './features/slice/authSlice';
+import { programServiceApi } from './api/authService/programServiceApi';
 // ...
 
 const store = configureStore({
@@ -8,11 +9,14 @@ const store = configureStore({
         auth: authReducer,
         // Add the generated reducer as a specific top-level slice
         [authServiceApi.reducerPath]: authServiceApi.reducer,
+        [programServiceApi.reducerPath]: programServiceApi.reducer,
     },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(authServiceApi.middleware),
+        getDefaultMiddleware()
+            .concat(authServiceApi.middleware)
+            .concat(programServiceApi.middleware),
 });
 
 export default store;
