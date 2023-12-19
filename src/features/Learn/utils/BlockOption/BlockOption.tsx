@@ -1,23 +1,34 @@
 import classNames from 'classnames';
 import style from './BlockOption.module.scss';
 import { Option } from '../Option';
-import { GetSubjectResponseApiType } from '../../../../types';
+import {
+    GetSectionsResponseApiType,
+    GetSubjectResponseApiType,
+} from '../../../../types';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
-interface IBlockOption {
+interface IBlockOption<
+    T = GetSubjectResponseApiType | GetSectionsResponseApiType,
+> {
     title?: string;
     withImage?: boolean;
-    data?: GetSubjectResponseApiType;
+    data?: T;
     isLoading?: boolean;
     active?: string;
+    handleChange?: (id: string) => void;
 }
 
-export const BlockOption: React.FC<IBlockOption> = ({
+export const BlockOption: React.FC<
+    IBlockOption<GetSectionsResponseApiType>
+> = ({
     title,
     withImage = false,
     data,
     isLoading = true,
     active,
+    handleChange,
     ...props
 }) => {
     const { i18n } = useTranslation();
@@ -25,8 +36,6 @@ export const BlockOption: React.FC<IBlockOption> = ({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
-
-    const [active, ]
 
     return (
         <div
@@ -40,25 +49,32 @@ export const BlockOption: React.FC<IBlockOption> = ({
                 {title}
             </span>
             <div>
-                <ul>
-                    {data &&
-                        data.data.subjects.map(item => {
-                            return (
-                                <Option
-                                    key={item.id}
-                                    name={
-                                        item.translations.find(
-                                            element =>
-                                                element.locale === locale,
-                                        )?.name
-                                    }
-                                    handleClick={}
-                                    imageSrc={item.icon_url}
-                                    isActive={active === String(item.id)}
-                                />
-                            );
-                        })}
-                </ul>
+                {isLoading ? (
+                    <Skeleton count={4} height={38} />
+                ) : (
+                    <ul>
+                        {data &&
+                            data.data.sections?.map(item => {
+                                return (
+                                    <Option
+                                        key={item.id}
+                                        name={
+                                            item.translations.find(
+                                                element =>
+                                                    element.locale === locale,
+                                            )?.name
+                                        }
+                                        handleClick={() => {
+                                            if (handleChange) {
+                                                handleChange(String(item.id));
+                                            }
+                                        }}
+                                        isActive={active === String(item.id)}
+                                    />
+                                );
+                            })}
+                    </ul>
+                )}
             </div>
         </div>
     );

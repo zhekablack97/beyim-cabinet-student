@@ -1,6 +1,8 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+    GetSectionsRequestApiType,
+    GetSectionsResponseApiType,
     GetSubjectRequestApiType,
     GetSubjectResponseApiType,
 } from '../../types';
@@ -38,7 +40,26 @@ export const programServiceApi = createApi({
             },
             providesTags: ['Subjects'],
         }),
+        getAllSections: build.query<
+            GetSectionsResponseApiType,
+            GetSectionsRequestApiType
+        >({
+            query: ({ subject_id, limit = 100, type_id, parent_id }) => {
+                return {
+                    url: `sections?${limit ? `limit=${limit}` : ''}${
+                        subject_id ? `&subject_id=${subject_id}` : ''
+                    }${type_id ? `&type_id=${type_id}` : ''}${
+                        parent_id ? `&parent_id=${parent_id}` : ''
+                    }`,
+                };
+            },
+        }),
     }),
 });
 
-export const { useGetAllSubjectsQuery, useLazyGetAllSubjectsQuery } = programServiceApi;
+export const {
+    useGetAllSubjectsQuery,
+    useLazyGetAllSubjectsQuery,
+    useGetAllSectionsQuery,
+    useLazyGetAllSectionsQuery,
+} = programServiceApi;
