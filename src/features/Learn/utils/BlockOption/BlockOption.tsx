@@ -8,6 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { BlockEmpty } from '../BlockEmpty/BlockEmpty';
 
 interface IBlockOption<
     T = GetSubjectResponseApiType | GetSectionsResponseApiType,
@@ -33,6 +34,7 @@ export const BlockOption: React.FC<
 }) => {
     const { i18n } = useTranslation();
 
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
@@ -40,7 +42,7 @@ export const BlockOption: React.FC<
     return (
         <div
             className={classNames(
-                'min-h-[516px] py-4 px-3 w-[216px]',
+                'min-h-[516px] py-4 px-3 w-[264px] overflow-auto max-h-full',
                 style.wrapper,
             )}
             {...props}
@@ -48,13 +50,14 @@ export const BlockOption: React.FC<
             <span className={classNames(style.title, 'text-sm mb-6 block')}>
                 {title}
             </span>
-            <div>
+            <div >
                 {isLoading ? (
                     <Skeleton count={4} height={38} />
                 ) : (
-                    <ul>
-                        {data &&
-                            data.data.sections?.map(item => {
+                    data &&
+                    (data.data.sections.length > 0 ? (
+                        <ul className='w-full'>
+                            {data.data.sections?.map(item => {
                                 return (
                                     <Option
                                         key={item.id}
@@ -72,8 +75,11 @@ export const BlockOption: React.FC<
                                         isActive={active === String(item.id)}
                                     />
                                 );
-                            })}
-                    </ul>
+                            })}{' '}
+                        </ul>
+                    ) : (
+                        <BlockEmpty />
+                    ))
                 )}
             </div>
         </div>

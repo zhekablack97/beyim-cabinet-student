@@ -43,7 +43,7 @@ export const Option: React.FC<IOption> = ({
                     />
                 )}
 
-                <span className={classNames(style.text, 'text-sm')}>
+                <span className={classNames(style.text, 'text-sm text-ellipsis text-left  overflow-hidden py-2 mr-2')}>
                     {name}
                 </span>
                 <img src="/icons/arrowRight.svg" className="ml-auto " alt="" />

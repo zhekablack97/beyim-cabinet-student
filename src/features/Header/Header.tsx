@@ -6,13 +6,13 @@ import { Learn } from '../Learn';
 
 export const Header: React.FC = () => {
     return (
-        <header className={classNames("h-14 flex px-6 items-center", style.wrapper)}>
+        <header className={classNames("h-14 flex px-6 items-center relative z-10", style.wrapper)}>
             <div>
                 <Link to="/">
                     <img src="/icons/logoMain.svg" alt="" />
                 </Link>
             </div>
-            <Learn className={classNames('ml-[77px] ')} />
+            <Learn className={classNames('ml-[49px] ')} />
             <div className="ml-7">поиск</div>
             <div className="ml-auto flex items-center">
                 <ChangingLanguage />

@@ -24,5 +24,18 @@
         },
         "invalidLogin": "Invalid username or password"
     },
-    "header": {"learn": "Learn"}
+    "header": {
+        "learn": "Learn",
+        "subject": "Subjects",
+        "chapters": "Chapters",
+        "sections": "Sections",
+        "topics": "Topics",
+        "blockEmpty": {
+            "title": "No chapters",
+            "description": "At the moment, no chapters have been added on this subject."
+        }
+    },
+    "feed": {
+        "allFeed": "All posts"
+    }
 }

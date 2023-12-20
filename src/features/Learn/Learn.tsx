@@ -4,12 +4,10 @@ import style from './Learn.module.scss';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BlockOption } from './utils';
-import Skeleton from 'react-loading-skeleton';
 import {
     useGetAllSubjectsQuery,
     useLazyGetAllSectionsQuery,
-    useLazyGetAllSubjectsQuery,
-} from '../../api/authService';
+} from '../../api/';
 import { BlockOptionSubject } from './utils/BlockOptionSubject';
 
 interface ILearn {
@@ -17,7 +15,8 @@ interface ILearn {
 }
 
 export const Learn: React.FC<ILearn> = ({ className, ...props }) => {
-    const { data: subjects } = useGetAllSubjectsQuery({ limit: 100 });
+    const { data: subjects, isFetching: isFetchingSubjects } =
+        useGetAllSubjectsQuery({ limit: 100 });
     const [currentSubject, setCurrentSubject] = useState<string>('');
     const [currentChapters, setCurrentChapters] = useState<string>('');
     const [currentSection, setCurrentSections] = useState<string>('');
@@ -79,23 +78,29 @@ export const Learn: React.FC<ILearn> = ({ className, ...props }) => {
     return (
         <>
             <button
-                className={classNames(className, style.learn)}
+                className={classNames(className, 'flex pl-7 items-center')}
                 data-tooltip-id="learn"
+                data-tooltip-offset={28}
                 {...props}
             >
-                {t('header.learn')}
+                <span className={classNames(style.learn, 'text-sm block')}>
+                    {t('header.learn')}
+                </span>
+                <img src="/icons/arrowDown2.svg" className="block w-6 h-6" />
             </button>
             <Tooltip
                 openOnClick={true}
                 clickable={true}
                 noArrow={true}
                 opacity={1}
+                place="bottom-start"
                 id="learn"
                 className={style.wrapperTooltip}
             >
-                <aside className="flex rounded-2xl">
+                <aside className="flex rounded-2xl overflow-hidden relative le">
                     <BlockOptionSubject
-                        title="Предмет"
+                        title={t('header.subject')}
+                        isLoading={isFetchingSubjects}
                         data={subjects}
                         active={currentSubject}
                         handleChange={id => {
@@ -104,7 +109,7 @@ export const Learn: React.FC<ILearn> = ({ className, ...props }) => {
                     />
                     {currentSubject !== '' && (
                         <BlockOption
-                            title="Главы"
+                            title={t('header.chapters')}
                             data={chapters}
                             isLoading={isFetchingChapters}
                             handleChange={id => {
@@ -116,7 +121,7 @@ export const Learn: React.FC<ILearn> = ({ className, ...props }) => {
 
                     {currentChapters !== '' && (
                         <BlockOption
-                            title="Разделы"
+                            title={t('header.sections')}
                             handleChange={id => {
                                 handleClickSection(id);
                             }}
@@ -129,7 +134,7 @@ export const Learn: React.FC<ILearn> = ({ className, ...props }) => {
                     {currentSection !== '' && (
                         <BlockOption
                             isLoading={isFetchingTopics}
-                            title="Темы"
+                            title={t('header.topics')}
                             data={topics}
                         />
                     )}
