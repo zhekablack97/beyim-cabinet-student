@@ -3,6 +3,7 @@ import { authServiceApi } from './api/authService';
 import authReducer from './features/slice/authSlice';
 import { programServiceApi } from './api/programService/programServiceApi';
 import { contentServiceApi } from './api/contentService';
+import { contentInteractionApi } from './api/contentInteractionApi/';
 // ...
 
 const store = configureStore({
@@ -12,6 +13,7 @@ const store = configureStore({
         [authServiceApi.reducerPath]: authServiceApi.reducer,
         [programServiceApi.reducerPath]: programServiceApi.reducer,
         [contentServiceApi.reducerPath]: contentServiceApi.reducer,
+        [contentInteractionApi.reducerPath]: contentInteractionApi.reducer,
     },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
@@ -19,7 +21,8 @@ const store = configureStore({
         getDefaultMiddleware()
             .concat(authServiceApi.middleware)
             .concat(programServiceApi.middleware)
-            .concat(contentServiceApi.middleware),
+            .concat(contentServiceApi.middleware)
+            .concat(contentInteractionApi.middleware),
 });
 
 export default store;

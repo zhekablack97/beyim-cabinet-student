@@ -1,0 +1,1 @@
+export { FooterPost } from './FooterPost';

@@ -1,0 +1,8 @@
+.count {
+    &:not(.active) {
+        color: #b9c9e3;
+    }
+    &.active {
+        color: #e55959;
+    }
+}

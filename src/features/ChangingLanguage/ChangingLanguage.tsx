@@ -18,12 +18,9 @@ export const ChangingLanguage: React.FC = () => {
 
     useEffect(() => {
         if (locale !== 'kk' || locale !== 'ru' || locale !== 'en') {
-
             const lngLocal = String(
                 localStorage.getItem('i18nextLng'),
             ) as string;
-
-            console.log('lngLocal', lngLocal);
 
             //@ts-ignore
             if (lngLocal === 'kk' || lngLocal === 'ru' || lngLocal === 'en') {

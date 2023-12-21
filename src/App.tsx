@@ -10,10 +10,7 @@ import { login } from './features/slice/authSlice';
 import Feed from './pages/feed';
 
 function App() {
-    const isLogin = useAppSelector(state => state.auth.isLogin);
     const dispatch = useAppDispatch();
-
-    console.log(isLogin, 'islogin');
 
     useEffect(() => {
         const coocieData = Cookies.get('access_token');

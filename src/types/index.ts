@@ -6,3 +6,6 @@ export type { GetSectionsResponseApiType } from './GetSectionsResponseApiType';
 export type { GetSectionsRequestApiType } from './GetSectionsRequestApiType';
 export type { GetContentsResponseApiType } from './GetContentsResponseApiType';
 export type { getContentsRequestApiType } from './getContentsRequestApiType';
+export type { GetAllLikeRequestApiType } from './GetAllLikeRequestApiType';
+export type { GetLikesFeedResponseApiType } from './GetLikesFeedResponseApiType';
+export type { GetCountResponseApiType } from './GetCountResponseApiType';

@@ -33,6 +33,7 @@
     "react-i18next": "^13.5.0",
     "react-indiana-drag-scroll": "^2.2.0",
     "react-loading-skeleton": "^3.3.1",
+    "react-modal": "^3.16.1",
     "react-redux": "^9.0.3",
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
@@ -82,6 +83,7 @@
   },
   "devDependencies": {
     "@types/react-helmet": "^6.1.11",
+    "@types/react-modal": "^3.16.3",
     "@types/react-scroll": "^1.8.10",
     "prettier": "3.1.1",
     "tailwindcss": "^3.3.6"

@@ -17,8 +17,7 @@ import { ChangingLanguage } from '../../features/ChangingLanguage';
 import Cookies from 'js-cookie';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { login } from '../../features/slice/authSlice';
-import { Navigate, redirect, useNavigate } from 'react-router-dom';
-// Import Swiper styles
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const authSchema = yup
     .object({
@@ -54,17 +53,15 @@ const Authorization: React.FC = () => {
                     expires: 1,
                     secure: true,
                 });
-                Cookies.set("id_token", data.data.tokenData.id_token, {
+                Cookies.set('id_token', data.data.tokenData.id_token, {
                     expires: 1,
                     secure: true,
                 });
-                
             })
             .then(() => {
                 dispatch(login());
             })
             .then(() => {
-                console.log('дошли сюда');
                 navigate('/feed');
             })
             .catch(() => {
@@ -106,7 +103,6 @@ const Authorization: React.FC = () => {
                             slidesPerView={1}
                             pagination={pagination}
                             modules={[Pagination]}
-                            onSlideChange={() => console.log('slide change')}
                             onSwiper={(swiper: any) => console.log(swiper)}
                         >
                             <SwiperSlide>

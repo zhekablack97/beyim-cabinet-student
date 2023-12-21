@@ -14,7 +14,7 @@ export const programServiceApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.REACT_APP_PROGRAMS_SERVICE_URL}/api/v1/`,
         prepareHeaders: headers => {
-            const token = Cookies.get('access__token');
+            const token = Cookies.get('access_token');
             const id_token = Cookies.get('id_token');
 
             // If we have a token set in state, let's assume that we should be passing it.
@@ -22,6 +22,8 @@ export const programServiceApi = createApi({
                 headers.set('authorization', `Bearer ${token}`);
                 headers.set('X-Api-Key', id_token);
             }
+
+            headers.set('Access-Control-Allow-Headers', 'Authorization');
             return headers;
         },
     }),

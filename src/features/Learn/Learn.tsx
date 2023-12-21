@@ -4,10 +4,7 @@ import style from './Learn.module.scss';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BlockOption } from './utils';
-import {
-    useGetAllSubjectsQuery,
-    useLazyGetAllSectionsQuery,
-} from '../../api/';
+import { useGetAllSubjectsQuery, useLazyGetAllSectionsQuery } from '../../api/';
 import { BlockOptionSubject } from './utils/BlockOptionSubject';
 
 interface ILearn {
@@ -72,8 +69,6 @@ export const Learn: React.FC<ILearn> = ({ className, ...props }) => {
             });
         }
     }, [currentSection]);
-
-    console.log('isFetchingSections', isFetchingSections);
 
     return (
         <>
