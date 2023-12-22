@@ -97,8 +97,7 @@ const Feed: React.FC = () => {
                             if (item.category === 'video') {
                                 return (
                                     <div key={item.id}>
-                                        {item.thumbnail}
-                                        <VideoPost />
+                                        <VideoPost data={item} />
                                     </div>
                                 );
                             }
@@ -113,7 +112,7 @@ const Feed: React.FC = () => {
                             }
                         })}
                     </div>
-                    <div ref={loaderIndicator}>aaaaaaaaaaaaa</div>
+                    <div ref={loaderIndicator}> </div>
                 </div>
 
                 <aside className=" col-span-4">статус бар</aside>

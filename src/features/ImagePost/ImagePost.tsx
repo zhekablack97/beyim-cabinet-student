@@ -46,6 +46,7 @@ export const ImagePost: React.FC<IImagePost> = ({ data }) => {
                 iconUrl={data.iconUrl}
                 objective={data.objective}
                 subject={data.subject}
+                id={data.id}
             />
             <div>
                 <div className="mb-3">

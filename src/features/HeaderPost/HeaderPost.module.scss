@@ -1,0 +1,29 @@
+.wrapperTooltip.wrapperTooltip {
+    background-color: #fff;
+    padding: 12px;
+    z-index: 200;
+    color: #364954;
+}
+
+.tooltip.tooltip {
+    background-color: #fff;
+    border-radius: 8px;
+
+    span {
+        color: var(--color-black-500, #577487);
+    }
+
+    button {
+
+        span {
+            color: var(--color-black-main, #364954);
+        }
+        &:hover {
+            background-color: #55bbeb;
+
+            span {
+                color: #fff;
+            }
+        }
+    }
+}
