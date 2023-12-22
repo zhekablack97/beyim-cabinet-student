@@ -53,7 +53,6 @@ export const contentInteractionApi = createApi({
                     method: 'POST',
                 };
             },
-            invalidatesTags: ['like'],
         }),
 
         postBookmark: build.mutation<
@@ -66,7 +65,6 @@ export const contentInteractionApi = createApi({
                     method: 'POST',
                 };
             },
-            invalidatesTags: ['bookmart'],
         }),
 
         getUserLikedThisPost: build.query<any, { postId: string }>({
@@ -93,7 +91,6 @@ export const contentInteractionApi = createApi({
                     method: 'DELETE',
                 };
             },
-            invalidatesTags: ['like'],
         }),
 
         deleteBookmark: build.mutation<
@@ -106,7 +103,6 @@ export const contentInteractionApi = createApi({
                     method: 'DELETE',
                 };
             },
-            invalidatesTags: ['bookmart'],
         }),
         getAllLike: build.query<GetAllLikeRequestApiType, void>({
             query: () => {

@@ -8,6 +8,7 @@ import { Post } from '../../types/GetContentsResponseApiType';
 import { ImagePost } from '../../features/ImagePost';
 import Modal from 'react-modal';
 import classNames from 'classnames';
+import { VideoPost } from '../../features/VideoPost';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -95,9 +96,9 @@ const Feed: React.FC = () => {
 
                             if (item.category === 'video') {
                                 return (
-                                    <div className="" key={item.id}>
-                                        Видео
-                                        <div className=" h-96"></div>
+                                    <div key={item.id}>
+                                        {item.thumbnail}
+                                        <VideoPost />
                                     </div>
                                 );
                             }

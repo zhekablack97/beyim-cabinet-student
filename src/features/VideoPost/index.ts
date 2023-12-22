@@ -1,0 +1,1 @@
+export { VideoPost } from './VideoPost';

@@ -15,7 +15,7 @@ interface ILike {
 export const Like: React.FC<ILike> = ({ postId }) => {
     const { data } = useGetUserLikedThisPostQuery({ postId });
     const [isLiked, setIsLiked] = useState<boolean>(false);
-    const { data: count } = useGetCountQuery({ postId });
+    const { data: count, refetch: refetchCount } = useGetCountQuery({ postId });
     const [postLike] = usePostLikeMutation();
     const [deleteLike] = useDeleteLikeMutation();
 
@@ -32,14 +32,18 @@ export const Like: React.FC<ILike> = ({ postId }) => {
             className="flex gap-2 items-center h-7 justify-between"
             onClick={() => {
                 if (isLiked) {
-                    deleteLike({ postId });
+                    deleteLike({ postId })
+                        .unwrap()
+                        .then(() => {
+                            refetchCount();
+                        });
                     setIsLiked(false);
                 } else {
                     postLike({ postId })
                         .unwrap()
                         .then(() => {
-                            console.log('slaldaksal');
                             setIsLiked(true);
+                            refetchCount();
                         });
                 }
             }}

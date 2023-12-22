@@ -16,7 +16,9 @@ interface IBookmark {
 export const Bookmark: React.FC<IBookmark> = ({ postId }) => {
     const { data } = useGetUserBookmarkedThisPostQuery({ postId });
     const [isBooked, setIsBooked] = useState<boolean>(false);
-    const { data: count } = useGetCountBookedQuery({ postId });
+    const { data: count, refetch: refetchCount } = useGetCountBookedQuery({
+        postId,
+    });
     const [postBookmark] = usePostBookmarkMutation();
     const [deleteBookmark] = useDeleteBookmarkMutation();
 
@@ -35,20 +37,28 @@ export const Bookmark: React.FC<IBookmark> = ({ postId }) => {
             className="flex gap-2 items-center h-7 justify-between"
             onClick={() => {
                 if (isBooked) {
-                    deleteBookmark({ postId });
+                    deleteBookmark({ postId })
+                        .unwrap()
+                        .then(() => {
+                            refetchCount();
+                        });
                     setIsBooked(false);
                 } else {
                     postBookmark({ postId })
                         .unwrap()
                         .then(() => {
-                            console.log('slaldaksal');
                             setIsBooked(true);
+                            refetchCount();
                         });
                 }
             }}
         >
             <img
-                src={isBooked ? '/icons/bookmarkActive.svg' : '/icons/bookmark.svg'}
+                src={
+                    isBooked
+                        ? '/icons/bookmarkActive.svg'
+                        : '/icons/bookmark.svg'
+                }
                 alt=""
                 className="block h-7 w-7"
             />{' '}
