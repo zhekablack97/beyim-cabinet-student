@@ -29,7 +29,7 @@ export const VideoPost: React.FC<IVideoPost> = ({ data }) => {
                 />
             </div>
             <div>контент редактора</div>
-            <FooterPost postId={data.id} />
+            <FooterPost contentId={data.contentId} postId={data.id} />
         </article>
     );
 };

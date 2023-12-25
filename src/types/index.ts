@@ -9,3 +9,6 @@ export type { getContentsRequestApiType } from './getContentsRequestApiType';
 export type { GetAllLikeRequestApiType } from './GetAllLikeRequestApiType';
 export type { GetLikesFeedResponseApiType } from './GetLikesFeedResponseApiType';
 export type { GetCountResponseApiType } from './GetCountResponseApiType';
+export type { GetOneResponseApiType } from './GetOneResponseApiType';
+export type { GetOneContentResponseApiType } from './GetOneContentResponseApiType';
+export type { GetSearchGlobalResponseApiType } from './GetSearchGlobalResponseApiType';

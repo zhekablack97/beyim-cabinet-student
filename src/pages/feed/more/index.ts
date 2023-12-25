@@ -1,3 +1,3 @@
-import More from "./More";
+import More from './More';
 
-export default More
+export default More;

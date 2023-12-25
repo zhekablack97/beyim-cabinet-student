@@ -135,7 +135,7 @@ export const ImagePost: React.FC<IImagePost> = ({ data }) => {
                 <div>контент редактора </div>
             </div>
 
-            <FooterPost postId={data.id} />
+            <FooterPost postId={data.id} contentId={data.contentId} />
         </article>
     );
 };

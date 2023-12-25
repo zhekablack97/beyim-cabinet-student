@@ -2,19 +2,22 @@ import { useTranslation } from 'react-i18next';
 import { useGetFeedQuery } from '../../api/contentService';
 import { Header } from '../../features/Header';
 import { SubjectsFilter } from '../../features/SubjectsFilter';
-import { date } from 'yup';
 import { useEffect, useRef, useState } from 'react';
 import { Post } from '../../types/GetContentsResponseApiType';
 import { ImagePost } from '../../features/ImagePost';
-import Modal from 'react-modal';
+import style from './Feed.module.scss';
 import classNames from 'classnames';
 import { VideoPost } from '../../features/VideoPost';
 
+import More from './more';
+
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
+
     const [currentPage, setCurrentPage] = useState<number>(0);
     const {
         data: dataFeed,
@@ -31,7 +34,6 @@ const Feed: React.FC = () => {
     const loaderIndicator = useRef(null);
 
     useEffect(() => {
-        // console.log(currentPage, 'currentPage');
         setPosts([]);
         setCurrentPage(0);
     }, [locale, refetch]);
@@ -81,7 +83,7 @@ const Feed: React.FC = () => {
     }, [isVisible, isFetching, dataFeed]);
 
     return (
-        <div className="bg-slate-200 min-h-screen">
+        <div className={classNames(' min-h-screen', style.wrapper)}>
             <Header />
             <main className="container  grid gap-4  grid-cols-12">
                 <nav className=" col-span-2">Меню боковое </nav>
@@ -113,6 +115,8 @@ const Feed: React.FC = () => {
                         })}
                     </div>
                     <div ref={loaderIndicator}> </div>
+
+                    <More />
                 </div>
 
                 <aside className=" col-span-4">статус бар</aside>

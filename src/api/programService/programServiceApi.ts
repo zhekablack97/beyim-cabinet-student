@@ -1,6 +1,7 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+    GetSearchGlobalResponseApiType,
     GetSectionsRequestApiType,
     GetSectionsResponseApiType,
     GetSubjectRequestApiType,
@@ -29,6 +30,23 @@ export const programServiceApi = createApi({
     }),
 
     endpoints: build => ({
+        getSearchGlobal: build.query<
+            GetSearchGlobalResponseApiType,
+            {
+                input: string | string[];
+                locale?: string;
+                subjectIds?: number[];
+            }
+        >({
+            query: ({ input, locale, subjectIds }) => {
+                return {
+                    url:
+                        `global-search?q=${input}` +
+                        (locale ? `&locale=${locale}` : '') +
+                        (subjectIds ? `&subjectIds=${subjectIds}` : ''),
+                };
+            },
+        }),
         getAllSubjects: build.query<
             GetSubjectResponseApiType,
             GetSubjectRequestApiType
@@ -63,5 +81,7 @@ export const {
     useGetAllSubjectsQuery,
     useLazyGetAllSubjectsQuery,
     useGetAllSectionsQuery,
+    useLazyGetSearchGlobalQuery,
+    useGetSearchGlobalQuery,
     useLazyGetAllSectionsQuery,
 } = programServiceApi;

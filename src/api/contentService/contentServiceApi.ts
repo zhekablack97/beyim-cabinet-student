@@ -4,6 +4,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 import {
     GetContentsResponseApiType,
+    GetOneContentResponseApiType,
+    GetOneResponseApiType,
     getContentsRequestApiType,
 } from '../../types';
 
@@ -26,6 +28,14 @@ export const contentServiceApi = createApi({
     }),
 
     endpoints: build => ({
+        getOne: build.query<GetOneContentResponseApiType, string>({
+            query: id => `/content/${id}`,
+        }),
+
+        getOnePost: build.query<GetOneResponseApiType, string>({
+            query: id => `/post/${id}`,
+        }),
+
         getFeed: build.query<
             GetContentsResponseApiType,
             getContentsRequestApiType
@@ -55,4 +65,11 @@ export const contentServiceApi = createApi({
     }),
 });
 
-export const { useGetFeedQuery, useLazyGetFeedQuery } = contentServiceApi;
+export const {
+    useGetFeedQuery,
+    useLazyGetFeedQuery,
+    useGetOneQuery,
+    useLazyGetOneQuery,
+    useGetOnePostQuery,
+    useLazyGetOnePostQuery,
+} = contentServiceApi;
