@@ -1,0 +1,17 @@
+.blue {
+    color: var(--color-blue-main, #55bbeb);
+}
+
+.paragraph {
+    color: var(--color-black-500, #577487);
+}
+
+.list {
+    li {
+        color: var(--color-black-500, #577487);
+
+        &::marker {
+            color: var(--color-black-500, #577487);
+        }
+    }
+}

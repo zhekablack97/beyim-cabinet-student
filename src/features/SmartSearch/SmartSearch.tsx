@@ -153,7 +153,7 @@ export const SmartSearch: React.FC = () => {
                         )}
                     >
                         {dataIdSearch?.data.result.length === 0 ? (
-                            <EmptyResult />
+                            <EmptyResult value={value}/>
                         ) : (
                             <div className="col-span-8 col-start-3 flex gap-4 flex-col">
                                 <div className="z-[1000] relative flex justify-between">
