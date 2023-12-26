@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
     return (
         <header
             className={classNames(
-                'h-14 flex px-6 items-center  z-10 sticky top-0',
+                'h-14 flex px-6 items-center sticky top-0 z-[2000]',
                 style.wrapper,
             )}
         >

@@ -1,3 +1,64 @@
 .input {
     background-color: var(--Hover, #f2f6f8);
 }
+
+.blue {
+    color: var(--color-blue-main, #55bbeb);
+}
+
+.buttonFilter {
+    background-color: #fff;
+    border-color: var(--color-black-200, #cbdce7);
+}
+
+.wrapperFilter.wrapperFilter {
+    background-color: transparent;
+    padding: 0;
+}
+
+.blockFilter {
+    box-shadow: 0px 0px 34px 0px rgba(103, 138, 161, 0.2);
+    background-color: #fff;
+    border-color: var(--color-black-200, #CBDCE7);;
+}
+
+.label {
+    border-color: var(--Stroke, #e3e5ea);
+    &::after {
+        content: '';
+        width: 16px;
+        height: 16px;
+        display: block;
+        background-image: url('../../../public/icons/ph_x-bold.svg');
+    }
+}
+
+.input {
+    &:checked {
+        & + .label {
+            border-color: #55bbeb;
+            background-color: #55bbeb;
+            color: #fff;
+            span {
+                color: #fff;
+            }
+            &::after {
+                display: block;
+                content: '';
+                width: 16px;
+                height: 16px;
+                background-image: url('../../../public/icons/ph_x-boldActive.svg');
+            }
+        }
+    }
+}
+
+.apply{
+    color: #fff;
+    background-color: #55BBEB;
+    box-shadow: 0px 3.972px 0px 0px #0B638C; 
+}
+
+.clear{
+    color: var(--color-black-300, #A3C0D2);
+}

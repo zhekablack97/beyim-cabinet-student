@@ -13,10 +13,13 @@ import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 interface ISliderPopup {
     data: string[];
-    initialSlide: number;
+    initialSlide?: number;
 }
 
-export const SliderPopup: React.FC<ISliderPopup> = ({ data, initialSlide }) => {
+export const SliderPopup: React.FC<ISliderPopup> = ({
+    data,
+    initialSlide = 0,
+}) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     return (

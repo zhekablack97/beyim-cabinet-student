@@ -5,9 +5,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Pagination, Thumbs } from 'swiper/modules';
 import ReactModal from 'react-modal';
 import { useState } from 'react';
-import { SliderPopup } from './utils';
 import { HeaderPost } from '../HeaderPost';
 import { FooterPost } from '../FooterPost';
+import { SliderPopup } from '../SliderPopup';
 
 interface IImagePost {
     data: Post;
@@ -95,7 +95,7 @@ export const ImagePost: React.FC<IImagePost> = ({ data }) => {
                                     overlay: {
                                         backgroundColor:
                                             'rgba(31, 41, 55, 0.90)',
-                                        zIndex: 100,
+                                        zIndex: 2001,
                                     },
                                     content: {
                                         backgroundColor: 'transparent',

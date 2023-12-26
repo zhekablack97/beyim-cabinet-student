@@ -10,8 +10,8 @@ import {
 } from '../../../api/contentService';
 
 const More: React.FC = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [searchParams, setSearchParams] = useSearchParams();
     const openId = searchParams.get('idPost');
 
     // const { data: dataPost } = useGetOnePostQuery(openId || '');
@@ -24,8 +24,10 @@ const More: React.FC = () => {
     const closeModal = () => {
         setIsOpen(false);
 
+        if (!searchParams.get('fromSearch')) {
+            document.body.style.overflow = 'visible';
+        }
         setSearchParams({});
-        document.body.style.overflow = 'visible';
     };
 
     useEffect(() => {
@@ -46,7 +48,7 @@ const More: React.FC = () => {
                 style={{
                     overlay: {
                         backgroundColor: '#E9F0F3',
-                        zIndex: 100,
+                        zIndex: 2001,
                         padding: 0,
                     },
                     content: {
@@ -63,6 +65,7 @@ const More: React.FC = () => {
                         title={String(dataContent?.data.content.subjectId)}
                         subTitle={dataContent?.data.content.description}
                         onBack={closeModal}
+                        
                     />
                     <div
                         className={classNames(

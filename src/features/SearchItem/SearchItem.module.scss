@@ -1,3 +1,47 @@
-.wrapper{
+.wrapper {
     background-color: #fff;
+    border-color: var(--color-black-200, #cbdce7);
+}
+
+.content {
+    max-width: calc(100% - 128px - 14px);
+}
+
+.titleWrapper {
+    max-width: calc(100% - 40px);
+}
+
+.title {
+    color: var(--color-black-800, #232f37);
+}
+
+.subTitle {
+    color: var(--color-black-400, #678aa1);
+}
+
+.buttonGallery {
+    background: linear-gradient(
+        0deg,
+        rgba(31, 41, 55, 0.7) 0%,
+        rgba(31, 41, 55, 0.7) 100%
+    );
+}
+
+.more {
+    color: var(--color-blue-main, #55bbeb);
+}
+
+.microtopic {
+    color: var(--color-black-800, #232f37);
+}
+
+.close{
+    background-color: #fff;
+}
+
+
+.moreLink{
+    color: #fff;
+    background-color: #55BBEB;
+    box-shadow: 0px 3.972px 0px 0px #0B638C; 
 }

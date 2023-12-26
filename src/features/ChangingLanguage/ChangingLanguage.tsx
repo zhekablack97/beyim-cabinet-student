@@ -43,7 +43,7 @@ export const ChangingLanguage: React.FC = () => {
                 {locale === 'kk' ? 'Қаз' : locale === 'ru' ? 'Rus' : 'Eng'}
                 <img src="/icons/arrowDown.svg" />
             </button>
-            <div className="z-10  relative	">
+            <div className="z-[1000]  relative	">
                 <Tooltip
                     id="changing-language"
                     className={classNames(
