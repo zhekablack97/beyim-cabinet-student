@@ -26,7 +26,7 @@ export const SubjectsFilter: React.FC<ISubjectsFilter> = ({ ...props }) => {
                 fromSearch: prev.get('fromSearch') || '',
                 subject: id || '',
                 sectionsBySubject: '',
-                them: prev.get('them') || '',
+                them: '',
             };
         });
     };
