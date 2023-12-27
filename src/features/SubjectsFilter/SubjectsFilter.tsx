@@ -5,39 +5,49 @@ import classNames from 'classnames';
 import { Button } from './utils';
 import { useState } from 'react';
 import { useGetAllSubjectsQuery } from '../../api';
+import { useSearchParams } from 'react-router-dom';
 
-interface ISubjectsFilter {
-    currentFeed?: string;
-}
+interface ISubjectsFilter {}
 
-export const SubjectsFilter: React.FC<ISubjectsFilter> = ({
-    currentFeed = '',
-}) => {
+export const SubjectsFilter: React.FC<ISubjectsFilter> = ({ ...props }) => {
     const { t, i18n } = useTranslation();
     const { data: subjects, isFetching: isFetchingSubjects } =
         useGetAllSubjectsQuery({ limit: 100 });
 
-    const [currentActive, setCurrentActive] = useState<string>(currentFeed);
-
+    const [searchParams, setSearchParams] = useSearchParams();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
 
+    const onChangeSubject = (id?: string) => {
+        setSearchParams(prev => {
+            return {
+                idContent: prev.get('contentId') || '',
+                fromSearch: prev.get('fromSearch') || '',
+                subject: id || '',
+                sectionsBySubject: '',
+                them: prev.get('them') || '',
+            };
+        });
+    };
     return (
         <div
             className={classNames(
                 style.wrapper,
                 'overflow-hidden rounded-2xl h-24 mt-3',
             )}
+            {...props}
         >
             <ScrollContainer>
                 <div className="flex px-2">
                     <Button
                         imgSrc="/icons/allFeed.svg"
                         name={t('feed.allFeed')}
-                        isActive={currentActive === '' ? true : false}
+                        isActive={
+                            searchParams.get('subject') === '' ? true : false
+                        }
                         onClick={() => {
-                            setCurrentActive('');
+                            onChangeSubject('');
                         }}
                     />
                     {subjects?.data.subjects.map(item => {
@@ -46,7 +56,8 @@ export const SubjectsFilter: React.FC<ISubjectsFilter> = ({
                                 key={item.id}
                                 imgSrc={item.icon_url}
                                 isActive={
-                                    currentActive === String(item.id)
+                                    searchParams.get('subject') ===
+                                    String(item.id)
                                         ? true
                                         : false
                                 }
@@ -56,7 +67,7 @@ export const SubjectsFilter: React.FC<ISubjectsFilter> = ({
                                     )?.name
                                 }
                                 onClick={() => {
-                                    setCurrentActive(String(item.id));
+                                    onChangeSubject(String(item.id));
                                 }}
                             />
                         );

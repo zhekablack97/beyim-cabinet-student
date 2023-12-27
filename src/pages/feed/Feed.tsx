@@ -1,5 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { useGetFeedQuery } from '../../api/contentService';
+import {
+    useGetCustomFeedQuery,
+    useGetFeedQuery,
+} from '../../api/contentService';
 import { Header } from '../../features/Header';
 import { SubjectsFilter } from '../../features/SubjectsFilter';
 import { useEffect, useRef, useState } from 'react';
@@ -10,6 +13,13 @@ import classNames from 'classnames';
 import { VideoPost } from '../../features/VideoPost';
 
 import More from './more';
+import {
+    useGetFeedMicrotopicsQuery,
+    useGetSectionsBySubjectQuery,
+} from '../../api/programService';
+import { useSearchParams } from 'react-router-dom';
+import { WithVideoOrImage } from '../../features/WithVideoOrImage';
+import { SectionStatus } from '../../features/SectionStatus';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -18,6 +28,7 @@ const Feed: React.FC = () => {
     //@ts-ignore
     const locale = i18n.translator.language;
 
+    //логика для загрузки обычной ленты
     const [currentPage, setCurrentPage] = useState<number>(0);
     const {
         data: dataFeed,
@@ -31,6 +42,64 @@ const Feed: React.FC = () => {
     const [isLastPage, setIsLastPage] = useState<boolean>(false);
     const [posts, setPosts] = useState<Post[]>([]);
     const [isVisible, setIsVisible] = useState(false);
+    const [withVideo, setWithVideo] = useState<boolean>(true);
+    const [withPicture, setWithPicture] = useState<boolean>(true);
+
+    //для специальной ленты
+    const [searchParams] = useSearchParams();
+    const { data: dataSectionsBySubject } = useGetSectionsBySubjectQuery({
+        subject_id: searchParams.get('subject') || '',
+        limit: 100,
+    });
+
+    //если тема есть, если есть в адресной строке, если есть данные, ну и пустай строка
+    const { data: dataFeedMicrotopics } = useGetFeedMicrotopicsQuery({
+        section_id: String(
+            searchParams.get('them') ||
+                dataSectionsBySubject?.data.sections.find(section => {
+                    return (
+                        String(section.id) ===
+                        searchParams.get('sectionsBySubject')
+                    );
+                })?.children[0]?.id ||
+                dataSectionsBySubject?.data.sections[0]?.children[0]?.id ||
+                '',
+        ),
+        limit: 100,
+    });
+
+    const { data: dataCustomFeed } = useGetCustomFeedQuery({
+        microtopicIds: dataFeedMicrotopics?.data.result.ids || [],
+        include: [withPicture ? 'image' : '', withVideo ? 'video' : ''],
+        locale,
+    });
+
+    const handleChangeFilter = (type?: 'video' | 'image') => {
+        if (type === 'image') {
+            if (withVideo) {
+                setWithPicture(prev => !prev);
+            } else {
+                if (withPicture) {
+                    setWithVideo(true);
+                    setWithPicture(false);
+                } else {
+                    setWithPicture(false);
+                }
+            }
+        } else {
+            if (withPicture) {
+                setWithVideo(prev => !prev);
+            } else {
+                if (withVideo) {
+                    setWithPicture(true);
+                    setWithVideo(false);
+                } else {
+                    setWithPicture(false);
+                }
+            }
+        }
+    };
+
     const loaderIndicator = useRef(null);
 
     useEffect(() => {
@@ -86,11 +155,22 @@ const Feed: React.FC = () => {
         <div className={classNames(' min-h-screen', style.wrapper)}>
             <Header />
             <main className="container  grid gap-4  grid-cols-12">
-                <nav className=" col-span-2">Меню боковое </nav>
+                <nav className=" col-span-2"> Меню боковое </nav>
 
                 <div className=" col-span-6 flex flex-col gap-4">
                     <SubjectsFilter />
                     <div className="flex flex-col gap-4">
+                        {searchParams.get('subject') &&
+                            dataCustomFeed?.data.data?.map(itemActivityFeed => {
+                                return (
+                                    <span
+                                        className="block h-28"
+                                        key={itemActivityFeed.post?.id}
+                                    >
+                                        {itemActivityFeed.post?.id}
+                                    </span>
+                                );
+                            })}
                         {posts.map(item => {
                             if (item.category === 'image') {
                                 return <ImagePost data={item} key={item.id} />;
@@ -119,7 +199,17 @@ const Feed: React.FC = () => {
                     <More />
                 </div>
 
-                <aside className=" col-span-4">статус бар</aside>
+                <aside className=" col-span-4 pt-3">
+                    {' '}
+                    <WithVideoOrImage
+                        handleChangeFilter={handleChangeFilter}
+                        withPicture={withPicture}
+                        withVideo={withVideo}
+                    />{' '}
+                    <SectionStatus
+                        data={dataSectionsBySubject?.data.sections || []}
+                    />
+                </aside>
             </main>
         </div>
     );

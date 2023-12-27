@@ -5,4 +5,8 @@ export {
     useLazyGetSearchGlobalQuery,
     useGetSearchGlobalQuery,
     useLazyGetAllSectionsQuery,
+    useGetSectionsBySubjectQuery,
+    useLazyGetSectionsBySubjectQuery,
+    useGetFeedMicrotopicsQuery,
+    useLazyGetFeedMicrotopicsQuery,
 } from './programServiceApi';

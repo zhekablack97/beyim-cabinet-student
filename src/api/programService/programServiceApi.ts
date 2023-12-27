@@ -1,7 +1,9 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+    GetFeedMicrotopicsResponseApiType,
     GetSearchGlobalResponseApiType,
+    GetSectionBySubjectsApiResponseApiType,
     GetSectionsRequestApiType,
     GetSectionsResponseApiType,
     GetSubjectRequestApiType,
@@ -11,7 +13,7 @@ import Cookies from 'js-cookie';
 
 export const programServiceApi = createApi({
     reducerPath: 'programServiceApi',
-    tagTypes: ['Subjects'],
+    tagTypes: ['Subjects', 'Microtopics'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.REACT_APP_PROGRAMS_SERVICE_URL}/api/v1/`,
         prepareHeaders: headers => {
@@ -74,14 +76,42 @@ export const programServiceApi = createApi({
                 };
             },
         }),
+        getSectionsBySubject: build.query<
+            GetSectionBySubjectsApiResponseApiType,
+            { subject_id: string; limit: number }
+        >({
+            query: ({ subject_id, limit = 100 }) => {
+                return {
+                    url: `sections/sections-by-subject?limit=${limit}${
+                        subject_id ? `&subject_id=${subject_id}` : ''
+                    }`,
+                };
+            },
+            providesTags: ['Subjects'],
+        }),
+        getFeedMicrotopics: build.query<
+            GetFeedMicrotopicsResponseApiType,
+            { limit: number; section_id: string }
+        >({
+            query: ({ limit = 100, section_id }) => {
+                return {
+                    url: `microtopics/feed-microtopics?limit=${limit}&section_id=${section_id}`,
+                };
+            },
+            providesTags: ['Microtopics'],
+        }),
     }),
 });
 
 export const {
+    useGetSectionsBySubjectQuery,
+    useLazyGetSectionsBySubjectQuery,
     useGetAllSubjectsQuery,
     useLazyGetAllSubjectsQuery,
     useGetAllSectionsQuery,
     useLazyGetSearchGlobalQuery,
     useGetSearchGlobalQuery,
+    useGetFeedMicrotopicsQuery,
+    useLazyGetFeedMicrotopicsQuery,
     useLazyGetAllSectionsQuery,
 } = programServiceApi;

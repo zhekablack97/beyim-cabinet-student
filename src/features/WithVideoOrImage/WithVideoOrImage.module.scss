@@ -1,0 +1,37 @@
+.wrapper {
+    background-color: #fff;
+
+    label {
+        .checked {
+            background-color: #e9f0f3;
+            justify-content: flex-start;
+            &::before {
+                border-radius: 50%;
+                content: '';
+                background-color: #a3c0d2;
+                display: block;
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+
+    input {
+        &:checked {
+            & + label {
+                .checked {
+                    justify-content: flex-end;
+                    background-color: #55bbeb;
+                    &::before {
+                        background-color: #fff;
+                    }
+                }
+                
+            }
+        }
+    }
+}
+
+.hr{
+    background-color: #E9F0F3;
+}

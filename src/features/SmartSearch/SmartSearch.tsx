@@ -36,7 +36,7 @@ export const SmartSearch: React.FC = () => {
     const [isOpenGallery, setIsOpenGallery] = useState<boolean>(false);
     const [searchParams] = useSearchParams();
 
-    const openId = searchParams.get('idPost');
+    const openId = searchParams.get('idContent');
     const { data: subjects, isFetching: isFetchingSubjects } =
         useGetAllSubjectsQuery({ limit: 100 });
     const [filter, setFilter] = useState<IFilter>();
@@ -86,7 +86,7 @@ export const SmartSearch: React.FC = () => {
     //нужно для того что бы отслеживать открывался пост подробнее или нет, это помогает исправлять скролл страницы
     useEffect(() => {
         if (value != '') {
-            if (!searchParams.get('idPost')) {
+            if (!searchParams.get('idContent')) {
                 document.body.style.overflow = 'hidden';
             }
         } else {
@@ -112,7 +112,7 @@ export const SmartSearch: React.FC = () => {
                     const value = e.target.value;
                     setValue(value || '');
                 }}
-                placeholder="Поиск"
+                placeholder={t('search.placeholder')}
             />
             <ReactModal
                 isOpen={true}
@@ -153,7 +153,7 @@ export const SmartSearch: React.FC = () => {
                         )}
                     >
                         {dataIdSearch?.data.result.length === 0 ? (
-                            <EmptyResult value={value}/>
+                            <EmptyResult value={value} />
                         ) : (
                             <div className="col-span-8 col-start-3 flex gap-4 flex-col">
                                 <div className="z-[1000] relative flex justify-between">
@@ -166,14 +166,19 @@ export const SmartSearch: React.FC = () => {
                                             dataContentSearch?.data.posts
                                                 .length) ||
                                             0}{' '}
-                                        результата на тему{' '}
+                                        {t('search.empty.valueTitleFirst')}{' '}
                                         <span
                                             className={classNames(
                                                 'text-xl font-medium',
                                                 style.blue,
                                             )}
                                         >
+                                            {' '}
                                             &quot;{value}&quot;
+                                        </span>
+                                        <span className="text-xl font-medium">
+                                            {' '}
+                                            {t('search.empty.valueTitleSecond')}
                                         </span>
                                     </h2>
                                     <div>
@@ -190,7 +195,7 @@ export const SmartSearch: React.FC = () => {
                                                 alt=""
                                             />
                                             <span className="text-base">
-                                                Фильтр
+                                                {t('search.filter.title')}
                                             </span>
                                         </button>
                                         <Tooltip
@@ -217,7 +222,9 @@ export const SmartSearch: React.FC = () => {
                                                     )}
                                                 >
                                                     <h2 className="text-lg font-bold mb-[12px]">
-                                                        Фильтр
+                                                        {t(
+                                                            'search.filter.title',
+                                                        )}
                                                     </h2>
                                                     <div>
                                                         <span
@@ -226,7 +233,9 @@ export const SmartSearch: React.FC = () => {
                                                                 'text-sm font-medium mb-4 block',
                                                             )}
                                                         >
-                                                            Предмет:
+                                                            {t(
+                                                                'search.filter.subjects',
+                                                            )}
                                                         </span>
                                                         <div className="flex flex-wrap gap-2 mb-4">
                                                             {subjects?.data.subjects.map(
@@ -286,7 +295,9 @@ export const SmartSearch: React.FC = () => {
                                                                 'text-sm font-medium mb-4 block',
                                                             )}
                                                         >
-                                                            Тип
+                                                            {t(
+                                                                'search.filter.type',
+                                                            )}
                                                         </span>
                                                         <div className="flex flex-wrap gap-2 mb-4">
                                                             <input
@@ -309,7 +320,9 @@ export const SmartSearch: React.FC = () => {
                                                                 htmlFor={`typeResources.0`}
                                                             >
                                                                 <span>
-                                                                    картинки
+                                                                    {t(
+                                                                        'search.filter.picture',
+                                                                    )}
                                                                 </span>
                                                             </label>
                                                             <input
@@ -332,7 +345,9 @@ export const SmartSearch: React.FC = () => {
                                                                 htmlFor={`typeResources.1`}
                                                             >
                                                                 <span>
-                                                                    видео
+                                                                    {t(
+                                                                        'search.filter.video',
+                                                                    )}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -344,32 +359,11 @@ export const SmartSearch: React.FC = () => {
                                                                 'text-sm font-medium mb-4 block',
                                                             )}
                                                         >
-                                                            Язык
+                                                            {t(
+                                                                'search.filter.language',
+                                                            )}
                                                         </span>
                                                         <div className="flex flex-wrap gap-2 mb-4">
-                                                            <input
-                                                                type="radio"
-                                                                {...register(
-                                                                    `locale`,
-                                                                )}
-                                                                className={classNames(
-                                                                    'hidden',
-                                                                    style.input,
-                                                                )}
-                                                                value={'ru'}
-                                                                id="locale-ru"
-                                                            />
-                                                            <label
-                                                                className={classNames(
-                                                                    'gap-1 rounded-xl px-3 py-2 cursor-pointer border-2 border-solid flex h-8 items-center',
-                                                                    style.label,
-                                                                )}
-                                                                htmlFor="locale-ru"
-                                                            >
-                                                                <span>
-                                                                    Русский
-                                                                </span>
-                                                            </label>
                                                             <input
                                                                 id="locale-kk"
                                                                 className={classNames(
@@ -390,7 +384,34 @@ export const SmartSearch: React.FC = () => {
                                                                 htmlFor="locale-kk"
                                                             >
                                                                 <span>
-                                                                    Казахский
+                                                                    {t(
+                                                                        'search.filter.kk',
+                                                                    )}
+                                                                </span>
+                                                            </label>
+                                                            <input
+                                                                type="radio"
+                                                                {...register(
+                                                                    `locale`,
+                                                                )}
+                                                                className={classNames(
+                                                                    'hidden',
+                                                                    style.input,
+                                                                )}
+                                                                value={'ru'}
+                                                                id="locale-ru"
+                                                            />
+                                                            <label
+                                                                className={classNames(
+                                                                    'gap-1 rounded-xl px-3 py-2 cursor-pointer border-2 border-solid flex h-8 items-center',
+                                                                    style.label,
+                                                                )}
+                                                                htmlFor="locale-ru"
+                                                            >
+                                                                <span>
+                                                                    {t(
+                                                                        'search.filter.ru',
+                                                                    )}
                                                                 </span>
                                                             </label>
 
@@ -414,7 +435,9 @@ export const SmartSearch: React.FC = () => {
                                                                 htmlFor="locale-en"
                                                             >
                                                                 <span>
-                                                                    Англиский
+                                                                    {t(
+                                                                        'search.filter.en',
+                                                                    )}
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -430,7 +453,9 @@ export const SmartSearch: React.FC = () => {
                                                                 style.apply,
                                                             )}
                                                         >
-                                                            Применить
+                                                            {t(
+                                                                'search.filter.apply',
+                                                            )}
                                                         </button>
                                                         <button
                                                             type="button"
@@ -442,7 +467,9 @@ export const SmartSearch: React.FC = () => {
                                                                 reset();
                                                             }}
                                                         >
-                                                            сбросить фильтр
+                                                            {t(
+                                                                'search.filter.resetFilter',
+                                                            )}
                                                         </button>
                                                     </div>
                                                 </form>

@@ -12,7 +12,7 @@ import {
 const More: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
-    const openId = searchParams.get('idPost');
+    const openId = searchParams.get('idContent');
 
     // const { data: dataPost } = useGetOnePostQuery(openId || '');
     const { data: dataContent } = useGetOneQuery(openId || '');
@@ -27,11 +27,19 @@ const More: React.FC = () => {
         if (!searchParams.get('fromSearch')) {
             document.body.style.overflow = 'visible';
         }
-        setSearchParams({});
+        setSearchParams(prev => {
+            return {
+                idContent: '',
+                fromSearch: '',
+                subject: prev.get('subject') || '',
+                sectionsBySubject: prev.get('sectionsBySubject') || '',
+                them: prev.get('them') || '',
+            };
+        });
     };
 
     useEffect(() => {
-        if (searchParams.get('idPost')) {
+        if (searchParams.get('idContent')) {
             openModal();
         } else {
             closeModal();
@@ -65,7 +73,6 @@ const More: React.FC = () => {
                         title={String(dataContent?.data.content.subjectId)}
                         subTitle={dataContent?.data.content.description}
                         onBack={closeModal}
-                        
                     />
                     <div
                         className={classNames(

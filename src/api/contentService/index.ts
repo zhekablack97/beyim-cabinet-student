@@ -6,4 +6,6 @@ export {
     useLazyGetFeedQuery,
     useGetOnePostQuery,
     useLazyGetOnePostQuery,
+    useGetCustomFeedQuery,
+    useLazyGetCustomFeedQuery,
 } from './contentServiceApi';

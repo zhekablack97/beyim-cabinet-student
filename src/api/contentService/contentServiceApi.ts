@@ -4,6 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 import {
     GetContentsResponseApiType,
+    GetCustomFeedRequestApiType,
     GetOneContentResponseApiType,
     GetOneResponseApiType,
     getContentsRequestApiType,
@@ -34,6 +35,27 @@ export const contentServiceApi = createApi({
 
         getOnePost: build.query<GetOneResponseApiType, string>({
             query: id => `/post/${id}`,
+        }),
+
+        getCustomFeed: build.query<
+            GetCustomFeedRequestApiType,
+            {
+                microtopicIds: number[];
+                include?: string[];
+                locale?: 'kk' | 'ru' | 'en';
+            }
+        >({
+            query: ({
+                microtopicIds,
+                locale = 'kk',
+                include = ['image', 'video'],
+            }) => {
+                return {
+                    url: `feed/custom?microtopicIds=${microtopicIds.join(
+                        ',',
+                    )}&locale=${locale}&include=${include.join(',')}`,
+                };
+            },
         }),
 
         getFeed: build.query<
@@ -71,5 +93,7 @@ export const {
     useGetOneQuery,
     useLazyGetOneQuery,
     useGetOnePostQuery,
+    useGetCustomFeedQuery,
+    useLazyGetCustomFeedQuery,
     useLazyGetOnePostQuery,
 } = contentServiceApi;

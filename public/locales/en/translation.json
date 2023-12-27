@@ -36,6 +36,34 @@
         }
     },
     "feed": {
-        "allFeed": "All posts"
+        "allFeed": "All posts",
+        "video": "Video Posts",
+        "picture": "Illustration Posts"
+    },
+    "search": {
+        "placeholder": "search", 
+        "empty": {
+            "valueTitleFirst": "results found for ",
+            "valueTitleSecond": "",
+            "title1": "Unfortunately, we couldn't find anything on the request",
+            "title2": "",
+            "subTitle": "Try to optimize your search. Here are some suggestions:",
+            "li1": "Make sure that all the words are spelled correctly",
+            "li2": "Try entering other search queries",
+            "li3": "Try using more general search queries"
+        },
+        "filter": {
+            "title": "Filter",
+            "subjects": "Subjects",
+            "type": "Type",
+            "picture": "Picture",
+            "video": "Video",
+            "language": "Language",
+            "ru": "Russian",
+            "kk": "Kazakh",
+            "en": "English", 
+            "apply": "Apply",
+            "resetFilter": "reset filter"
+        }
     }
 }

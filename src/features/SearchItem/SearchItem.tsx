@@ -4,7 +4,7 @@ import style from './SearchItem.module.scss';
 import { useState } from 'react';
 import { SliderPopup } from '../SliderPopup';
 import ReactModal from 'react-modal';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 interface ISearchItem {
     data: Post;
@@ -19,6 +19,7 @@ export const SearchItem: React.FC<ISearchItem> = ({
 }) => {
     const [isOpenPost, setIsOpenPost] = useState<boolean>(false);
     const [isOpenGallery, setIsOpenGallery] = useState<boolean>(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const closePopupGallery = () => {
         setIsOpenGallery(false);
@@ -97,7 +98,6 @@ export const SearchItem: React.FC<ISearchItem> = ({
                                 style.title,
                             )}
                         >
-                            {isOpenGallery} isOpenGallery
                             {data.subject}
                         </h2>
                         <span
@@ -110,7 +110,7 @@ export const SearchItem: React.FC<ISearchItem> = ({
                         </span>
                     </div>
                 </header>
-                <div className='flex flex-col items-start'>
+                <div className="flex flex-col items-start">
                     <h3
                         className={classNames(
                             'overflow-hidden whitespace-nowrap text-ellipsis block text-base font-semibold mb-1',
@@ -143,15 +143,28 @@ export const SearchItem: React.FC<ISearchItem> = ({
                     </button>
                     {isOpenPost && (
                         <div>
-                            <Link
-                                to={`/feed/?idPost=${data.contentId}&fromSearch=true`}
+                            <button
+                                onClick={() => {
+                                    setSearchParams(prev => {
+                                        return {
+                                            idContent:
+                                                String(data.contentId) || '',
+                                            fromSearch: 'true',
+                                            subject: prev.get('subject') || '',
+                                            sectionsBySubject:
+                                                prev.get('sectionsBySubject') ||
+                                                '',
+                                            them: prev.get('them') || '',
+                                        };
+                                    });
+                                }}
                                 className={classNames(
                                     'rounded-2xl  h-11 items-center flex justify-center uppercase text-xs font-bold min-w-[132px] tracking-[1px] p-3',
                                     style.moreLink,
                                 )}
                             >
                                 подробнее
-                            </Link>
+                            </button>
                         </div>
                     )}
                 </div>

@@ -1,0 +1,1 @@
+export { WithVideoOrImage } from './WithVideoOrImage';

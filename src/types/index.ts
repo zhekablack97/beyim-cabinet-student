@@ -12,3 +12,6 @@ export type { GetCountResponseApiType } from './GetCountResponseApiType';
 export type { GetOneResponseApiType } from './GetOneResponseApiType';
 export type { GetOneContentResponseApiType } from './GetOneContentResponseApiType';
 export type { GetSearchGlobalResponseApiType } from './GetSearchGlobalResponseApiType';
+export type { GetSectionBySubjectsApiResponseApiType } from './GetSectionBySubjectsApiResponseApiType';
+export type { GetFeedMicrotopicsResponseApiType } from './GetFeedMicrotopicsResponseApiType';
+export type { GetCustomFeedRequestApiType } from './GetCustomFeedRequestApiType';
