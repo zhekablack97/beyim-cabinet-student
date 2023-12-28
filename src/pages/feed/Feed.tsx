@@ -20,6 +20,9 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { WithVideoOrImage } from '../../features/WithVideoOrImage';
 import { SectionStatus } from '../../features/SectionStatus';
+import { nanoid } from '@reduxjs/toolkit';
+import { HeaderPost } from '../../features/HeaderPost';
+import { ActivityPost } from '../../features/ActivityPost/ActivityPost';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -53,18 +56,20 @@ const Feed: React.FC = () => {
     });
 
     //если тема есть, если есть в адресной строке, если есть данные, ну и пустай строка
+
+    const sectionId = String(
+        searchParams.get('them') ||
+            dataSectionsBySubject?.data.sections.find(section => {
+                return (
+                    String(section.id) === searchParams.get('sectionsBySubject')
+                );
+            })?.children[0]?.id ||
+            dataSectionsBySubject?.data.sections[0]?.children[0]?.id ||
+            '',
+    );
+
     const { data: dataFeedMicrotopics } = useGetFeedMicrotopicsQuery({
-        section_id: String(
-            searchParams.get('them') ||
-                dataSectionsBySubject?.data.sections.find(section => {
-                    return (
-                        String(section.id) ===
-                        searchParams.get('sectionsBySubject')
-                    );
-                })?.children[0]?.id ||
-                dataSectionsBySubject?.data.sections[0]?.children[0]?.id ||
-                '',
-        ),
+        section_id: sectionId,
         limit: 100,
     });
 
@@ -161,7 +166,52 @@ const Feed: React.FC = () => {
                     <SubjectsFilter />
                     <div className="flex flex-col gap-4">
                         {searchParams.get('subject') &&
+                            sectionId !== '' &&
                             dataCustomFeed?.data.data?.map(itemActivityFeed => {
+                                const post = {
+                                    microtopicId: itemActivityFeed.microtopicId,
+                                    objectiveId: itemActivityFeed.objectiveId,
+                                    subject: itemActivityFeed.subject,
+                                    microtopic: itemActivityFeed.microtopic,
+                                    objective: itemActivityFeed.objective,
+                                    iconUrl: itemActivityFeed.iconUrl,
+                                    // subjectId: 1,
+                                    id: itemActivityFeed.post?.id,
+                                    category: itemActivityFeed.category,
+                                    resources: itemActivityFeed.post?.resources,
+                                    contentId: itemActivityFeed.post?.contentId,
+                                    description:
+                                        itemActivityFeed.post?.description,
+                                    thumbnail: itemActivityFeed.post?.thumbnail,
+                                };
+
+                                if (itemActivityFeed.category === 'image') {
+                                    return (
+                                        <ImagePost
+                                            data={post as Post}
+                                            key={itemActivityFeed.post?.id}
+                                        />
+                                    );
+                                }
+
+                                if (itemActivityFeed.category === 'video') {
+                                    return (
+                                        <div key={itemActivityFeed.post?.id}>
+                                            <VideoPost data={post as Post} />
+                                        </div>
+                                    );
+                                }
+
+                                if (itemActivityFeed.category === 'activity') {
+                                    return (
+                                        <div key={nanoid()}>
+                                            <ActivityPost
+                                                data={itemActivityFeed}
+                                            />
+                                        </div>
+                                    );
+                                }
+
                                 return (
                                     <span
                                         className="block h-28"

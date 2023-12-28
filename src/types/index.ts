@@ -15,3 +15,11 @@ export type { GetSearchGlobalResponseApiType } from './GetSearchGlobalResponseAp
 export type { GetSectionBySubjectsApiResponseApiType } from './GetSectionBySubjectsApiResponseApiType';
 export type { GetFeedMicrotopicsResponseApiType } from './GetFeedMicrotopicsResponseApiType';
 export type { GetCustomFeedRequestApiType } from './GetCustomFeedRequestApiType';
+export type { PostAnswersAssessmentRequestApiType } from './PostAnswersAssessmentRequestApiType';
+export type { PostAnswersAssessmentResponseApiType } from './PostAnswersAssessmentResponseApiType';
+export type { PostGetProgressResponseApiType } from './PostGetProgressResponseApiType';
+export type { PostStartAssessmentRequestApiType } from './PostStartAssessmentRequestApiType';
+export type { PostStartAssessmentResponseApiType } from './PostStartAssessmentResponseApiType';
+export type { GetAnswerResponseApiType } from './GetAnswerResponseApiType';
+export type { PostCheckAnswerResponseApiType } from './PostCheckAnswerResponseApiType';
+export type { GetHintResponseApiType } from './GetHintResponseApiType';

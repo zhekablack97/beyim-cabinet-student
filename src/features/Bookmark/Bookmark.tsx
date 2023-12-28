@@ -29,9 +29,10 @@ export const Bookmark: React.FC<IBookmark> = ({ postId }) => {
             setIsBooked(false);
         }
     }, [data]);
-    
+
     return (
         <button
+            type="button"
             className="flex gap-2 items-center h-7 justify-between"
             onClick={() => {
                 if (isBooked) {

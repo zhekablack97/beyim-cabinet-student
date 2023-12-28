@@ -29,6 +29,7 @@ export const Like: React.FC<ILike> = ({ postId }) => {
 
     return (
         <button
+        type='button'
             className="flex gap-2 items-center h-7 justify-between"
             onClick={() => {
                 if (isLiked) {

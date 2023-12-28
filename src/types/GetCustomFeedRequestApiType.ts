@@ -31,6 +31,7 @@ export interface Daum {
     iconUrl: string;
     category: 'activity' | 'video' | 'image';
     post?: Post;
+    activity?: Activity;
     activities?: Activity[];
 }
 
