@@ -70,9 +70,6 @@ export const Question: React.FC<IQuestion> = ({ data, onChange, refSlide }) => {
                         return oldState;
                     });
                     setIsLastHint(hint.data.isLast);
-                    if (onChange) {
-                        onChange();
-                    }
                 });
         }
     };
@@ -81,13 +78,17 @@ export const Question: React.FC<IQuestion> = ({ data, onChange, refSlide }) => {
     const handleResize = () => {
         // Ваш код обработки изменения размера
 
-        if(refWrapper.current){
-
+        if (refWrapper.current) {
             //@ts-ignore
             console.log(refWrapper.current, 'height');
         }
-       
     };
+
+    useEffect(() => {
+        if (onChange) {
+            onChange();
+        }
+    }, [currentHints]);
 
     // useEffect(() => {
     //     const resizeObserver = new ResizeObserver(handleResize);

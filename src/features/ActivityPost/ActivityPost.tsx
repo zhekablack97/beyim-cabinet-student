@@ -15,6 +15,7 @@ interface IActivityPost {
 
 export const ActivityPost: React.FC<IActivityPost> = ({ data }) => {
     const [sliderRef, setSliderRef] = useState<any>(0);
+    const [count, setCount] = useState<number>(200);
 
     return (
         <div className={classNames('p-4 rounded-2xl', style.wrapper)}>
@@ -38,13 +39,21 @@ export const ActivityPost: React.FC<IActivityPost> = ({ data }) => {
                         height={200}
                         updateOnWindowResize={true}
                     >
-                        {data.activities.map(item => {
+                        {data.activities.map((item, index) => {
                             return (
                                 <SwiperSlide key={`${item?.id}`}>
-                                  
                                     <Question
                                         onChange={() => {
-                                            sliderRef.update();
+                                            // sliderRef.update();
+                                            //@ts-ignore
+                                           
+
+                                            if (sliderRef) {
+                                                 // eslint-disable-next-line no-debugger
+                                                debugger;
+                                                sliderRef.updateAutoHeight(200);
+                                                
+                                            }
                                         }}
                                         data={item}
                                     />
