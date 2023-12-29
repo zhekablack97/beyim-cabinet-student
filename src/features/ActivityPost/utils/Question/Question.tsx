@@ -9,11 +9,11 @@ import { SwiperSlide } from 'swiper/react';
 
 interface IQuestion {
     data: Activity;
-    onChange?: () => void;
+    onResize?: () => void;
     refSlide?: any;
 }
 
-export const Question: React.FC<IQuestion> = ({ data, onChange, refSlide }) => {
+export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
     const refWrapper = useRef(null);
     const {
         register,
@@ -74,34 +74,11 @@ export const Question: React.FC<IQuestion> = ({ data, onChange, refSlide }) => {
         }
     };
 
-    // Функция, которую нужно вызвать при изменении размера элемента
-    const handleResize = () => {
-        // Ваш код обработки изменения размера
-
-        if (refWrapper.current) {
-            //@ts-ignore
-            console.log(refWrapper.current, 'height');
-        }
-    };
-
     useEffect(() => {
-        if (onChange) {
-            onChange();
+        if (onResize) {
+            onResize();
         }
     }, [currentHints]);
-
-    // useEffect(() => {
-    //     const resizeObserver = new ResizeObserver(handleResize);
-
-    //     if (refWrapper.current) {
-    //         resizeObserver.observe(refWrapper.current);
-    //     }
-
-    //     return () => {
-    //         // Отписываемся от Resize Observer при размонтировании компонента
-    //         resizeObserver.disconnect();
-    //     };
-    // }, [refWrapper, handleResize]);
 
     return (
         <div ref={refWrapper}>

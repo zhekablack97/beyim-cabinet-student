@@ -43,16 +43,9 @@ export const ActivityPost: React.FC<IActivityPost> = ({ data }) => {
                             return (
                                 <SwiperSlide key={`${item?.id}`}>
                                     <Question
-                                        onChange={() => {
-                                            // sliderRef.update();
-                                            //@ts-ignore
-                                           
-
+                                        onResize={() => {
                                             if (sliderRef) {
-                                                 // eslint-disable-next-line no-debugger
-                                                debugger;
                                                 sliderRef.updateAutoHeight(200);
-                                                
                                             }
                                         }}
                                         data={item}
