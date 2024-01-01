@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLazyGetHintQuery } from '../../../../api/assessmentService';
 import { Hint } from '../../../../types/GetHintResponseApiType';
 import { SwiperSlide } from 'swiper/react';
+шьзщке
 
 interface IQuestion {
     data: Activity;
@@ -83,21 +84,45 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
     return (
         <div ref={refWrapper}>
             <form>
-                <h2>{data.title}</h2>
-                <div>{data.body}</div>
+                <h2 className="text-base font-bold mb-4 ">{data.title}</h2>
+                <div className="mb-4">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Perspiciatis, architecto magnam delectus voluptas omnis,
+                    saepe accusantium ipsam maxime officiis nemo nulla iusto
+                    earum molestiae explicabo quod totam soluta dolorem laborum.
+                    Provident nihil sit doloribus molestias nam ab saepe nemo
+                    dicta eos culpa dolores unde quam debitis, incidunt officiis
+                    perspiciatis dolor? Ut, molestiae est voluptate blanditiis
+                    molestias fugit odio itaque veniam.
+                    {/* {data.body} */}
+                </div>
 
                 {data.type === 'MS_MCQ'
                     ? data.options.map((option, index) => {
                           const id = nanoid();
                           return (
-                              <div key={option.Body}>
+                              <div
+                                  key={option.Body}
+                                  className={classNames("border-2 rounded-xl p-4", )}
+                              >
                                   <input
                                       id={id}
                                       type="checkbox"
                                       value={index}
                                       {...register(`answer.${index}`)}
                                   />
-                                  <label htmlFor={id}>{option.Body}</label>
+                                  <label htmlFor={id}>
+                                      <span>
+                                          <img src="" alt="" />
+                                      </span>
+                                      Lorem ipsum, dolor sit amet consectetur
+                                      adipisicing elit. Ipsam hic alias quod nam
+                                      facere ad provident autem delectus
+                                      placeat! Fugiat quaerat vitae ipsam
+                                      explicabo a similique qui ducimus
+                                      distinctio molestias?
+                                      {/* {option.Body} */}
+                                  </label>
                               </div>
                           );
                       })
@@ -111,7 +136,16 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                                       {...register('answer')}
                                       id={id}
                                   />
-                                  <label htmlFor={id}>{option.Body}</label>
+                                  <label htmlFor={id}>
+                                      {' '}
+                                      {index} Lorem ipsum, dolor sit amet
+                                      consectetur adipisicing elit. Ipsam hic
+                                      alias quod nam facere ad provident autem
+                                      delectus placeat! Fugiat quaerat vitae
+                                      ipsam explicabo a similique qui ducimus
+                                      distinctio molestias?
+                                      {/* {option.Body} */}
+                                  </label>
                               </div>
                           );
                       })}
@@ -120,7 +154,13 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                     {currentHints.map(item => {
                         const id = nanoid();
 
-                        return <div key={id}>{item.body}</div>;
+                        return (
+                            <div key={id}>
+                                Lorem ipsum, dolor sit amet consectetur
+                                adipisicing elit.
+                                {/* {item.body} */}
+                            </div>
+                        );
                     })}
                 </div>
                 <button type="button" onClick={onHints}>

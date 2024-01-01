@@ -22,7 +22,7 @@ export const HeaderPost: React.FC<IHeaderPost> = ({
                 className="w-10 h-10  grow-0 shrink-0 rounded-full overflow-hidden"
             />
             <div className=" overflow-hidden">
-                <h2 className="text-base leading-5">{subject}</h2>
+                <h2 className="text-base leading-5 mb-1">{subject}</h2>
                 <span className=" text-sm whitespace-nowrap text-ellipsis overflow-hidden block w-96 max-w-full">
                     {objective}
                 </span>
