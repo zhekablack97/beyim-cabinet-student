@@ -18,14 +18,14 @@ export const ActivityPost: React.FC<IActivityPost> = ({ data }) => {
     const [count, setCount] = useState<number>(200);
 
     return (
-        <div className={classNames('p-4 rounded-2xl', style.wrapper)}>
+        <div className={classNames('p-4 rounded-2xl activity', style.wrapper)}>
             <HeaderPost
                 iconUrl={data.iconUrl}
                 objective={data.objective}
                 subject={data.subject}
             />
             {data.activities ? (
-                <div>
+                <div className="relative">
                     <Swiper
                         onSwiper={(swiper: any) => {
                             setSliderRef(swiper);
@@ -35,6 +35,21 @@ export const ActivityPost: React.FC<IActivityPost> = ({ data }) => {
                         navigation={true}
                         pagination={{
                             type: 'fraction',
+
+                            renderFraction: (
+                                currentClass: string,
+                                totalClass: string,
+                            ) => {
+                                return (
+                                    `<span class=" text-base font-bold ${style.pagination} ` +
+                                    currentClass +
+                                    '"></span>' +
+                                    `<span class="text-base font-bold ${style.pagination}"> из </span> ` +
+                                    `<span class=" text-base font-bold ${style.pagination} ` +
+                                    totalClass +
+                                    '"></span>'
+                                );
+                            },
                         }}
                         height={200}
                         updateOnWindowResize={true}
@@ -42,18 +57,37 @@ export const ActivityPost: React.FC<IActivityPost> = ({ data }) => {
                         {data.activities.map((item, index) => {
                             return (
                                 <SwiperSlide key={`${item?.id}`}>
-                                    <Question
-                                        onResize={() => {
-                                            if (sliderRef) {
-                                                sliderRef.updateAutoHeight(200);
-                                            }
-                                        }}
-                                        data={item}
-                                    />
+                                    <div
+                                        className={
+                                            data.activities && data.activities.length > 1
+                                                ? 'pb-16'
+                                                : ''
+                                        }
+                                    >
+                                        <Question
+                                            onResize={() => {
+                                                if (sliderRef) {
+                                                    sliderRef.updateAutoHeight(
+                                                        200,
+                                                    );
+                                                }
+                                            }}
+                                            data={item}
+                                        />
+                                    </div>
                                 </SwiperSlide>
                             );
                         })}
                     </Swiper>
+
+                    {data.activities.length > 1 && (
+                        <hr
+                            className={classNames(
+                                'absolute h-[2px] bottom-12 w-full rounded-[10px]',
+                                style.hr,
+                            )}
+                        />
+                    )}
                 </div>
             ) : (
                 data.activity && (

@@ -249,7 +249,7 @@ const Feed: React.FC = () => {
                     <More />
                 </div>
 
-                <aside className=" col-span-4 pt-3">
+                <aside className=" col-span-4 pt-3 flex flex-col gap-4">
                     {' '}
                     <WithVideoOrImage
                         handleChangeFilter={handleChangeFilter}

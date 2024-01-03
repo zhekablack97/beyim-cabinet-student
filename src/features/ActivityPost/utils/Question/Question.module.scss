@@ -1,0 +1,104 @@
+.option {
+    border-color: #d2dfe4;
+
+    .index {
+        color: #678aa1;
+    }
+
+    .checked {
+        // border-radius: 50%;
+        border-color: #d2dfe4;
+    }
+    &:hover {
+        background-color: #e9f0f3;
+    }
+}
+
+.input {
+    &:checked {
+        & + .option {
+            border-color: #55bbeb;
+            background-color: #e4f3fb;
+
+            .index {
+                color: #55bbeb;
+            }
+
+            .checked {
+                border-color: #55bbeb;
+                background-image: url('../../../../../public/icons/answerChecked.svg');
+            }
+        }
+    }
+}
+
+.answerFalse.answerFalse.answerFalse {
+    &.option {
+        border-color: #f59393;
+        background-color: #ffefef;
+    }
+
+    .index {
+        color: #e55959;
+    }
+
+    .checked {
+        border-color: #e55959;
+        background-image: url('../../../../../public/icons/answerFalse.svg');
+    }
+}
+
+.answerTrue.answerTrue.answerTrue {
+    &.option {
+        border-color: #71bd4e;
+        background-color: #ecfce4;
+    }
+
+    .index {
+        color: #71bd4e;
+    }
+    .checked {
+        border-color: #71bd4e;
+        background-image: url('../../../../../public/icons/answerTrue.svg');
+    }
+}
+
+.hint {
+    background-color: #ddf4ff;
+}
+
+.labelHint {
+    color: #55bbeb;
+}
+
+.hintCount {
+    color: #55bbeb;
+}
+
+.hintButton {
+    background-color: #e9f0f3;
+    box-shadow: 0px 3.972px 0px 0px #bec3c6;
+    
+
+    &:hover:not(.hintButtonDisable){
+        background-color: #FFF5E2;
+        box-shadow: 0px 3.972px 0px 0px #FCAF3A;
+        cursor: pointer;
+    }
+
+    
+}
+
+.checkAnswer {
+    background: #55BBEB;
+    box-shadow: 0px 3.972px 0px 0px #0B638C;
+    color: #fff;
+
+   
+}
+
+.checkAnswerDisable{
+    background: var(--color-black-300, #a3c0d2);
+    box-shadow: 0px 3.972px 0px 0px #577487;
+    color: #fff;
+}

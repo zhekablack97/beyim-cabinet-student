@@ -11,9 +11,10 @@ import style from './Bookmark.module.scss';
 
 interface IBookmark {
     postId: string;
+    postType?: 'activity' | 'post'
 }
 
-export const Bookmark: React.FC<IBookmark> = ({ postId }) => {
+export const Bookmark: React.FC<IBookmark> = ({ postId, postType = 'post' }) => {
     const { data } = useGetUserBookmarkedThisPostQuery({ postId });
     const [isBooked, setIsBooked] = useState<boolean>(false);
     const { data: count, refetch: refetchCount } = useGetCountBookedQuery({
@@ -36,14 +37,14 @@ export const Bookmark: React.FC<IBookmark> = ({ postId }) => {
             className="flex gap-2 items-center h-7 justify-between"
             onClick={() => {
                 if (isBooked) {
-                    deleteBookmark({ postId })
+                    deleteBookmark({ postId})
                         .unwrap()
                         .then(() => {
                             refetchCount();
                         });
                     setIsBooked(false);
                 } else {
-                    postBookmark({ postId })
+                    postBookmark({ postId, postType })
                         .unwrap()
                         .then(() => {
                             setIsBooked(true);

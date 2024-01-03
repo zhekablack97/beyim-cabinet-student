@@ -6,7 +6,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useLazyGetHintQuery } from '../../../../api/assessmentService';
 import { Hint } from '../../../../types/GetHintResponseApiType';
 import { SwiperSlide } from 'swiper/react';
-шьзщке
+import classNames from 'classnames';
+import style from './Question.module.scss';
+import { indexLatinLetters } from '../indexLatinLetters';
+import { Like } from '../../../like';
+import { Bookmark } from '../../../Bookmark';
 
 interface IQuestion {
     data: Activity;
@@ -71,6 +75,9 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                         return oldState;
                     });
                     setIsLastHint(hint.data.isLast);
+                })
+                .catch((error: any) => {
+                    console.log(error, 'error');
                 });
         }
     };
@@ -81,8 +88,10 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
         }
     }, [currentHints]);
 
+    console.log(currentAnswers, 'currentAnswers');
+
     return (
-        <div ref={refWrapper}>
+        <div ref={refWrapper} className="question">
             <form>
                 <h2 className="text-base font-bold mb-4 ">{data.title}</h2>
                 <div className="mb-4">
@@ -97,79 +106,141 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                     {/* {data.body} */}
                 </div>
 
-                {data.type === 'MS_MCQ'
-                    ? data.options.map((option, index) => {
-                          const id = nanoid();
-                          return (
-                              <div
-                                  key={option.Body}
-                                  className={classNames("border-2 rounded-xl p-4", )}
-                              >
-                                  <input
-                                      id={id}
-                                      type="checkbox"
-                                      value={index}
-                                      {...register(`answer.${index}`)}
-                                  />
-                                  <label htmlFor={id}>
-                                      <span>
-                                          <img src="" alt="" />
-                                      </span>
-                                      Lorem ipsum, dolor sit amet consectetur
-                                      adipisicing elit. Ipsam hic alias quod nam
-                                      facere ad provident autem delectus
-                                      placeat! Fugiat quaerat vitae ipsam
-                                      explicabo a similique qui ducimus
-                                      distinctio molestias?
-                                      {/* {option.Body} */}
-                                  </label>
-                              </div>
-                          );
-                      })
-                    : data.options.map((option, index) => {
-                          const id = nanoid();
-                          return (
-                              <div key={option.Body}>
-                                  <input
-                                      type="radio"
-                                      value={index}
-                                      {...register('answer')}
-                                      id={id}
-                                  />
-                                  <label htmlFor={id}>
-                                      {' '}
-                                      {index} Lorem ipsum, dolor sit amet
-                                      consectetur adipisicing elit. Ipsam hic
-                                      alias quod nam facere ad provident autem
-                                      delectus placeat! Fugiat quaerat vitae
-                                      ipsam explicabo a similique qui ducimus
-                                      distinctio molestias?
-                                      {/* {option.Body} */}
-                                  </label>
-                              </div>
-                          );
-                      })}
+                {data.options.map((option, index) => {
+                    const id = nanoid();
 
-                <div>
-                    {currentHints.map(item => {
+                    console.log(
+                        currentAnswers.index.find(
+                            //@ts-ignore
+                            element => element === String(index),
+                        ),
+                        'currentAnswers.index.includes(index)',
+                    );
+                    console.log(currentAnswers, 'currentAnswers');
+                    return (
+                        <div key={option.Body}>
+                            <input
+                                id={id}
+                                type={
+                                    data.type === 'MS_MCQ'
+                                        ? 'checkbox'
+                                        : 'radio'
+                                }
+                                value={index}
+                                {...register(
+                                    data.type === 'MS_MCQ'
+                                        ? `answer.${index}`
+                                        : `answer`,
+                                )}
+                                className={classNames(style.input, 'hidden')}
+                            />
+                            <label
+                                htmlFor={id}
+                                className={classNames(
+                                    'border-2 rounded-xl p-4 mb-1 cursor-pointer flex items-center gap-3 duration-200',
+                                    style.option,
+                                    //@ts-ignore
+                                    currentAnswers.index.includes(String(index))
+                                        ? currentAnswers.isCorrect
+                                            ? style.answerTrue
+                                            : style.answerFalse
+                                        : '',
+                                )}
+                            >
+                                <span
+                                    className={classNames(
+                                        'block w-6 h-6 shrink-0 grow-0 border-2 bg-center  rounded-full',
+                                        style.checked,
+                                    )}
+                                />
+                                <span className={classNames(style.index)}>
+                                    {indexLatinLetters[index]}
+                                </span>
+                                Lorem ipsum, dolor sit amet consectetur
+                                adipisicing elit. Ipsam hic alias quod nam
+                                facere ad provident autem delectus placeat!
+                                Fugiat quaerat vitae ipsam explicabo a similique
+                                qui ducimus distinctio molestias?
+                                {/* {option.Body} */}
+                            </label>
+                        </div>
+                    );
+                })}
+
+                <div className="mb-4">
+                    {currentHints.map((item, index) => {
                         const id = nanoid();
 
                         return (
-                            <div key={id}>
-                                Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit.
+                            <div
+                                key={id}
+                                className={classNames(
+                                    'px-3 py-4 rounded-2xl mb-1',
+                                    style.hint,
+                                )}
+                            >
+                                <span
+                                    className={classNames(
+                                        style.hintCount,
+                                        'text-sm font-bold block',
+                                    )}
+                                >
+                                    Подсказка {index + 1} из {data.hintsCount}
+                                </span>
+                                <span className={classNames(' block')}>
+                                    {' '}
+                                    Lorem ipsum, dolor sit amet consectetur
+                                    adipisicing elit.
+                                </span>
+
                                 {/* {item.body} */}
                             </div>
                         );
                     })}
                 </div>
-                <button type="button" onClick={onHints}>
-                    Подсказка
-                </button>
-                <button onClick={handleSubmit(onSubmit)} type="button">
-                    проверить
-                </button>
+                <div className="flex justify-between pb-1 items-center">
+                    <div className="flex gap-4">
+                        <Like postId={data.id} postType="activity" />
+                        <Bookmark postId={data.id} postType="activity" />
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            type="button"
+                            className={classNames(
+                                ' w-12 h-11 flex items-center justify-center rounded-2xl duration-200',
+                                style.hintButton,
+                                currentHints.length === data.hintsCount &&
+                                    'opacity-50',
+                                currentHints.length === data.hintsCount &&
+                                    style.hintButtonDisable,
+                            )}
+                            disabled={currentHints.length === data.hintsCount}
+                            onClick={onHints}
+                        >
+                            <img
+                                src="/icons/hint.svg"
+                                className="block h-6 w-6"
+                                alt=""
+                            />
+                        </button>
+                        <button
+                            onClick={handleSubmit(onSubmit)}
+                            className={classNames(
+                                'flex items-center tracking-[1px] justify-center px-6 rounded-2xl uppercase text-xs font-bold',
+                                style.checkAnswer,
+                                !watch('answer') && style.checkAnswerDisable,
+                            )}
+                            type="button"
+                            disabled={!watch('answer')}
+                        >
+                            проверить
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     );
 };
+
+///api/v1/bookmark?postId=656d8e4c66ad80c6cbda8af7&postType=post
+///api/v1/bookmark?postId=655c89939fc9a3c2698ca49f&postType=activity

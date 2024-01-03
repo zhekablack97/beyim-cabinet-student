@@ -10,9 +10,10 @@ import { useEffect, useState } from 'react';
 
 interface ILike {
     postId: string;
+    postType?: 'activity' | 'post';
 }
 
-export const Like: React.FC<ILike> = ({ postId }) => {
+export const Like: React.FC<ILike> = ({ postId, postType = 'post' }) => {
     const { data } = useGetUserLikedThisPostQuery({ postId });
     const [isLiked, setIsLiked] = useState<boolean>(false);
     const { data: count, refetch: refetchCount } = useGetCountQuery({ postId });
@@ -29,7 +30,7 @@ export const Like: React.FC<ILike> = ({ postId }) => {
 
     return (
         <button
-        type='button'
+            type="button"
             className="flex gap-2 items-center h-7 justify-between"
             onClick={() => {
                 if (isLiked) {
@@ -40,7 +41,7 @@ export const Like: React.FC<ILike> = ({ postId }) => {
                         });
                     setIsLiked(false);
                 } else {
-                    postLike({ postId })
+                    postLike({ postId, postType })
                         .unwrap()
                         .then(() => {
                             setIsLiked(true);

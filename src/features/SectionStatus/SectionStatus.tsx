@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { Section } from '../../types/GetSectionBySubjectsApiResponseApiType';
 import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
+import classNames from 'classnames';
+import style from './SectionStatus.module.scss';
 
 interface ISectionStatus {
     data: Section[];
@@ -43,7 +45,7 @@ export const SectionStatus: React.FC<ISectionStatus> = ({ data, ...rest }) => {
                     sectionsBySubject: String(
                         data[indexSectionsBySubject + 1].id || '',
                     ),
-                    them: ''
+                    them: '',
                 };
             });
         }
@@ -59,19 +61,33 @@ export const SectionStatus: React.FC<ISectionStatus> = ({ data, ...rest }) => {
                     sectionsBySubject: String(
                         data[indexSectionsBySubject - 1].id || '',
                     ),
-                    them: ''
+                    them: '',
                 };
             });
         }
     };
 
     return (
-        <div {...rest}>
-            {data.map(item => {
+        <div
+            {...rest}
+            className={classNames(
+                'p-4 rounded-2xl sticky top-[181px]',
+                style.wrapper,
+            )}
+        >
+            <span>
+                <h2 className={classNames(style.section, 'text-sm')}>Раздел</h2>
+            </span>
+            {data.map((item, index) => {
                 return (
                     <div key={item.id}>
                         <button
-                            className="h-20"
+                            className={classNames(
+                                style.nameSection,
+                                indexSectionsBySubject === index ? '' : 'hidden',
+
+                                'mb-3',
+                            )}
                             onClick={() => {
                                 setSearchParams(prev => {
                                     return {
@@ -81,23 +97,29 @@ export const SectionStatus: React.FC<ISectionStatus> = ({ data, ...rest }) => {
                                         subject: prev.get('subject') || '',
                                         sectionsBySubject:
                                             String(item.id) || '',
-                                        them: ''
+                                        them: '',
                                     };
                                 });
                             }}
                         >
-                            {
-                                item.translations.find(translation => {
-                                    return translation.locale === locale;
-                                })?.name
-                            }
+                            <span
+                                className={classNames(
+                                    'font-semibold',
+                                    style.nameSection,
+                                )}
+                            >
+                                {
+                                    item.translations.find(translation => {
+                                        return translation.locale === locale;
+                                    })?.name
+                                }
+                            </span>
                         </button>
                     </div>
                 );
             })}
             <button onClick={prevSection}>прошлый раздел</button>|||
             <button onClick={nextSection}>следующий раздел</button>
-            <hr />
             {data[indexSectionsBySubject]?.children?.map(item => {
                 return (
                     <button
