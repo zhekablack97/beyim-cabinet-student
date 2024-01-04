@@ -163,7 +163,9 @@ const Feed: React.FC = () => {
                 <nav className=" col-span-2"> Меню боковое </nav>
 
                 <div className=" col-span-6 flex flex-col gap-4">
+                    <div className={classNames('pt-3 sticky top-[56px] z-10', style.wrapperSubjectFilter)}>
                     <SubjectsFilter />
+                    </div>
                     <div className="flex flex-col gap-4">
                         {searchParams.get('subject') &&
                             sectionId !== '' &&

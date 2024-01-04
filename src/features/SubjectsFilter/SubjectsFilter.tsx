@@ -34,7 +34,7 @@ export const SubjectsFilter: React.FC<ISubjectsFilter> = ({ ...props }) => {
         <div
             className={classNames(
                 style.wrapper,
-                'overflow-hidden rounded-2xl h-24 mt-3',
+                'overflow-hidden rounded-2xl h-24  shadow-xl',
             )}
             {...props}
         >
