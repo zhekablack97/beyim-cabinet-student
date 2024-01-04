@@ -19,7 +19,6 @@ interface IQuestion {
 }
 
 export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
-    const refWrapper = useRef(null);
     const {
         register,
         handleSubmit,
@@ -29,6 +28,8 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
         answer: number | number[];
         id: string;
     }>();
+    // eslint-disable-next-line no-debugger
+    debugger;
 
     const [postCheckAnswer] = usePostCheckAnswerMutation();
     const [currentAnswers, setCurrentAnswers] = useState<{
@@ -88,10 +89,8 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
         }
     }, [currentHints]);
 
-    console.log(currentAnswers, 'currentAnswers');
-
     return (
-        <div ref={refWrapper} className="question">
+        <div className="question">
             <form>
                 <h2 className="text-base font-bold mb-4 ">{data.title}</h2>
                 <div className="mb-4">

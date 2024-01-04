@@ -5,7 +5,7 @@ import {
 } from '../../api/contentService';
 import { Header } from '../../features/Header';
 import { SubjectsFilter } from '../../features/SubjectsFilter';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Post } from '../../types/GetContentsResponseApiType';
 import { ImagePost } from '../../features/ImagePost';
 import style from './Feed.module.scss';
@@ -23,14 +23,15 @@ import { SectionStatus } from '../../features/SectionStatus';
 import { nanoid } from '@reduxjs/toolkit';
 import { HeaderPost } from '../../features/HeaderPost';
 import { ActivityPost } from '../../features/ActivityPost/ActivityPost';
+import { useGetAnswerQuery } from '../../api/beyimProgress';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
-
+    // eslint-disable-next-line no-debugger
+    debugger;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
-
     //логика для загрузки обычной ленты
     const [currentPage, setCurrentPage] = useState<number>(0);
     const {
@@ -47,6 +48,7 @@ const Feed: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [withVideo, setWithVideo] = useState<boolean>(true);
     const [withPicture, setWithPicture] = useState<boolean>(true);
+    const [sectionId, setSectionId] = useState<string>('');
 
     //для специальной ленты
     const [searchParams] = useSearchParams();
@@ -55,18 +57,27 @@ const Feed: React.FC = () => {
         limit: 100,
     });
 
-    //если тема есть, если есть в адресной строке, если есть данные, ну и пустай строка
-
-    const sectionId = String(
-        searchParams.get('them') ||
-            dataSectionsBySubject?.data.sections.find(section => {
-                return (
-                    String(section.id) === searchParams.get('sectionsBySubject')
-                );
-            })?.children[0]?.id ||
-            dataSectionsBySubject?.data.sections[0]?.children[0]?.id ||
-            '',
-    );
+    useEffect(() => {
+        setSectionId(
+            String(
+                searchParams.get('them') ||
+                    dataSectionsBySubject?.data.sections.find(section => {
+                        return (
+                            String(section.id) ===
+                            searchParams.get('sectionsBySubject')
+                        );
+                    })?.children[0]?.id ||
+                    dataSectionsBySubject?.data.sections[0]?.children[0]?.id ||
+                    '',
+            ),
+        );
+    }, [
+        searchParams.get('them'), //тема из урла
+        dataSectionsBySubject?.data.sections.find(section => {
+            return String(section.id) === searchParams.get('sectionsBySubject');
+        })?.children[0]?.id, //выбор темы из активной секции
+        dataSectionsBySubject?.data.sections[0]?.children[0]?.id, //выбор самой первой доступной темы
+    ]);
 
     const { data: dataFeedMicrotopics } = useGetFeedMicrotopicsQuery({
         section_id: sectionId,
@@ -156,6 +167,31 @@ const Feed: React.FC = () => {
         }
     }, [isVisible, isFetching, dataFeed]);
 
+    //------------------------------
+
+    // useEffect(() => {
+    //     if (dataCustomFeed) {
+    //         const data =
+    //             dataCustomFeed?.data.data !== null
+    //                 ? dataCustomFeed?.data.data
+    //                 : [];
+
+    //         setDataAllActivity(
+    //             data
+    //                 .filter(post => post.category === 'activity')
+    //                 .map(
+    //                     element =>
+    //                         element.activities?.map(activity => activity.id),
+    //                 )
+    //                 .reduce((accumulate, current) => {
+    //                     if (current) {
+    //                         return accumulate?.concat(current);
+    //                     }
+    //                 }, []),
+    //         );
+    //     }
+    // }, [dataCustomFeed]);
+
     return (
         <div className={classNames(' min-h-screen', style.wrapper)}>
             <Header />
@@ -163,88 +199,122 @@ const Feed: React.FC = () => {
                 <nav className=" col-span-2"> Меню боковое </nav>
 
                 <div className=" col-span-6 flex flex-col gap-4">
-                    <div className={classNames('pt-3 sticky top-[56px] z-10', style.wrapperSubjectFilter)}>
-                    <SubjectsFilter />
+                    <div
+                        className={classNames(
+                            'pt-3 sticky top-[56px] z-10',
+                            style.wrapperSubjectFilter,
+                        )}
+                    >
+                        <SubjectsFilter />
                     </div>
                     <div className="flex flex-col gap-4">
-                        {searchParams.get('subject') &&
-                            sectionId !== '' &&
-                            dataCustomFeed?.data.data?.map(itemActivityFeed => {
-                                const post = {
-                                    microtopicId: itemActivityFeed.microtopicId,
-                                    objectiveId: itemActivityFeed.objectiveId,
-                                    subject: itemActivityFeed.subject,
-                                    microtopic: itemActivityFeed.microtopic,
-                                    objective: itemActivityFeed.objective,
-                                    iconUrl: itemActivityFeed.iconUrl,
-                                    // subjectId: 1,
-                                    id: itemActivityFeed.post?.id,
-                                    category: itemActivityFeed.category,
-                                    resources: itemActivityFeed.post?.resources,
-                                    contentId: itemActivityFeed.post?.contentId,
-                                    description:
-                                        itemActivityFeed.post?.description,
-                                    thumbnail: itemActivityFeed.post?.thumbnail,
-                                };
+                        {searchParams.get('subject')
+                            ? sectionId !== '' &&
+                              dataCustomFeed?.data.data?.map(
+                                  itemActivityFeed => {
+                                      const post = {
+                                          microtopicId:
+                                              itemActivityFeed.microtopicId,
+                                          objectiveId:
+                                              itemActivityFeed.objectiveId,
+                                          subject: itemActivityFeed.subject,
+                                          microtopic:
+                                              itemActivityFeed.microtopic,
+                                          objective: itemActivityFeed.objective,
+                                          iconUrl: itemActivityFeed.iconUrl,
+                                          // subjectId: 1,
+                                          id: itemActivityFeed.post?.id,
+                                          category: itemActivityFeed.category,
+                                          resources:
+                                              itemActivityFeed.post?.resources,
+                                          contentId:
+                                              itemActivityFeed.post?.contentId,
+                                          description:
+                                              itemActivityFeed.post
+                                                  ?.description,
+                                          thumbnail:
+                                              itemActivityFeed.post?.thumbnail,
+                                      };
 
-                                if (itemActivityFeed.category === 'image') {
-                                    return (
-                                        <ImagePost
-                                            data={post as Post}
-                                            key={itemActivityFeed.post?.id}
-                                        />
-                                    );
-                                }
+                                      if (
+                                          itemActivityFeed.category === 'image'
+                                      ) {
+                                          return (
+                                              <ImagePost
+                                                  data={post as Post}
+                                                  key={
+                                                      itemActivityFeed.post?.id
+                                                  }
+                                              />
+                                          );
+                                      }
 
-                                if (itemActivityFeed.category === 'video') {
-                                    return (
-                                        <div key={itemActivityFeed.post?.id}>
-                                            <VideoPost data={post as Post} />
-                                        </div>
-                                    );
-                                }
+                                      if (
+                                          itemActivityFeed.category === 'video'
+                                      ) {
+                                          return (
+                                              <div
+                                                  key={
+                                                      itemActivityFeed.post?.id
+                                                  }
+                                              >
+                                                  <VideoPost
+                                                      data={post as Post}
+                                                  />
+                                              </div>
+                                          );
+                                      }
 
-                                if (itemActivityFeed.category === 'activity') {
-                                    return (
-                                        <div key={nanoid()}>
-                                            <ActivityPost
-                                                data={itemActivityFeed}
-                                            />
-                                        </div>
-                                    );
-                                }
+                                      if (
+                                          itemActivityFeed.category ===
+                                          'activity'
+                                      ) {
+                                          return (
+                                              // eslint-disable-next-line react/jsx-key
+                                              <ActivityPost
+                                                  them={sectionId}
+                                                  data={itemActivityFeed}
+                                              />
+                                          );
+                                      }
 
-                                return (
-                                    <span
-                                        className="block h-28"
-                                        key={itemActivityFeed.post?.id}
-                                    >
-                                        {itemActivityFeed.post?.id}
-                                    </span>
-                                );
-                            })}
-                        {posts.map(item => {
-                            if (item.category === 'image') {
-                                return <ImagePost data={item} key={item.id} />;
-                            }
+                                      return (
+                                          <span
+                                              className="block h-28"
+                                              key={itemActivityFeed.post?.id}
+                                          >
+                                              {itemActivityFeed.post?.id}
+                                          </span>
+                                      );
+                                  },
+                              )
+                            : posts.map(item => {
+                                  if (item.category === 'image') {
+                                      return (
+                                          <ImagePost
+                                              data={item}
+                                              key={item.id}
+                                          />
+                                      );
+                                  }
 
-                            if (item.category === 'video') {
-                                return (
-                                    <div key={item.id}>
-                                        <VideoPost data={item} />
-                                    </div>
-                                );
-                            }
+                                  if (item.category === 'video') {
+                                      return (
+                                          <div key={item.id}>
+                                              <VideoPost data={item} />
+                                          </div>
+                                      );
+                                  }
 
-                            if (item.category === 'activity') {
-                                return (
-                                    <div className="" key={item.id}>
-                                        картинки
-                                        <div className=" h-96"></div>
-                                    </div>
-                                );
-                            }
-                        })}
+                                  if (item.category === 'activity') {
+                                      return (
+                                          <div className="" key={item.id}>
+                                              картинки
+                                              <div className=" h-96"></div>
+                                          </div>
+                                      );
+                                  }
+                              })}
                     </div>
                     <div ref={loaderIndicator}> </div>
 
