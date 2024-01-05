@@ -27,8 +27,7 @@ import { useGetAnswerQuery } from '../../api/beyimProgress';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
-    // eslint-disable-next-line no-debugger
-    debugger;
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const locale = i18n.translator.language;
@@ -169,28 +168,6 @@ const Feed: React.FC = () => {
 
     //------------------------------
 
-    // useEffect(() => {
-    //     if (dataCustomFeed) {
-    //         const data =
-    //             dataCustomFeed?.data.data !== null
-    //                 ? dataCustomFeed?.data.data
-    //                 : [];
-
-    //         setDataAllActivity(
-    //             data
-    //                 .filter(post => post.category === 'activity')
-    //                 .map(
-    //                     element =>
-    //                         element.activities?.map(activity => activity.id),
-    //                 )
-    //                 .reduce((accumulate, current) => {
-    //                     if (current) {
-    //                         return accumulate?.concat(current);
-    //                     }
-    //                 }, []),
-    //         );
-    //     }
-    // }, [dataCustomFeed]);
 
     return (
         <div className={classNames(' min-h-screen', style.wrapper)}>
