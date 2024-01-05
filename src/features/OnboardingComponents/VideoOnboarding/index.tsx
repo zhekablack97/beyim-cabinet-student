@@ -1,0 +1,1 @@
+export { VideoOnboarding } from './VideoOnboarding';

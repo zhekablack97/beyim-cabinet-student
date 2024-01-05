@@ -1,0 +1,1 @@
+export { ImageOnboarding } from './ImageOnboarding';

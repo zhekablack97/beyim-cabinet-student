@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { login } from './features/slice/authSlice';
 import Feed from './pages/feed';
 import More from './pages/feed/more';
+import Onboarding from './pages/onboarding';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -25,7 +26,9 @@ function App() {
         <Routes>
             <Route path="/">
                 <Route index element={<Authorization />} />
-
+                <Route path="/onboarding">
+                    <Route index element={<Onboarding />} />
+                </Route>
                 <Route path="/sss">
                     <Route index element={<div>sss</div>} />
                     <Route path="aaaa" element={<div>aaaa11aa1</div>} />
@@ -45,4 +48,3 @@ function App() {
 }
 
 export default App;
-//

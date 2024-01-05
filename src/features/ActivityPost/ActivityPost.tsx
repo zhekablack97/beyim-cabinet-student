@@ -113,7 +113,6 @@ export const ActivityPost: React.FC<IActivityPost> = React.memo(
     (prevProps, nextProps) => {
         // Вернуть true, если data.id не изменилось, иначе false
 
-   
         return prevProps.them === nextProps.them;
     },
 );
