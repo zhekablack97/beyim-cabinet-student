@@ -9,3 +9,33 @@
 .close {
     background-color: #fff;
 }
+.emptyPhoto {
+    border-radius: var(--radius-all-radius, 16px);
+    background: #e9f0f3;
+    height: 268px;
+    width: 268px;
+}
+.accordion {
+    max-height: 72px;
+    overflow: hidden;
+    &_title {
+        color: var(--color-black-800, #232f37);
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; /* 133.333% */
+    }
+    &.open {
+        max-height: fit-content;
+    }
+}
+.buttonMore {
+    display: inline;
+    background-color: transparent;
+    color: var(--color-blue-main, #55bbeb);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
