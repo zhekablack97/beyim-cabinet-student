@@ -1,7 +1,7 @@
 // Your translation file
 
 import { useTranslation } from 'react-i18next';
-import style from '../Onboarding.module.scss';
+import style from '../OnboardingComponents.module.scss';
 import { getData } from './data';
 interface ITooltipData {
     activeActivity: string;

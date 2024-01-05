@@ -2,12 +2,11 @@ import classNames from 'classnames';
 import { Post } from '../../../types/GetContentsResponseApiType';
 
 import style from '../../../features/VideoPost/VideoPost.module.scss';
-import { HeaderPost } from '../../../features/HeaderPost';
-import { BlockVideo } from '../../../features/VideoPost/utils';
-import { FooterPost } from '../../../features/FooterPost';
-import FooterOnboarding from './FooterOnboarding';
+import { HeaderPost } from '../../HeaderPost';
+import { BlockVideo } from '../../VideoPost/utils';
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
+import { FooterOnboarding } from '../FooterOnboarding';
 
 export const VideoOnboarding: React.FC = () => {
     const { t } = useTranslation();

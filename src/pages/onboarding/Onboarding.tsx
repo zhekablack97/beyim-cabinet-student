@@ -7,14 +7,14 @@ import styleOnboarding from './Onboarding.module.scss';
 import classNames from 'classnames';
 import More from '../feed/more';
 
-import { ActivityOnboarding } from './components/ActivityOnboarding';
-import { ImageOnboarding } from './components/ImageOnboarding';
-import { VideoOnboarding } from './components/VideoOnboarding';
 import { useState } from 'react';
 import { Button } from '../../features/SubjectsFilter/utils';
-import { getTranslatedTooltipContent } from './utils/TooltipData';
-import { getData } from './utils/data';
-import TooltipOnBoarding from './utils/TooltipOnboarding';
+import { getTranslatedTooltipContent } from '../../features/OnboardingComponents/utils/TooltipData';
+import { getData } from '../../features/OnboardingComponents/utils/data';
+import TooltipOnBoarding from '../../features/OnboardingComponents/utils/TooltipOnboarding';
+import { ImageOnboarding } from '../../features/OnboardingComponents/ImageOnboarding';
+import { VideoOnboarding } from '../../features/OnboardingComponents/VideoOnboarding';
+import { ActivityOnboarding } from '../../features/OnboardingComponents/ActivityOnboarding';
 
 const Onboarding: React.FC = () => {
     const { t, i18n } = useTranslation();

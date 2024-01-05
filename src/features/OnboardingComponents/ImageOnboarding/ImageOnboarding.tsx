@@ -2,11 +2,10 @@ import classNames from 'classnames';
 import style from '../../../features/ImagePost/ImagePost.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { useState } from 'react';
-import { HeaderPost } from '../../../features/HeaderPost';
-import FooterOnboarding from './FooterOnboarding';
+import { HeaderPost } from '../../HeaderPost';
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
+import { FooterOnboarding } from '../FooterOnboarding';
 
 export const ImageOnboarding: React.FC = () => {
     const pagination = {

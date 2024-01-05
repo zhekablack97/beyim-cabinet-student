@@ -4,7 +4,7 @@ import { PlacesType, Tooltip } from 'react-tooltip';
 
 import 'react-tooltip/dist/react-tooltip.css';
 
-import style from '../Onboarding.module.scss';
+import style from '../OnboardingComponents.module.scss';
 
 import { useTranslation } from 'react-i18next';
 export interface TooltipOnBoardingProps {

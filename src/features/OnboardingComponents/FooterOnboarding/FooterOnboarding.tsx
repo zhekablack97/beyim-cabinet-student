@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
 import style from '../../../features/ImagePost/ImagePost.module.scss';
-import styleBoarding from '../Onboarding.module.scss';
+import styleBoarding from '../OnboardingComponents.module.scss';
 
-const FooterOnboarding: React.FC = () => {
+export const FooterOnboarding: React.FC = () => {
     return (
         <footer className="flex justify-between items-center">
             <div className="flex gap-4">
@@ -54,5 +54,3 @@ const FooterOnboarding: React.FC = () => {
         </footer>
     );
 };
-
-export default FooterOnboarding;
