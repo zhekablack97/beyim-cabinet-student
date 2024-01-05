@@ -28,8 +28,7 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
         answer: number | number[];
         id: string;
     }>();
-    // eslint-disable-next-line no-debugger
-    debugger;
+
 
     const [postCheckAnswer] = usePostCheckAnswerMutation();
     const [currentAnswers, setCurrentAnswers] = useState<{
@@ -68,7 +67,7 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
             getHint({ id: data.id, offset: currentHints.length })
                 .unwrap()
                 .then(hint => {
-                    console.log(hint, 'hint');
+                   
                     setCurrentHints(prev => {
                         const oldState = [...prev];
 
@@ -108,14 +107,7 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                 {data.options.map((option, index) => {
                     const id = nanoid();
 
-                    console.log(
-                        currentAnswers.index.find(
-                            //@ts-ignore
-                            element => element === String(index),
-                        ),
-                        'currentAnswers.index.includes(index)',
-                    );
-                    console.log(currentAnswers, 'currentAnswers');
+                   
                     return (
                         <div key={option.Body}>
                             <input

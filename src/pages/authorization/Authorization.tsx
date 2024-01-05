@@ -103,7 +103,7 @@ const Authorization: React.FC = () => {
                             slidesPerView={1}
                             pagination={pagination}
                             modules={[Pagination]}
-                            onSwiper={(swiper: any) => console.log(swiper)}
+                            // onSwiper={(swiper: any) => console.log(swiper)}
                         >
                             <SwiperSlide>
                                 <div

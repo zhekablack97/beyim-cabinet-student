@@ -10,19 +10,14 @@ import classNames from 'classnames';
 import style from './TopicBlock.module.scss';
 import { GetAnswerResponseApiType } from '../../../../types';
 import { useGetCustomFeedQuery } from '../../../../api/contentService';
+import { useGetAnswerQuery } from '../../../../api/beyimProgress';
+import { Link } from 'react-scroll';
 
 interface ITopicBlock {
     item: Children;
-    dataAllActivity?: string[];
-    answer?: GetAnswerResponseApiType;
 }
 
-export const TopicBlock: React.FC<ITopicBlock> = ({
-    dataAllActivity = [],
-    item,
-    answer,
-    ...props
-}) => {
+export const TopicBlock: React.FC<ITopicBlock> = ({ item, ...props }) => {
     const { i18n } = useTranslation();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
@@ -30,6 +25,7 @@ export const TopicBlock: React.FC<ITopicBlock> = ({
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [sectionId, setSectionId] = useState<string>('');
+    const [allActivity, setAllActivity] = useState<string[] | undefined>([]);
 
     const { data: dataSectionsBySubject } = useGetSectionsBySubjectQuery({
         subject_id: searchParams.get('subject') || '',
@@ -45,6 +41,34 @@ export const TopicBlock: React.FC<ITopicBlock> = ({
         microtopicIds: dataFeedMicrotopics?.data.result.ids || [],
         locale,
     });
+
+    const dataMicrotopicIds =
+        dataCustomFeed?.data.data !== null
+            ? dataCustomFeed?.data.data
+                ? dataCustomFeed?.data.data
+                : []
+            : [];
+
+    const { data: answer } = useGetAnswerQuery({
+        microtopicIds:
+            dataMicrotopicIds
+                .filter(item => item.category === 'activity')
+                .map(activity => activity.microtopicId) || [],
+    });
+
+    // Function to handle the activation of a link.
+    const handleSetActive = (activity: string) => {
+        setSearchParams(prev => {
+            return {
+                idContent: prev.get('idContent') || '',
+                fromSearch: prev.get('fromSearch') || '',
+                subject: prev.get('subject') || '',
+                sectionsBySubject: prev.get('sectionsBySubject') || '',
+                them: String(item.id || ''),
+                idActivity: activity,
+            };
+        });
+    };
 
     useEffect(() => {
         setSectionId(
@@ -68,6 +92,35 @@ export const TopicBlock: React.FC<ITopicBlock> = ({
         dataSectionsBySubject?.data.sections[0]?.children[0]?.id, //выбор самой первой доступной темы
     ]);
 
+    useEffect(() => {
+        if (dataCustomFeed) {
+            const data =
+                dataCustomFeed?.data.data !== null
+                    ? dataCustomFeed?.data.data
+                    : [];
+            setAllActivity(
+                data
+                    .filter(post => post.category === 'activity')
+                    .map(
+                        element =>
+                            element.activities?.map(activity => activity.id),
+                    )
+                    .reduce((accumulate, current) => {
+                        if (current) {
+                            return accumulate?.concat(current);
+                        }
+                    }, []),
+            );
+        }
+    }, [dataCustomFeed]);
+
+    const trueActivity = answer?.data.answers
+        ?.filter(answer => answer.is_correct)
+        .filter(answerFilter => allActivity?.indexOf(answerFilter.id) !== -1)
+        .length;
+
+    const percent = ((trueActivity || 0) / (allActivity?.length || 1)) * 100;
+
     return (
         <button
             {...props}
@@ -76,17 +129,22 @@ export const TopicBlock: React.FC<ITopicBlock> = ({
                 style.wrapper,
                 sectionId === String(item.id) && style.active,
             )}
-            onClick={() => {
-                setSearchParams(prev => {
-                    return {
-                        idContent: prev.get('idContent') || '',
-                        fromSearch: prev.get('fromSearch') || '',
-                        subject: prev.get('subject') || '',
-                        sectionsBySubject: prev.get('sectionsBySubject') || '',
-                        them: String(item.id || ''),
-                    };
-                });
-            }}
+            onClick={
+                !(sectionId === String(item.id))
+                    ? () => {
+                          setSearchParams(prev => {
+                              return {
+                                  idContent: prev.get('idContent') || '',
+                                  fromSearch: prev.get('fromSearch') || '',
+                                  subject: prev.get('subject') || '',
+                                  sectionsBySubject:
+                                      prev.get('sectionsBySubject') || '',
+                                  them: String(item.id || ''),
+                              };
+                          });
+                      }
+                    : undefined
+            }
         >
             <div>
                 <h4 className="text-sm font-bold block">
@@ -101,33 +159,51 @@ export const TopicBlock: React.FC<ITopicBlock> = ({
             {sectionId === String(item.id) && (
                 <div className="w-full">
                     <hr className="h-[2px] my-2" />
-                    <div className="flex">
+                    <div className="flex items-center">
                         <span
                             className={classNames(
                                 style.percentage,
-                                'text-sm font-medium',
+                                'text-sm font-medium mr-2 leading-6',
                             )}
                         >
-                            Выполнено 25%
+                            Выполнено {Math.round(percent)} %
                         </span>
-                        {dataAllActivity?.map(item => {
-                            const isCorrect =
-                                answer?.data.answers?.find(
-                                    (answer: { id: string }) =>
-                                        answer.id === item,
-                                )?.is_correct || false;
+                        <div
+                            className="flex gap-1 items-center"
+                            onClick={e => {
+                                e.preventDefault();
+                            }}
+                        >
+                            {allActivity?.map(activity => {
+                                const isCorrect =
+                                    answer?.data.answers?.find(
+                                        (answer: { id: string }) =>
+                                            answer.id === activity,
+                                    )?.is_correct || false;
 
-                            return (
-                                <div key={item}>
-                                    <img
-                                        src={`/icons/solar_star${
-                                            isCorrect ? '' : '-gray'
-                                        }.svg`}
-                                        alt=""
-                                    />
-                                </div>
-                            );
-                        })}
+                                return (
+                                    <Link
+                                        key={`${activity}-activity`}
+                                        activeClass="active"
+                                        to={activity}
+                                        spy={true}
+                                        smooth={true}
+                                        offset={-250}
+                                        duration={300}
+                                    >
+                                        <img
+                                            src={`/icons/solar_star${
+                                                isCorrect ? '' : '-gray'
+                                            }.svg`}
+                                            alt=""
+                                            onClick={() => {
+                                                handleSetActive(activity);
+                                            }}
+                                        />
+                                    </Link>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             )}
