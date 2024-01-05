@@ -7,7 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
 import { FooterOnboarding } from '../FooterOnboarding';
 
-export const ImageOnboarding: React.FC = () => {
+export const ImageOnboarding: React.FC<{
+    currentStep: number;
+}> = ({ currentStep }) => {
     const pagination = {
         clickable: true,
         renderBullet: function (index: number, className: string) {
@@ -19,10 +21,10 @@ export const ImageOnboarding: React.FC = () => {
 
     return (
         <article
-            data-tooltip-id="2"
             className={classNames(
                 style.wrapper,
                 'p-4 rounded-2xl sliderImagePost',
+                currentStep === 2 && 'z-210',
             )}
         >
             <HeaderPost
@@ -58,16 +60,17 @@ export const ImageOnboarding: React.FC = () => {
                         <SwiperSlide className="pb-3"></SwiperSlide>
                     </Swiper>
                 </div>
+                <div id="step-5"></div>
                 <div className={style.content}>
                     <div className={`${style.accordion} `}>
                         <h3 className={`${style.accordion_title}`}>
-                            {t('onboarding:post.titleImage')}
+                            {t('onboarding.post.titleImage')}
                         </h3>
-                        {t('onboarding:post.descriptionImage')}
+                        {t('onboarding.post.descriptionImage')}
                     </div>
 
                     <button className={style.buttonMore}>
-                        {t('onboarding:more')}
+                        {t('onboarding.more')}
                     </button>
                 </div>
             </div>

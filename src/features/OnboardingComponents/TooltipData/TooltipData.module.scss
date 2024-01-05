@@ -1,0 +1,43 @@
+.onBoarding {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    span {
+        color: var(--color-blue-main, #55bbeb);
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    h2 {
+        margin: 0;
+        color: var(--color-black-800, #232f37);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    p {
+        margin: 0;
+        color: var(--color-black-500, #577487);
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 8px;
+    }
+    &_button {
+        color: var(--color-black-300, #a3c0d2);
+        text-align: center;
+        font-family: Inter;
+        font-size: 12px;
+        font-style: normal;
+        cursor: pointer;
+        font-weight: 600;
+        line-height: 16px;
+        background-color: #fff;
+    }
+}

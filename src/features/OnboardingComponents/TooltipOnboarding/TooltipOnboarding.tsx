@@ -1,12 +1,15 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { PlacesType, Tooltip } from 'react-tooltip';
 
 import 'react-tooltip/dist/react-tooltip.css';
 
-import style from '../OnboardingComponents.module.scss';
+import style from './TooltipOnboarding.module.scss';
 
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 export interface TooltipOnBoardingProps {
     currentStep: number;
     setCurrentStep: (currentStep: number) => void;
@@ -15,7 +18,12 @@ export interface TooltipOnBoardingProps {
     content: ReactNode;
     classTooltip?: string;
     classArrow?: string;
+    offset?: number;
 }
+const easeOutQuad = (t: number, b: number, c: number, d: number) => {
+    t /= d;
+    return -c * t * (t - 2) + b;
+};
 const scrollToElement = (step: number): Promise<void> => {
     return new Promise(resolve => {
         const element = document.getElementById(`step-${step}`);
@@ -31,7 +39,8 @@ const scrollToElement = (step: number): Promise<void> => {
         }
     });
 };
-const TooltipOnBoarding = ({
+
+export const TooltipOnBoarding = ({
     currentStep,
     setCurrentStep,
     id,
@@ -39,9 +48,11 @@ const TooltipOnBoarding = ({
     content,
     classTooltip,
     classArrow,
+    offset,
 }: TooltipOnBoardingProps) => {
+    const navigate = useNavigate();
     const { t } = useTranslation(['onboarding']);
-
+    const [isTooltipVisible, setIsTooltipVisible] = useState(true);
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (event.key === 'ArrowLeft' && currentStep > 1) {
@@ -64,7 +75,8 @@ const TooltipOnBoarding = ({
             document.removeEventListener('keydown', handleKeyPress);
         };
     }, [currentStep]);
-    console.log(id);
+    console.log(id, 123);
+    console.log(currentStep, 123);
 
     return (
         <Tooltip
@@ -74,27 +86,24 @@ const TooltipOnBoarding = ({
             classNameArrow={`${style.tooltip_arrow} ${
                 classArrow ? classArrow : ''
             }`}
-            isOpen={currentStep === +id}
+            isOpen={currentStep === +id && isTooltipVisible}
             place={place as PlacesType}
+            offset={offset}
         >
-            <div>
+            <div
+                style={{ visibility: isTooltipVisible ? 'visible' : 'hidden' }}
+            >
                 <div>{content}</div>
-                <div className="d-flex justify-content-between">
+                <div className="flex justify-between">
                     <button
-                        className={style.onBoarding_button}
+                        className={style.button}
                         onClick={() => {
-                            setCurrentStep(0);
-                            // router.push(`/${router.query.locale}/student/feed`);
+                            navigate(`/feed`);
                         }}
                     >
                         {t('onboarding:close')}
                     </button>
-                    <div
-                        className="d-flex"
-                        style={{
-                            gap: '12px',
-                        }}
-                    >
+                    <div className="flex gap-3">
                         <div
                             style={{
                                 cursor:
@@ -148,5 +157,3 @@ const TooltipOnBoarding = ({
         </Tooltip>
     );
 };
-
-export default TooltipOnBoarding;

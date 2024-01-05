@@ -1,30 +1,28 @@
+import { useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+
+import { Button } from '../../features/SubjectsFilter/utils';
+import { getData } from '../../features/OnboardingComponents/utils/data';
+import { ImageOnboarding } from '../../features/OnboardingComponents/ImageOnboarding';
+import { VideoOnboarding } from '../../features/OnboardingComponents/VideoOnboarding';
+import { ActivityOnboarding } from '../../features/OnboardingComponents/ActivityOnboarding';
+import More from '../feed/more';
 import { Header } from '../../features/Header';
+import { TooltipOnBoarding } from '../../features/OnboardingComponents/TooltipOnboarding';
+import { getTranslatedTooltipContent } from '../../features/OnboardingComponents/TooltipData';
 
 import style from '../feed/Feed.module.scss';
 import styleSubject from '../../features/SubjectsFilter/SubjectsFilter.module.scss';
 import styleOnboarding from './Onboarding.module.scss';
-import classNames from 'classnames';
-import More from '../feed/more';
-
-import { useState } from 'react';
-import { Button } from '../../features/SubjectsFilter/utils';
-import { getTranslatedTooltipContent } from '../../features/OnboardingComponents/utils/TooltipData';
-import { getData } from '../../features/OnboardingComponents/utils/data';
-import TooltipOnBoarding from '../../features/OnboardingComponents/utils/TooltipOnboarding';
-import { ImageOnboarding } from '../../features/OnboardingComponents/ImageOnboarding';
-import { VideoOnboarding } from '../../features/OnboardingComponents/VideoOnboarding';
-import { ActivityOnboarding } from '../../features/OnboardingComponents/ActivityOnboarding';
+import styleShowVideo from '../../features/WithVideoOrImage/WithVideoOrImage.module.scss';
+import styleStatus from '../../features/SectionStatus/SectionStatus.module.scss';
 
 const Onboarding: React.FC = () => {
     const { t, i18n } = useTranslation();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    const locale = i18n.translator.language;
-
-    const [withVideo, setWithVideo] = useState<boolean>(true);
-    const [withPicture, setWithPicture] = useState<boolean>(true);
+    const [withVideo, setWithVideo] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const data = getData();
@@ -33,22 +31,56 @@ const Onboarding: React.FC = () => {
         activeAssessment: '1',
         activeActivity: '1',
     });
+    useEffect(() => {
+        if (withVideo) {
+            const element = document.getElementById(`step-1`);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                });
+            }
+        }
+    }, [withVideo]);
+    useEffect(() => {
+        if (currentStep === 4) {
+            setTimeout(() => {
+                setWithVideo(true);
+            }, 400);
+        }
+        setWithVideo(false);
+    }, [currentStep]);
+
+    useEffect(() => {
+        if (withVideo) {
+            const element = document.getElementById(`step-1`);
+            if (element) {
+                window.scrollTo(0, 0);
+            }
+        }
+    }, [withVideo]);
 
     return (
-        <div className={classNames(' min-h-screen', style.wrapper)}>
+        <div className={classNames('min-h-screen', style.wrapper)}>
             <div className={styleOnboarding.overlay}></div>
-            {tooltipData.map(item => {
+            {tooltipData.slice(0, 9).map(item => {
                 return (
-                    <TooltipOnBoarding
+                    <div
                         key={item.id}
-                        currentStep={currentStep}
-                        setCurrentStep={setCurrentStep}
-                        id={item.id}
-                        place={item.place}
-                        content={item.content}
-                        classTooltip={item.classNameTooltip}
-                        classArrow={item.classArrow}
-                    />
+                        className={`${
+                            currentStep === +item.id ? 'block' : 'hidden'
+                        }`}
+                    >
+                        <TooltipOnBoarding
+                            currentStep={currentStep}
+                            setCurrentStep={setCurrentStep}
+                            id={item.id}
+                            place={item.place}
+                            content={item.content}
+                            classTooltip={item.classNameTooltip}
+                            classArrow={item.classArrow}
+                            offset={item.offset}
+                        />
+                    </div>
                 );
             })}
             <Header />
@@ -56,10 +88,11 @@ const Onboarding: React.FC = () => {
                 <nav className=" col-span-2"></nav>
                 <div className=" col-span-6 flex flex-col gap-4">
                     <div
+                        id="step-1"
                         data-tooltip-id="1"
                         className={classNames(
-                            'pt-3 sticky top-[56px] z-10',
-                            style.wrapperSubjectFilter,
+                            'sticky top-[68px] z-10 mb-4',
+                            currentStep === 1 && 'z-210',
                         )}
                     >
                         <div
@@ -87,19 +120,147 @@ const Onboarding: React.FC = () => {
                         </div>
                     </div>
                     <div className="flex flex-col gap-4">
-                        <ImageOnboarding />
-                        <VideoOnboarding />
-                        <ActivityOnboarding />
+                        {!withVideo && (
+                            <ImageOnboarding currentStep={currentStep} />
+                        )}
+                        <VideoOnboarding currentStep={currentStep} />
+                        <ActivityOnboarding currentStep={currentStep} />
                     </div>
                     <More />
                 </div>
-                <aside className=" col-span-4 pt-3 flex flex-col gap-4">
-                    {/* <WithVideoOrImage   
-                        handleChangeFilter={handleChangeFilter}
-                        withPicture={withPicture}
-                        withVideo={withVideo}
-                    /> */}
-                    {/* <SectionStatus /> */}
+                <aside className=" col-span-4 pt-3 flex flex-col gap-5">
+                    <div
+                        className={classNames(
+                            styleShowVideo.wrapper,
+                            ' rounded-xl sticky top-[68px] px-4 py-3 flex flex-col gap-3',
+                            currentStep === 4 && 'z-210',
+                        )}
+                    >
+                        <div className="w-full" data-tooltip-id="4">
+                            <input
+                                className="hidden"
+                                type="checkbox"
+                                checked={withVideo}
+                                name=""
+                                id="videoFilterFeed"
+                            />
+                            <label
+                                htmlFor="videoFilterFeed"
+                                className="flex items-center "
+                            >
+                                <img
+                                    src="/icons/videoFilter.svg"
+                                    alt=""
+                                    className="w-6 h-6 block mr-2"
+                                />
+                                <span className="text-sm font-semibold cursor-pointer">
+                                    {t('feed.video')}
+                                </span>
+                                <span
+                                    className={classNames(
+                                        ' ml-auto w-11 h-6 rounded-3xl flex items-center p-1 duration-200',
+                                        styleShowVideo.checked,
+                                    )}
+                                />
+                            </label>
+                        </div>
+                        <hr
+                            className={classNames('h-[1px]', styleShowVideo.hr)}
+                        />
+                        <div className="">
+                            <input
+                                className="hidden"
+                                type="checkbox"
+                                name=""
+                                id="pictureFilterFeed"
+                            />
+                            <label
+                                className="flex items-center "
+                                htmlFor="pictureFilterFeed"
+                            >
+                                <img
+                                    src="/icons/imageFilter.svg"
+                                    alt=""
+                                    className="w-5 h-5 block mr-3"
+                                />
+                                <span className="text-sm font-semibold cursor-pointer">
+                                    {t('feed.picture')}
+                                </span>
+                                <span
+                                    className={classNames(
+                                        'ml-auto w-11 h-6 rounded-3xl flex items-center p-1 duration-200',
+                                        styleShowVideo.checked,
+                                    )}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div
+                        className={classNames(
+                            'p-4 rounded-2xl sticky top-[181px]',
+                            styleStatus.wrapper,
+                            currentStep === 2 || currentStep === 3
+                                ? 'z-210'
+                                : '',
+                        )}
+                        data-tooltip-id="3"
+                    >
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <h2
+                                    className={classNames(
+                                        styleStatus.section,
+                                        'text-sm font-medium',
+                                    )}
+                                >
+                                    Раздел
+                                </h2>
+
+                                {data.progress.map((item, index) => {
+                                    return (
+                                        <h3
+                                            key={item}
+                                            className={classNames(
+                                                styleStatus.nameSection,
+                                                'mb-3',
+                                                'font-semibold',
+                                            )}
+                                        >
+                                            {item}
+                                        </h3>
+                                    );
+                                })}
+                            </div>
+                            <div className="flex grow-0 shrink-0 gap-2">
+                                <button
+                                    type="button"
+                                    className={classNames(
+                                        'border-2 w-8 h-8 flex items-center justify-center rounded-[10.7px]',
+                                        styleStatus.borderButton,
+                                    )}
+                                >
+                                    <img
+                                        src="/icons/buttonNext.svg"
+                                        className="rotate-180 block"
+                                        alt=""
+                                    />
+                                </button>
+                                <button
+                                    className={classNames(
+                                        'border-2 w-8 h-8 flex items-center justify-center rounded-[10.7px]',
+                                        styleStatus.borderButton,
+                                    )}
+                                >
+                                    <img
+                                        src="/icons/buttonNext.svg"
+                                        className=" block"
+                                        alt=""
+                                    />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2">fewfw</div>
+                    </div>
                 </aside>
             </main>
             {isOpen && (
@@ -110,14 +271,14 @@ const Onboarding: React.FC = () => {
                                 styleOnboarding.modalOnBoarding__content__stages
                             }
                         >
-                            {t('onboarding:modal.fiveStages')}
+                            {t('onboarding.modal.fiveStages')}
                         </span>
                         <div
                             className={
                                 styleOnboarding.modalOnBoarding__content__greetings
                             }
                         >
-                            <h1> {t('onboarding:modal.greeting')}</h1>
+                            <h1> {t('onboarding.modal.greeting')}</h1>
                             <img
                                 src={'/images/Party.png'}
                                 alt="party"
@@ -130,7 +291,7 @@ const Onboarding: React.FC = () => {
                                 styleOnboarding.modalOnBoarding__content__description
                             }
                         >
-                            {t('onboarding:modal.greetingText')}
+                            {t('onboarding.modal.greetingText')}
                         </p>
                         <footer>
                             <button
@@ -139,7 +300,7 @@ const Onboarding: React.FC = () => {
                                 }
                                 onClick={() => {}}
                             >
-                                {t('onboarding:modal.skip')}
+                                {t('onboarding.modal.skip')}
                             </button>
                             <button
                                 className={styleOnboarding.button_info}
@@ -148,7 +309,7 @@ const Onboarding: React.FC = () => {
                                     setCurrentStep(1);
                                 }}
                             >
-                                <span>{t('onboarding:modal.come')}</span>
+                                <span>{t('onboarding.modal.come')}</span>
                             </button>
                         </footer>
                     </div>

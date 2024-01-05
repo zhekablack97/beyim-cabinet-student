@@ -83,3 +83,35 @@
         }
     }
 }
+
+.button_info {
+    border-radius: var(--radius-card, 16px);
+    background: #55bbeb !important;
+    box-shadow: 0px 4px 0px 0px #0b638c !important;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    display: block;
+    padding: 14px 24px;
+    transition: 0.2s;
+    span {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px;
+        margin-left: 28px;
+        margin-right: 28px;
+    }
+    &:hover {
+        background: var(--background-accent-active, #36a0d0) !important;
+        box-shadow: 0px 4px 0px 0px #08425c !important;
+    }
+    &:active {
+        box-shadow: none !important;
+        transform: translateY(4px);
+    }
+    box-shadow: 0px 4px 0px 0px #577487;
+}

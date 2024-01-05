@@ -13,7 +13,9 @@ import styleQuestion from '../../../features/ActivityPost/utils/Question/Questio
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
 
-export const ActivityOnboarding: React.FC = () => {
+export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
+    currentStep,
+}) => {
     const data = getData();
     const { t } = useTranslation();
     const {
@@ -30,7 +32,15 @@ export const ActivityOnboarding: React.FC = () => {
         isCorrect: boolean;
     }>({ index: [], isCorrect: false });
     return (
-        <div className={classNames('p-4 rounded-2xl activity', style.wrapper)}>
+        <div
+            className={classNames(
+                'p-4 rounded-2xl activity',
+                style.wrapper,
+                currentStep === 7 && 'z-210',
+            )}
+            id="step-7"
+            data-tooltip-id="7"
+        >
             <HeaderPost
                 iconUrl={data.subjects[0].url}
                 objective={data.subjects[0].objective}
@@ -38,31 +48,7 @@ export const ActivityOnboarding: React.FC = () => {
             />
 
             <div className="relative">
-                <Swiper
-                    autoHeight={true}
-                    modules={[Pagination, Navigation]}
-                    navigation={true}
-                    pagination={{
-                        type: 'fraction',
-
-                        renderFraction: (
-                            currentClass: string,
-                            totalClass: string,
-                        ) => {
-                            return (
-                                `<span class=" text-base font-bold ${style.pagination} ` +
-                                currentClass +
-                                '"></span>' +
-                                `<span class="text-base font-bold ${style.pagination}"> из </span> ` +
-                                `<span class=" text-base font-bold ${style.pagination} ` +
-                                totalClass +
-                                '"></span>'
-                            );
-                        },
-                    }}
-                    height={200}
-                    updateOnWindowResize={true}
-                >
+                <Swiper>
                     {data.subjects.map((item, index: number) => (
                         <SwiperSlide key={index}>
                             <div className="pb-16">
@@ -70,7 +56,7 @@ export const ActivityOnboarding: React.FC = () => {
                                     <form>
                                         <h2 className="text-base font-bold mb-4 ">
                                             {t(
-                                                'onboarding:post.activityQuestion',
+                                                'onboarding.post.activityQuestion',
                                             )}
                                         </h2>
 
@@ -186,6 +172,8 @@ export const ActivityOnboarding: React.FC = () => {
                                                     className={classNames(
                                                         ' w-12 h-11 flex items-center justify-center rounded-2xl duration-200',
                                                         styleQuestion.hintButton,
+                                                        currentStep === 8 &&
+                                                            'z-210',
                                                     )}
                                                 >
                                                     <img
@@ -212,11 +200,15 @@ export const ActivityOnboarding: React.FC = () => {
                     ))}
 
                     <hr
+                        data-tooltip-id="8"
                         className={classNames(
                             'absolute h-[2px] bottom-12 w-full rounded-[10px]',
                             style.hr,
                         )}
                     />
+                    <div data-tooltip-id="9" style={{}}>
+                        1 {t('onboarding.outOf')} 2
+                    </div>
                 </Swiper>
             </div>
         </div>

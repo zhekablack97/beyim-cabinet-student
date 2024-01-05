@@ -1,0 +1,1 @@
+export { getTranslatedTooltipContent } from './TooltipData';

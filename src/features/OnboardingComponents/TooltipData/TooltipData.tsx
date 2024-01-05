@@ -1,8 +1,8 @@
 // Your translation file
 
 import { useTranslation } from 'react-i18next';
-import style from '../OnboardingComponents.module.scss';
-import { getData } from './data';
+import style from './TooltipData.module.scss';
+import { getData } from '../utils/data';
 interface ITooltipData {
     activeActivity: string;
     activeAssessment: string;
@@ -20,12 +20,12 @@ export const getTranslatedTooltipContent = ({
         {
             currrenSection: 1,
             id: '1',
-            place: 'left',
+            place: 'left-start',
             content: (
                 <div className={style.onBoarding}>
-                    <span>1 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step1.title')}</h2>
-                    <p>{t('onboarding:step1.paragraph')}</p>
+                    <span>1 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step1.title')}</h2>
+                    <p>{t('onboarding.step1.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transformY12,
@@ -34,12 +34,13 @@ export const getTranslatedTooltipContent = ({
         {
             currrenSection: 1,
             id: '2',
-            place: 'left',
+            place: 'left-start',
+            offset: 26,
             content: (
                 <div className={style.onBoarding}>
-                    <span>1 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step2.title')}</h2>
-                    <p>{t('onboarding:step2.paragraph')}</p>
+                    <span>1 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step2.title')}</h2>
+                    <p>{t('onboarding.step2.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform22Y,
@@ -51,21 +52,21 @@ export const getTranslatedTooltipContent = ({
             place: 'bottom',
             content: (
                 <div className={style.onBoarding}>
-                    <span>1 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step3.title')}</h2>
-                    <p>{t('onboarding:step3.paragraph')}</p>
+                    <span>1 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step3.title')}</h2>
+                    <p>{t('onboarding.step3.paragraph')}</p>
                 </div>
             ),
         },
         {
             currrenSection: 1,
             id: '4',
-            place: 'left',
+            place: 'left-start',
             content: (
                 <div className={style.onBoarding}>
-                    <span>1 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step4.title')}</h2>
-                    <p>{t('onboarding:step4.paragraph')}</p>
+                    <span>1 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step4.title')}</h2>
+                    <p>{t('onboarding.step4.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform14,
@@ -77,9 +78,9 @@ export const getTranslatedTooltipContent = ({
             place: 'left',
             content: (
                 <div className={style.onBoarding}>
-                    <span>2 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step5.title')}</h2>
-                    <p>{t('onboarding:step5.paragraph')}</p>
+                    <span>2 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step5.title')}</h2>
+                    <p>{t('onboarding.step5.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform17,
@@ -91,9 +92,9 @@ export const getTranslatedTooltipContent = ({
             place: 'right',
             content: (
                 <div className={style.onBoarding}>
-                    <span>2 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step6.title')}</h2>
-                    <p>{t('onboarding:step6.paragraph')}</p>
+                    <span>2 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step6.title')}</h2>
+                    <p>{t('onboarding.step6.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform18,
@@ -102,12 +103,12 @@ export const getTranslatedTooltipContent = ({
         {
             currrenSection: 3,
             id: '7',
-            place: 'right',
+            place: 'right-start',
             content: (
                 <div className={style.onBoarding}>
-                    <span>3 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step7.title')}</h2>
-                    <p>{t('onboarding:step7.paragraph')}</p>
+                    <span>3 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step7.title')}</h2>
+                    <p>{t('onboarding.step7.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform19,
@@ -119,9 +120,9 @@ export const getTranslatedTooltipContent = ({
             place: 'right',
             content: (
                 <div className={style.onBoarding}>
-                    <span>3 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step8.title')}</h2>
-                    <p>{t('onboarding:step8.paragraph')}</p>
+                    <span>3 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step8.title')}</h2>
+                    <p>{t('onboarding.step8.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform26,
@@ -133,9 +134,9 @@ export const getTranslatedTooltipContent = ({
             place: 'right',
             content: (
                 <div className={style.onBoarding}>
-                    <span>3 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step9.title')}</h2>
-                    <p>{t('onboarding:step9.paragraph')}</p>
+                    <span>3 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step9.title')}</h2>
+                    <p>{t('onboarding.step9.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform27,
@@ -147,10 +148,10 @@ export const getTranslatedTooltipContent = ({
             place: 'right',
             content: (
                 <div className={style.onBoarding}>
-                    <span>3 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step1011.title')}</h2>
+                    <span>3 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step1011.title')}</h2>
                     <p>
-                        {t('onboarding:step1011.paragraph')}
+                        {t('onboarding.step1011.paragraph')}
                         <div
                             className="d-flex"
                             style={{
@@ -183,10 +184,10 @@ export const getTranslatedTooltipContent = ({
             place: 'right',
             content: (
                 <div className={style.onBoarding}>
-                    <span>4 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step12.title')}</h2>
+                    <span>4 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step12.title')}</h2>
                     <p>
-                        {t('onboarding:step12.paragraph')}
+                        {t('onboarding.step12.paragraph')}
                         <img
                             src={
                                 currentStep === 12
@@ -212,9 +213,9 @@ export const getTranslatedTooltipContent = ({
             place: 'left',
             content: (
                 <div className={style.onBoarding}>
-                    <span>5 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step14.title')}</h2>
-                    <p>{t('onboarding:step14.paragraph')}</p>
+                    <span>5 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step14.title')}</h2>
+                    <p>{t('onboarding.step14.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform16,
@@ -226,9 +227,9 @@ export const getTranslatedTooltipContent = ({
             place: 'left',
             content: (
                 <div className={style.onBoarding}>
-                    <span>5 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step15.title')}</h2>
-                    <p>{t('onboarding:step15.paragraph')}</p>
+                    <span>5 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step15.title')}</h2>
+                    <p>{t('onboarding.step15.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform23,
@@ -240,10 +241,10 @@ export const getTranslatedTooltipContent = ({
             place: 'left',
             content: (
                 <div className={style.onBoarding}>
-                    <span>5 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step16.title')}</h2>
+                    <span>5 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step16.title')}</h2>
                     <p>
-                        {t('onboarding:step16.paragraph')}
+                        {t('onboarding.step16.paragraph')}
                         <img
                             src={'/static/icons/lightningActive.svg'}
                             alt="star"
@@ -265,9 +266,9 @@ export const getTranslatedTooltipContent = ({
             place: 'left',
             content: (
                 <div className={style.onBoarding}>
-                    <span>5 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step17.title')}</h2>
-                    <p>{t('onboarding:step17.paragraph')}</p>
+                    <span>5 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step17.title')}</h2>
+                    <p>{t('onboarding.step17.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform22,
@@ -279,8 +280,8 @@ export const getTranslatedTooltipContent = ({
             place: 'left',
             content: (
                 <div className={style.onBoarding}>
-                    <span>5 {t('onboarding:outOf')} 5</span>
-                    <h2>{t('onboarding:step18.title')}</h2>
+                    <span>5 {t('onboarding.outOf')} 5</span>
+                    <h2>{t('onboarding.step18.title')}</h2>
                     <div
                         style={{
                             display: 'flex',
@@ -300,7 +301,7 @@ export const getTranslatedTooltipContent = ({
                             </div>
                         ))}
                     </div>
-                    <p>{t('onboarding:step18.paragraph')}</p>
+                    <p>{t('onboarding.step18.paragraph')}</p>
                 </div>
             ),
             classNameTooltip: style.transform22,

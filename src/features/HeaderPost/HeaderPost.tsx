@@ -20,6 +20,7 @@ export const HeaderPost: React.FC<IHeaderPost> = ({
                 src={iconUrl}
                 alt={objective}
                 className="w-10 h-10  grow-0 shrink-0 rounded-full overflow-hidden"
+                data-tooltip-id="2"
             />
             <div className=" overflow-hidden">
                 <h2 className="text-base leading-5 mb-1">{subject}</h2>
