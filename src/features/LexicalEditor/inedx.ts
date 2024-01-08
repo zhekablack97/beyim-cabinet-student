@@ -1,0 +1,1 @@
+export {LexcialEditor} from './LexcialEditor';

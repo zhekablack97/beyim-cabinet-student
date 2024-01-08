@@ -47,7 +47,8 @@
     "swiper": "^11.0.5",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "yup": "^1.3.2"
+    "yup": "^1.3.2",
+    "beyim-docs": "github:nisbeyim/beyim-docs#5cbe98ddc92d9cd90c2486a172a6656b54a45a85"
   },
   "husky": {
     "hooks": {
