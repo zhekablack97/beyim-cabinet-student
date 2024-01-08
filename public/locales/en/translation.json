@@ -179,5 +179,16 @@
             "title": "The Assessment Is Open",
             "paragraph": "After completing the assessment, the following section will be available for you to study."
         }
+    },
+    "favorite": {
+        "title": "My actions",
+        "subTitle": "Here are your saved and favorite publications",
+        "favorite": "Bookmarks",
+        "likes": "Liked publications",
+        "type": "Type",
+        "subject": "Subject",
+        "activity": "Activity",
+        "video": "Video",
+        "image": "Post pictures"
     }
 }

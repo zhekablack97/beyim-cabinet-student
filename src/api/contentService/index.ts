@@ -8,4 +8,8 @@ export {
     useLazyGetOnePostQuery,
     useGetCustomFeedQuery,
     useLazyGetCustomFeedQuery,
+    useGetBookmarksFeedQuery,
+    useGetLikesFeedQuery,
+    useLazyGetBookmarksFeedQuery,
+    useLazyGetLikesFeedQuery,
 } from './contentServiceApi';

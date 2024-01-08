@@ -10,6 +10,7 @@ import { login } from './features/slice/authSlice';
 import Feed from './pages/feed';
 import More from './pages/feed/more';
 import Onboarding from './pages/onboarding';
+import Favorites from './pages/favorites';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -36,9 +37,10 @@ function App() {
       acts like a catch-all for URLs that we don't have explicit
       routes for. */}
                 </Route>
+                <Route path="/favorites" element={<Favorites />} />
                 <Route path="/feed">
                     <Route index element={<Feed />} />
-                    <Route path=":id" element={<More />} />
+                    {/* <Route path="/favorites" element={<div>xxx</div>} /> */}
                 </Route>
 
                 <Route path="*" element={<div>страница ошибки </div>} />
