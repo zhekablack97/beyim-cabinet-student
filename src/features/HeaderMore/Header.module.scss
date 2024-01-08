@@ -1,16 +1,17 @@
 .wrapper {
+    z-index: 2;
     background-color: #fff;
-    box-shadow: 0px 0px 34px 0px rgba(103, 138, 161, 0.20); 
+    box-shadow: 0px 0px 34px 0px rgba(103, 138, 161, 0.2);
 }
 
-.title{
-    color: var(--color-black-800, #232F37); 
+.title {
+    color: var(--color-black-800, #232f37);
 }
 
 .subText {
-    color: var(--color-black-400, #678AA1); 
+    color: var(--color-black-400, #678aa1);
 }
 
-.button{
-    border-color: var(--Stroke, #E3E5EA);;
+.button {
+    border-color: var(--Stroke, #e3e5ea);
 }

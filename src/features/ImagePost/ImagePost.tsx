@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { HeaderPost } from '../HeaderPost';
 import { FooterPost } from '../FooterPost';
 import { SliderPopup } from '../SliderPopup';
+import { LexcialEditor } from '../LexicalEditor/LexcialEditor';
 
 interface IImagePost {
     data: Post;
@@ -132,7 +133,9 @@ export const ImagePost: React.FC<IImagePost> = ({ data }) => {
                         </>
                     )}
                 </div>
-                <div>контент редактора </div>
+                <div>
+                    <LexcialEditor fieldData={data.description} />
+                </div>
             </div>
 
             <FooterPost postId={data.id} contentId={data.contentId} />

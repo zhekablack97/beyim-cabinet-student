@@ -8,6 +8,7 @@ import {
     useGetOnePostQuery,
     useGetOneQuery,
 } from '../../../api/contentService';
+import { LexcialEditor } from '../../../features/LexicalEditor/LexcialEditor';
 
 const More: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -85,7 +86,11 @@ const More: React.FC = () => {
                                 style.content,
                             )}
                         >
-                            {dataContent?.data.content.body}
+                            {dataContent?.data && (
+                                <LexcialEditor
+                                    fieldData={dataContent.data.content.body}
+                                />
+                            )}
                         </div>
                     </div>
                 </>

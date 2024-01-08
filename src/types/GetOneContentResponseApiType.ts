@@ -1,6 +1,8 @@
+import { Locale } from './common';
+
 export interface Content {
     id: string;
-    locale: string;
+    locale: Locale;
     body: string;
     description: string;
     resources: any[];
