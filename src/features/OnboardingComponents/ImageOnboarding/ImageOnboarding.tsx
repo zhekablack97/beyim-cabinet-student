@@ -6,6 +6,7 @@ import { HeaderPost } from '../../HeaderPost';
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
 import { FooterOnboarding } from '../FooterOnboarding';
+import { useEffect, useState } from 'react';
 
 export const ImageOnboarding: React.FC<{
     currentStep: number;
@@ -18,6 +19,15 @@ export const ImageOnboarding: React.FC<{
     };
     const { t } = useTranslation();
     const data = getData();
+    const [levelSame, setLevelSame] = useState('5');
+    useEffect(() => {
+        if (currentStep === 5) {
+            setLevelSame('5');
+        }
+        if (currentStep === 6) {
+            setLevelSame('6');
+        }
+    }, [currentStep]);
 
     return (
         <article
@@ -60,7 +70,7 @@ export const ImageOnboarding: React.FC<{
                         <SwiperSlide className="pb-3"></SwiperSlide>
                     </Swiper>
                 </div>
-                <div id="step-5"></div>
+                <div></div>
                 <div className={style.content}>
                     <div className={`${style.accordion} `}>
                         <h3 className={`${style.accordion_title}`}>
@@ -75,6 +85,7 @@ export const ImageOnboarding: React.FC<{
                 </div>
             </div>
             <FooterOnboarding />
+            <div></div>
         </article>
     );
 };

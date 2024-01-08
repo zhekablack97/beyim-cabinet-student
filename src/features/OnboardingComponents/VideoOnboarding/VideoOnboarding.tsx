@@ -2,20 +2,28 @@ import classNames from 'classnames';
 import { Post } from '../../../types/GetContentsResponseApiType';
 
 import style from '../../../features/VideoPost/VideoPost.module.scss';
-import styleImage from '../../ImagePost/ImagePost.module.scss';
 import styleBoarding from '../OnboardingComponents.module.scss';
 
 import { HeaderPost } from '../../HeaderPost';
 import { BlockVideo } from '../../VideoPost/utils';
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
-import { FooterOnboarding } from '../FooterOnboarding';
+import { useEffect, useState } from 'react';
 
 export const VideoOnboarding: React.FC<{
     currentStep: number;
 }> = ({ currentStep }) => {
     const { t } = useTranslation();
     const data = getData();
+    const [levelSame, setLevelSame] = useState('5');
+    useEffect(() => {
+        if (currentStep === 5) {
+            setLevelSame('5');
+        }
+        if (currentStep === 6) {
+            setLevelSame('6');
+        }
+    }, [currentStep]);
     return (
         <article
             className={classNames(
@@ -23,6 +31,7 @@ export const VideoOnboarding: React.FC<{
                 'p-4 rounded-2xl sliderImagePost',
                 currentStep === 5 || currentStep === 6 ? 'z-210' : '',
             )}
+            id={`step-${levelSame}`}
         >
             <HeaderPost
                 iconUrl={data.subjects[0].url}

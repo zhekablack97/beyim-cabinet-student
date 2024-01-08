@@ -20,20 +20,29 @@ export interface TooltipOnBoardingProps {
     classArrow?: string;
     offset?: number;
 }
-const easeOutQuad = (t: number, b: number, c: number, d: number) => {
-    t /= d;
-    return -c * t * (t - 2) + b;
-};
+
 const scrollToElement = (step: number): Promise<void> => {
     return new Promise(resolve => {
         const element = document.getElementById(`step-${step}`);
         if (element) {
-            element.scrollIntoView({
-                behavior: 'smooth',
-            });
+            const elementPosition =
+                element.getBoundingClientRect().y + window.scrollY;
+            const scrollLocation = step === 5 ? 300 : -200;
+            if (step !== 5) {
+                window.scrollTo({
+                    top: elementPosition + scrollLocation,
+                    behavior: 'smooth',
+                });
+            }
             setTimeout(() => {
+                if (step === 5) {
+                    window.scrollTo({
+                        top: elementPosition + scrollLocation,
+                        behavior: 'smooth',
+                    });
+                }
                 resolve();
-            }, 1200);
+            }, 600);
         } else {
             resolve();
         }
@@ -64,9 +73,14 @@ export const TooltipOnBoarding = ({
                 currentStep < 18 &&
                 currentStep > 0
             ) {
-                scrollToElement(currentStep + 1).then(() => {
+                if (currentStep === 6) {
                     setCurrentStep(currentStep + 1);
-                });
+                    scrollToElement(currentStep + 1);
+                } else {
+                    scrollToElement(currentStep + 1).then(() => {
+                        setCurrentStep(currentStep + 1);
+                    });
+                }
             }
         };
         document.addEventListener('keydown', handleKeyPress);
@@ -101,7 +115,7 @@ export const TooltipOnBoarding = ({
                             navigate(`/feed`);
                         }}
                     >
-                        {t('onboarding:close')}
+                        {t('onboarding.close')}
                     </button>
                     <div className="flex gap-3">
                         <div
@@ -135,9 +149,16 @@ export const TooltipOnBoarding = ({
                             aria-disabled={currentStep === 18}
                             onClick={() => {
                                 if (currentStep === 18) return;
-                                scrollToElement(currentStep + 1).then(() => {
+                                if (currentStep === 6) {
                                     setCurrentStep(currentStep + 1);
-                                });
+                                    scrollToElement(currentStep + 1);
+                                } else {
+                                    scrollToElement(currentStep + 1).then(
+                                        () => {
+                                            setCurrentStep(currentStep + 1);
+                                        },
+                                    );
+                                }
                             }}
                         >
                             <img

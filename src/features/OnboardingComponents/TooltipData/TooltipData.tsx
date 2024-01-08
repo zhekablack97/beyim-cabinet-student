@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next';
 import style from './TooltipData.module.scss';
 import { getData } from '../utils/data';
+
 interface ITooltipData {
     activeActivity: string;
     activeAssessment: string;
@@ -127,6 +128,7 @@ export const getTranslatedTooltipContent = ({
             ),
             classNameTooltip: style.transform26,
             classArrow: style.arrow8,
+            offset: 26,
         },
         {
             currrenSection: 3,
@@ -141,6 +143,7 @@ export const getTranslatedTooltipContent = ({
             ),
             classNameTooltip: style.transform27,
             classArrow: style.arrow1,
+            offset: 26,
         },
         {
             currrenSection: 3,
@@ -153,7 +156,7 @@ export const getTranslatedTooltipContent = ({
                     <p>
                         {t('onboarding.step1011.paragraph')}
                         <div
-                            className="d-flex"
+                            className="flex"
                             style={{
                                 gap: '8px',
                                 marginTop: '8px',
@@ -177,6 +180,7 @@ export const getTranslatedTooltipContent = ({
             ),
             classNameTooltip: style.transform26,
             classArrow: style.arrow2,
+            offset: 26,
         },
         {
             currrenSection: 4,
@@ -210,7 +214,7 @@ export const getTranslatedTooltipContent = ({
         {
             currrenSection: 5,
             id: '14',
-            place: 'left',
+            place: 'left-start',
             content: (
                 <div className={style.onBoarding}>
                     <span>5 {t('onboarding.outOf')} 5</span>
@@ -220,6 +224,7 @@ export const getTranslatedTooltipContent = ({
             ),
             classNameTooltip: style.transform16,
             classArrow: style.arrow4,
+            offset: 26,
         },
         {
             currrenSection: 5,
@@ -308,7 +313,6 @@ export const getTranslatedTooltipContent = ({
             classArrow: style.arrow2,
         },
     ];
-    // Translate your content here using the 't' function
 
     return tooltipData;
 };

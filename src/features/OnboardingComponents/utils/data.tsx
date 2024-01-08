@@ -33,16 +33,16 @@ export const getData = () => {
             },
         ],
         star: [
-            '/static/icons/solar_star-bold-gray.svg',
-            '/static/icons/solar_star-bold-gray.svg',
-            '/static/icons/solar_star-bold-gray.svg',
-            '/static/icons/solar_star-bold-gray.svg',
-            '/static/icons/lightning.svg',
+            '/icons/solar_star-bold-gray.svg',
+            '/icons/solar_star-bold-gray.svg',
+            '/icons/solar_star-bold-gray.svg',
+            '/icons/solar_star-bold-gray.svg',
+            '/icons/lightning.svg',
         ],
         starActive: [
-            '/static/icons/solar_star-bold.svg',
-            '/static/icons/solar_star-bold-gray.svg',
-            '/static/icons/solar_star-bold-gray.svg',
+            '/icons/solar_star-bold.svg',
+            '/icons/solar_star-bold-gray.svg',
+            '/icons/solar_star-bold-gray.svg',
         ],
         progress: [
             t('onboarding.progress.first'),
@@ -50,9 +50,9 @@ export const getData = () => {
             t('onboarding.progress.third'),
         ],
         allStar: [
-            '/static/icons/lightningActive.svg',
-            '/static/icons/lightningActive.svg',
-            '/static/icons/lightningActive.svg',
+            '/icons/lightningActive.svg',
+            '/icons/lightningActive.svg',
+            '/icons/lightningActive.svg',
         ],
     };
     return data;

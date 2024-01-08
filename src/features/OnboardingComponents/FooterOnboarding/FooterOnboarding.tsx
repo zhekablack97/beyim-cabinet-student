@@ -7,10 +7,7 @@ export const FooterOnboarding: React.FC = () => {
     return (
         <footer className="flex justify-between items-center">
             <div className="flex gap-4">
-                <button
-                    type="button"
-                    className="flex gap-2 items-center h-7 justify-between"
-                >
+                <button className="flex gap-2 items-center h-7 justify-between">
                     <img
                         src={'/icons/activeHeart.svg'}
                         alt=""

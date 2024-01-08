@@ -2,20 +2,23 @@ import classNames from 'classnames';
 import style from '../../../features/ActivityPost/ActivityPost.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { HeaderPost } from '../../HeaderPost';
 import { indexLatinLetters } from '../../ActivityPost/utils/indexLatinLetters';
 import { useForm } from 'react-hook-form';
-import { Bookmark } from '../../Bookmark';
-import { Like } from '../../like';
+
 import styleQuestion from '../../../features/ActivityPost/utils/Question/Question.module.scss';
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
+import styleOnboarding from '../OnboardingComponents.module.scss';
 
-export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
-    currentStep,
-}) => {
+export const ActivityOnboarding: React.FC<{
+    currentStep: number;
+    setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+    activeActivity: string;
+    setActiveActivity: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ currentStep, setCurrentStep, activeActivity, setActiveActivity }) => {
     const data = getData();
     const { t } = useTranslation();
     const {
@@ -26,17 +29,57 @@ export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
         answer: number | number[];
         id: string;
     }>();
+    const [numberStep, setNumberStep] = useState<string>('8');
+    const [buttonCheckClicked, setButtonCheckClicked] = useState(false);
+    const [buttonStart, setButtonStart] = useState(false);
+    const [labelChecked, setLabelChecked] = useState(false);
 
     const [currentAnswers, setCurrentAnswers] = useState<{
         index: number[];
         isCorrect: boolean;
     }>({ index: [], isCorrect: false });
+
+    useEffect(() => {
+        if (currentStep === 8) {
+            setNumberStep('8');
+        }
+        if (currentStep === 9) {
+            setNumberStep('9');
+        }
+        if (currentStep === 10) {
+            setActiveActivity('10');
+        }
+        if (currentStep === 11) {
+            setActiveActivity('11');
+        }
+
+        setLabelChecked(false);
+    }, [currentStep]);
+    useEffect(() => {
+        if (currentStep === 10) {
+            setTimeout(() => {
+                setLabelChecked(true);
+            }, 500);
+            setTimeout(() => {
+                setButtonCheckClicked(true);
+            }, 1000);
+            setTimeout(() => {
+                setButtonCheckClicked(false);
+            }, 1300);
+            setTimeout(() => {
+                setCurrentStep(prev => (prev >= 10 ? currentStep + 1 : prev));
+            }, 2000);
+        }
+    }, [currentStep]);
+
     return (
         <div
             className={classNames(
                 'p-4 rounded-2xl activity',
                 style.wrapper,
-                currentStep === 7 && 'z-210',
+                currentStep === 7 || currentStep === 10 || currentStep === 11
+                    ? 'z-210'
+                    : '',
             )}
             id="step-7"
             data-tooltip-id="7"
@@ -48,7 +91,30 @@ export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
             />
 
             <div className="relative">
-                <Swiper>
+                <Swiper
+                    autoHeight={true}
+                    modules={[Pagination, Navigation]}
+                    navigation={true}
+                    pagination={{
+                        type: 'fraction',
+                        renderFraction: (
+                            currentClass: string,
+                            totalClass: string,
+                        ) => {
+                            return (
+                                `<span class=" text-base font-bold ${style.pagination} ` +
+                                currentClass +
+                                '"></span>' +
+                                `<span class="text-base font-bold ${style.pagination}"> из </span> ` +
+                                `<span class=" text-base font-bold ${style.pagination} ` +
+                                totalClass +
+                                '"></span>'
+                            );
+                        },
+                    }}
+                    height={200}
+                    updateOnWindowResize={true}
+                >
                     {data.subjects.map((item, index: number) => (
                         <SwiperSlide key={index}>
                             <div className="pb-16">
@@ -61,43 +127,48 @@ export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
                                         </h2>
 
                                         {data.options.map(
-                                            (option: any, index: number) => {
+                                            (option, index: number) => {
                                                 const id = nanoid();
-
                                                 return (
-                                                    <div key={option.Body}>
+                                                    <div key={option}>
                                                         <input
                                                             id={id}
                                                             type={'radio'}
                                                             value={index}
                                                             {...register(
-                                                                `answer`,
+                                                                'answer',
                                                             )}
+                                                            checked={
+                                                                index === 1 &&
+                                                                labelChecked
+                                                            }
                                                             className={classNames(
-                                                                styleQuestion.input,
+                                                                labelChecked &&
+                                                                    styleQuestion.input,
                                                                 'hidden',
                                                             )}
                                                         />
                                                         <label
+                                                            data-tooltip-id={
+                                                                index === 1
+                                                                    ? activeActivity
+                                                                    : ''
+                                                            }
                                                             htmlFor={id}
                                                             className={classNames(
                                                                 'border-2 rounded-xl p-4 mb-1 cursor-pointer flex items-center gap-3 duration-200',
                                                                 styleQuestion.option,
-                                                                currentAnswers.index.includes(
-                                                                    //@ts-ignore
-                                                                    String(
-                                                                        index,
-                                                                    ),
-                                                                )
-                                                                    ? currentAnswers.isCorrect
-                                                                        ? styleQuestion.answerTrue
-                                                                        : styleQuestion.answerFalse
-                                                                    : '',
+                                                                currentStep ===
+                                                                    11 &&
+                                                                    index ===
+                                                                        1 &&
+                                                                    styleQuestion.answerTrue,
                                                             )}
                                                         >
                                                             <span
                                                                 className={classNames(
                                                                     'block w-6 h-6 shrink-0 grow-0 border-2 bg-center  rounded-full',
+
                                                                     styleQuestion.checked,
                                                                 )}
                                                             />
@@ -138,7 +209,6 @@ export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
                                                         className={classNames(
                                                             'text-base font-bold ',
                                                             style.count,
-
                                                             style.active,
                                                         )}
                                                     >
@@ -170,26 +240,42 @@ export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
                                             <div className="flex gap-2">
                                                 <button
                                                     className={classNames(
-                                                        ' w-12 h-11 flex items-center justify-center rounded-2xl duration-200',
+                                                        'w-12 h-11 flex items-center justify-center rounded-2xl duration-200',
                                                         styleQuestion.hintButton,
                                                         currentStep === 8 &&
                                                             'z-210',
                                                     )}
                                                 >
                                                     <img
+                                                        className={` block h-6 w-6`}
                                                         src="/icons/hint.svg"
-                                                        className="block h-6 w-6"
                                                         alt=""
                                                     />
                                                 </button>
                                                 <button
-                                                    className={classNames(
-                                                        'flex items-center tracking-[1px] justify-center px-6 rounded-2xl uppercase text-xs font-bold',
-                                                        styleQuestion.checkAnswer,
-                                                        styleQuestion.checkAnswerDisable,
-                                                    )}
+                                                    data-tooltip-id="8"
+                                                    className={`${
+                                                        !labelChecked
+                                                            ? styleOnboarding.button_disabled
+                                                            : styleOnboarding.button_info
+                                                    } ${
+                                                        styleOnboarding.button_info_text
+                                                    } ${
+                                                        buttonCheckClicked
+                                                            ? styleOnboarding.activeButton
+                                                            : ''
+                                                    }
+                                                    ${
+                                                        currentStep === 11 &&
+                                                        styleOnboarding.button_info
+                                                    }
+                    `}
                                                 >
-                                                    проверить
+                                                    {currentStep !== 11
+                                                        ? t(
+                                                              'onboarding.post.check',
+                                                          )
+                                                        : t('onboarding.again')}
                                                 </button>
                                             </div>
                                         </div>
@@ -200,15 +286,12 @@ export const ActivityOnboarding: React.FC<{ currentStep: number }> = ({
                     ))}
 
                     <hr
-                        data-tooltip-id="8"
+                        data-tooltip-id={numberStep}
                         className={classNames(
                             'absolute h-[2px] bottom-12 w-full rounded-[10px]',
                             style.hr,
                         )}
                     />
-                    <div data-tooltip-id="9" style={{}}>
-                        1 {t('onboarding.outOf')} 2
-                    </div>
                 </Swiper>
             </div>
         </div>

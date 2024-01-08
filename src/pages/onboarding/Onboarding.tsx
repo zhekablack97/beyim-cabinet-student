@@ -8,7 +8,6 @@ import { getData } from '../../features/OnboardingComponents/utils/data';
 import { ImageOnboarding } from '../../features/OnboardingComponents/ImageOnboarding';
 import { VideoOnboarding } from '../../features/OnboardingComponents/VideoOnboarding';
 import { ActivityOnboarding } from '../../features/OnboardingComponents/ActivityOnboarding';
-import More from '../feed/more';
 import { Header } from '../../features/Header';
 import { TooltipOnBoarding } from '../../features/OnboardingComponents/TooltipOnboarding';
 import { getTranslatedTooltipContent } from '../../features/OnboardingComponents/TooltipData';
@@ -24,12 +23,13 @@ const Onboarding: React.FC = () => {
 
     const [withVideo, setWithVideo] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
+    const [activeActivity, setActiveActivity] = useState('10');
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const data = getData();
     const tooltipData = getTranslatedTooltipContent({
-        currentStep: 11,
+        currentStep: currentStep,
         activeAssessment: '1',
-        activeActivity: '1',
+        activeActivity,
     });
     useEffect(() => {
         if (withVideo) {
@@ -46,15 +46,19 @@ const Onboarding: React.FC = () => {
             setTimeout(() => {
                 setWithVideo(true);
             }, 400);
+        } else {
+            setWithVideo(false);
         }
-        setWithVideo(false);
     }, [currentStep]);
 
     useEffect(() => {
         if (withVideo) {
             const element = document.getElementById(`step-1`);
             if (element) {
-                window.scrollTo(0, 0);
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                });
             }
         }
     }, [withVideo]);
@@ -62,7 +66,7 @@ const Onboarding: React.FC = () => {
     return (
         <div className={classNames('min-h-screen', style.wrapper)}>
             <div className={styleOnboarding.overlay}></div>
-            {tooltipData.slice(0, 9).map(item => {
+            {tooltipData.slice(0, 14).map(item => {
                 return (
                     <div
                         key={item.id}
@@ -124,9 +128,13 @@ const Onboarding: React.FC = () => {
                             <ImageOnboarding currentStep={currentStep} />
                         )}
                         <VideoOnboarding currentStep={currentStep} />
-                        <ActivityOnboarding currentStep={currentStep} />
+                        <ActivityOnboarding
+                            currentStep={currentStep}
+                            setCurrentStep={setCurrentStep}
+                            activeActivity={activeActivity}
+                            setActiveActivity={setActiveActivity}
+                        />
                     </div>
-                    <More />
                 </div>
                 <aside className=" col-span-4 pt-3 flex flex-col gap-5">
                     <div
@@ -199,7 +207,10 @@ const Onboarding: React.FC = () => {
                         className={classNames(
                             'p-4 rounded-2xl sticky top-[181px]',
                             styleStatus.wrapper,
-                            currentStep === 2 || currentStep === 3
+                            currentStep === 2 ||
+                                currentStep === 3 ||
+                                currentStep === 14 ||
+                                currentStep === 15
                                 ? 'z-210'
                                 : '',
                         )}
@@ -212,6 +223,7 @@ const Onboarding: React.FC = () => {
                                         styleStatus.section,
                                         'text-sm font-medium',
                                     )}
+                                    data-tooltip-id="14"
                                 >
                                     Раздел
                                 </h2>
