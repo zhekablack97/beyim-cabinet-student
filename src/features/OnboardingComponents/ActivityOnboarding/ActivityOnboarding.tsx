@@ -82,8 +82,9 @@ export const ActivityOnboarding: React.FC<{
                     : '',
             )}
             data-tooltip-id="7"
+            id="step-7"
         >
-            <div id="step-7">
+            <div>
                 <div id={`step-${activeActivity}`}>
                     <HeaderPost
                         iconUrl={data.subjects[0].url}
