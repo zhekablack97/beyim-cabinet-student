@@ -4,6 +4,7 @@ import { Content } from '../../types/GetOneContentResponseApiType';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BeyimDocs } from 'beyim-docs';
 import 'beyim-docs/dist/style.css';
+
 type Props = {
     fieldData?: string;
 };
