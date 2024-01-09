@@ -11,6 +11,7 @@ import style from './Question.module.scss';
 import { indexLatinLetters } from '../indexLatinLetters';
 import { Like } from '../../../like';
 import { Bookmark } from '../../../Bookmark';
+import { LexcialEditor } from '../../../LexicalEditor/LexcialEditor';
 
 interface IQuestion {
     data: Activity;
@@ -28,7 +29,6 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
         answer: number | number[];
         id: string;
     }>();
-
 
     const [postCheckAnswer] = usePostCheckAnswerMutation();
     const [currentAnswers, setCurrentAnswers] = useState<{
@@ -67,7 +67,6 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
             getHint({ id: data.id, offset: currentHints.length })
                 .unwrap()
                 .then(hint => {
-                   
                     setCurrentHints(prev => {
                         const oldState = [...prev];
 
@@ -93,21 +92,12 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
             <form>
                 <h2 className="text-base font-bold mb-4 ">{data.title}</h2>
                 <div className="mb-4">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Perspiciatis, architecto magnam delectus voluptas omnis,
-                    saepe accusantium ipsam maxime officiis nemo nulla iusto
-                    earum molestiae explicabo quod totam soluta dolorem laborum.
-                    Provident nihil sit doloribus molestias nam ab saepe nemo
-                    dicta eos culpa dolores unde quam debitis, incidunt officiis
-                    perspiciatis dolor? Ut, molestiae est voluptate blanditiis
-                    molestias fugit odio itaque veniam.
-                    {/* {data.body} */}
+                    <LexcialEditor fieldData={data.body} />
                 </div>
 
                 {data.options.map((option, index) => {
                     const id = nanoid();
 
-                   
                     return (
                         <div key={option.Body}>
                             <input
@@ -147,12 +137,8 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                                 <span className={classNames(style.index)}>
                                     {indexLatinLetters[index]}
                                 </span>
-                                Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Ipsam hic alias quod nam
-                                facere ad provident autem delectus placeat!
-                                Fugiat quaerat vitae ipsam explicabo a similique
-                                qui ducimus distinctio molestias?
-                                {/* {option.Body} */}
+
+                                <LexcialEditor fieldData={option.Body} />
                             </label>
                         </div>
                     );
@@ -179,12 +165,8 @@ export const Question: React.FC<IQuestion> = ({ data, onResize }) => {
                                     Подсказка {index + 1} из {data.hintsCount}
                                 </span>
                                 <span className={classNames(' block')}>
-                                    {' '}
-                                    Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit.
+                                    <LexcialEditor fieldData={item.body} />
                                 </span>
-
-                                {/* {item.body} */}
                             </div>
                         );
                     })}

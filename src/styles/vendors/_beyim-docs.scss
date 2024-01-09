@@ -1,0 +1,147 @@
+.beyimDocs-wrapper {
+.editor-demo-root {
+    background-color: rgba(233, 240, 243) !important;
+    // background-image: url('../../static/image/DotBg.svg');
+    background-size: 2000px !important;
+    height: 100%;
+    overflow: auto;
+    flex-grow: 1;
+}
+.toolbar {
+    position: fixed !important;
+    z-index: 2;
+}
+.toolbar-container.toolbar-container.toolbar-container {
+    width: calc(100% - 240px);
+}
+.editor-breadcrumbs.editor-breadcrumbs.editor-breadcrumbs {
+    margin-top: 64.5px;
+}
+.toolbar-buttons {
+    display: flex;
+    align-items: center !important;
+}
+.toolbar-level {
+    margin: 0 !important;
+}
+.toolbar-publish.toolbar-publish {
+    box-shadow: none !important;
+    font-weight: 400;
+}
+.editorHeading__buttons-save {
+    box-shadow: none !important;
+    & > span {
+        color: #fff;
+    }
+    &:disabled {
+        & > span {
+            color: #364954;
+            font-weight: 400;
+        }
+    }
+}
+.carousel-img {
+    min-width: 320px !important;
+    width: 320px !important;
+}
+.PlaygroundEditorTheme__paragraph {
+    margin-top: 0 !important;
+    line-height: 24px !important; /* 150% */
+
+    @media screen and (max-width: 750px) {
+        color: var(--fonts-font-main, #2e3138) !important;
+        font-family: Inter !important;
+        font-size: 14.122px !important;
+        font-style: normal !important;
+        font-weight: 400 !important;
+        line-height: 21.183px !important; /* 150% */
+    }
+}
+.PlaygroundEditorTheme__listItem {
+    margin: 0 !important;
+    line-height: 24px !important; /* 150% */
+    @media screen and (max-width: 750px) {
+        color: var(--fonts-font-main, #2e3138) !important;
+        font-family: Inter !important;
+        font-size: 14.122px !important;
+        font-style: normal !important;
+        font-weight: 400 !important;
+        line-height: 21.183px !important; /* 150% */
+    }
+}
+.katex-renderer-container {
+    width: fit-content !important;
+    display: inline !important;
+}
+.editor-image,
+.editor-image > div,
+.editor-image > div > img {
+    width: fit-content !important;
+    display: inline !important;
+    align-items: center !important;
+    justify-content: center !important;
+    max-width: 100% !important;
+    height: auto !important;
+}
+.ContentEditable__root {
+    @media screen and (max-width: 750px) {
+        padding: 40px 8px !important;
+    }
+}
+.plyr {
+    padding: 0 !important;
+}
+.posts-sidebar.posts-sidebar.posts-sidebar {
+    height: 100%;
+}
+.editor-shell {
+    height: 100%;
+}
+.posts-sidebar-list.posts-sidebar-list {
+    padding-bottom: 4px;
+}
+.editor-breadcrumbs > p {
+    color: #577487;
+}
+.editor-container.editor-container.editor-container {
+    height: fit-content;
+}
+.content-reader .editor-breadcrumbs {
+    display: none !important;
+}
+.questionBody__options-optionWrapper--checkbox.questionBody__options-optionWrapper--checkbox.questionBody__options-optionWrapper--checkbox {
+    margin: 0;
+}
+.questionBody__question-input > .PlaygroundEditorTheme__paragraph {
+    line-height: 17px !important;
+    font-size: 14px;
+}
+.ReactModal__Content > h3 {
+    color: var(--color-black-800, #232f37);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+}
+.ReactModal__Content > p {
+    color: var(--color-black-main, #364954);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+    margin: 8px 0 24px 0;
+}
+// .editor-container {
+//   max-width: none !important;
+// }
+.editor-shell {
+    border-radius: 16px !important;
+}
+
+.editor-scroller-readOnly {
+    width: 100% !important;
+}
+}

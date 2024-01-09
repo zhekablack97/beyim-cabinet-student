@@ -4,6 +4,7 @@ import { HeaderPost } from '../HeaderPost';
 import { FooterPost } from '../FooterPost';
 import { BlockVideo } from './utils';
 import style from './VideoPost.module.scss';
+import { LexcialEditor } from '../LexicalEditor/LexcialEditor';
 
 interface IVideoPost {
     data: Post;
@@ -28,7 +29,9 @@ export const VideoPost: React.FC<IVideoPost> = ({ data }) => {
                     thumbnail={data.thumbnail}
                 />
             </div>
-            <div>контент редактора</div>
+            <div>
+                <LexcialEditor fieldData={data.description} />
+            </div>
             <FooterPost contentId={data.contentId} postId={data.id} />
         </article>
     );

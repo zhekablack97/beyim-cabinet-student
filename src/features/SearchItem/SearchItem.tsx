@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { SliderPopup } from '../SliderPopup';
 import ReactModal from 'react-modal';
 import { Link, useSearchParams } from 'react-router-dom';
+import { LexcialEditor } from '../LexicalEditor/LexcialEditor';
 
 interface ISearchItem {
     data: Post;
@@ -125,13 +126,7 @@ export const SearchItem: React.FC<ISearchItem> = ({
                             isOpenPost ? 'h-fit' : 'h-[42px]',
                         )}
                     >
-                        {' '}
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Tempora cumque incidunt voluptates cum, sed vel
-                        maiores inventore eum omnis, libero quam explicabo,
-                        deserunt maxime necessitatibus assumenda porro laborum
-                        architecto voluptatem!
-                        {data.description}
+                        <LexcialEditor fieldData={data.description} />
                     </div>
                     <button
                         onClick={() => {
