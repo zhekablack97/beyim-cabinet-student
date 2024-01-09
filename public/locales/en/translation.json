@@ -41,7 +41,7 @@
         "picture": "Illustration Posts"
     },
     "search": {
-        "placeholder": "search", 
+        "placeholder": "search",
         "empty": {
             "valueTitleFirst": "results found for ",
             "valueTitleSecond": "",
@@ -61,9 +61,123 @@
             "language": "Language",
             "ru": "Russian",
             "kk": "Kazakh",
-            "en": "English", 
+            "en": "English",
             "apply": "Apply",
             "resetFilter": "reset filter"
+        }
+    },
+    "onboarding": {
+        "modal": {
+            "fiveStages": "There are 5 stages in total",
+            "greeting": "Welcome to Beyim!",
+            "greetingText": "Are you ready to dive into the limitless possibilities and improve your experience? Let's learn the basics together so that you can enjoy all the benefits of our product.",
+            "skip": "Skip",
+            "come": "Let's go!"
+        },
+        "subjects": {
+            "physics": "Physics",
+            "biology": "Biology",
+            "chemistry": "Chemistry"
+        },
+        "objective": "Distinctive features of representatives of the 5 kingdoms of the living",
+        "videoPost": "Video posts",
+        "imagePost": "Image posts",
+        "allFeed": "All feed",
+        "watch": "Watch",
+        "section": "Section",
+        "sectionName": "Kinematics",
+        "detail": "Learn more",
+        "more": "more",
+        "outOf": "out of",
+        "close": "Close",
+        "completed": "Completed",
+        "evaluationSection": "Evaluation of the section",
+        "again": "Again",
+        "post": {
+            "titleImage": "Gravity: The Force Uniting the Universe",
+            "descriptionImage": "The gravitational laws discovered by Isaac Newton describe the interaction of masses in the universe. This force not only keeps us on Earth, but also controls the movement of planets and stars.",
+            "titleVideo": "What caused Galileo to doubt the truth of Aristotle's statements?",
+            "descriptionVideo": "Galileo's process of doubting Aristotle's teachings began when he began observing celestial objects through a telescope that had just been invented",
+            "activityQuestion": "What is mechanical energy and what are its two types?",
+            "option1": "This is the sum of kinetic and potential energy.",
+            "option2": "This is the sum of the energy of motion and the energy of heat.",
+            "option3": "This is the sum of the energy of motion and the energy of light",
+            "option4": "This is the sum of the energy of light and the energy of heat",
+            "check": "Check",
+            "assessmentTitle": "Magnetic properties of the substance"
+        },
+        "progress": {
+            "first": "Movement and its description",
+            "second": "Speed and acceleration",
+            "third": "Traffic schedules"
+        },
+        "step1": {
+            "title": "Filter by subject",
+            "paragraph": "Move freely and choose subjects to study or pull up."
+        },
+        "step2": {
+            "title": "Feed of a subject",
+            "paragraph": "It consists of posts with videos and pictures, after studying which, there is an activity for fixing"
+        },
+        "step3": {
+            "title": "Menu progress",
+            "paragraph": "Which shows which section and topic you are currently studying"
+        },
+        "step4": {
+            "title": "Filter by post type",
+            "paragraph": "You can choose the type of post you prefer. Videos or pictures, or leave both options."
+        },
+        "step5": {
+            "title": "Actions",
+            "paragraph": "You can like and bookmark posts. They will be saved in your profile."
+        },
+        "step6": {
+            "title": "The learn more button",
+            "paragraph": "If you want to explore the topic in more detail, click on the “Learn more” button"
+        },
+        "step7": {
+            "title": "Activity",
+            "paragraph": "These are tasks for securing posts above."
+        },
+        "step8": {
+            "title": "Hints",
+            "paragraph": "They will help you choose the right option"
+        },
+        "step9": {
+            "title": "Multiple activites",
+            "paragraph": "There are several activities, you can use the carousel to view each one."
+        },
+        "step1011": {
+            "title": "Performing activation",
+            "paragraph": "After completing the activation, a star about the completed activation lights up in your progress menu"
+        },
+        "step12": {
+            "title": "Assessment",
+            "paragraph": "At the end of each topic, you will have an assessment for the topic. Where all the questions on the passed topic will be collected."
+        },
+        "step13": {
+            "title": "Passing the assessment",
+            "paragraph": "Gives you access to a new section! where you can learn new material."
+        },
+        "step14": {
+            "title": "Функционал прогресс меню",
+            "paragraph": "The functionality of the progress menu"
+        },
+        "step15": {
+            "title": "Moving between topics",
+            "paragraph": "You can open any topic in the section."
+        },
+        "step16": {
+            "title": "The topic is passed",
+            "paragraph": "When the assessment for the topic is completed."
+        },
+        "step17": {
+            "title": "The assessment for the section is closed",
+            "paragraph": "Until you complete all the assessment on the topicsa"
+        },
+        "step18": {
+            "title": "The Assessment Is Open",
+            "paragraph": "After completing the assessment, the following section will be available for you to study."
         }
     }
 }

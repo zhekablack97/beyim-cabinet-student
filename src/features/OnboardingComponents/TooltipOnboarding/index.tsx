@@ -1,0 +1,1 @@
+export { TooltipOnBoarding } from './TooltipOnboarding';

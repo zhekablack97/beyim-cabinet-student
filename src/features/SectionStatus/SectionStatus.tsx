@@ -57,7 +57,6 @@ export const SectionStatus: React.FC<ISectionStatus> = ({ data, ...rest }) => {
             indexSectionsBySubject + 1 !== data.length &&
             data[indexSectionsBySubject + 1].children[0]
         ) {
-    
             setSearchParams(prev => {
                 return {
                     idContent: prev.get('idContent') || '',

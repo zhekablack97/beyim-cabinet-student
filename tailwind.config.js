@@ -28,6 +28,11 @@ module.exports = {
                 'stroke-primary': '#B6D3E4',
             },
         },
+        zIndex: {
+            '210': '2100',
+            '10': '10',
+            "210": "21000"
+          }
     },
     plugins: [],
 };

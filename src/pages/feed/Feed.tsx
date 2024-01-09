@@ -168,7 +168,6 @@ const Feed: React.FC = () => {
 
     //------------------------------
 
-
     return (
         <div className={classNames(' min-h-screen', style.wrapper)}>
             <Header />
