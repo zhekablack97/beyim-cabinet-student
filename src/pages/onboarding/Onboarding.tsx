@@ -17,6 +17,8 @@ import styleSubject from '../../features/SubjectsFilter/SubjectsFilter.module.sc
 import styleOnboarding from './Onboarding.module.scss';
 import styleShowVideo from '../../features/WithVideoOrImage/WithVideoOrImage.module.scss';
 import styleStatus from '../../features/SectionStatus/SectionStatus.module.scss';
+import styleSectionBlock from '../../features/SectionStatus/utils/SectionBlock/SectionBlock.module.scss';
+import styleTopic from '../../features/SectionStatus/utils/TopicBlock/TopicBlock.module.scss';
 
 const Onboarding: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -24,6 +26,7 @@ const Onboarding: React.FC = () => {
     const [withVideo, setWithVideo] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [activeActivity, setActiveActivity] = useState('10');
+    const [changeProgress, setChangeProgress] = useState('15');
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const data = getData();
     const tooltipData = getTranslatedTooltipContent({
@@ -31,6 +34,14 @@ const Onboarding: React.FC = () => {
         activeAssessment: '1',
         activeActivity,
     });
+    useEffect(() => {
+        if (currentStep === 15) {
+            setChangeProgress('15');
+        }
+        if (currentStep === 16) {
+            setChangeProgress('16');
+        }
+    }, [currentStep]);
     useEffect(() => {
         if (withVideo) {
             const element = document.getElementById(`step-1`);
@@ -90,13 +101,19 @@ const Onboarding: React.FC = () => {
             <Header />
             <main className="container  grid gap-4  grid-cols-12">
                 <nav className=" col-span-2"></nav>
-                <div className=" col-span-6 flex flex-col gap-4">
+                <div
+                    className={` col-span-6 flex flex-col ${
+                        currentStep !== 1 ? 'gap-1' : 'gap-4'
+                    }`}
+                >
                     <div
                         id="step-1"
                         data-tooltip-id="1"
                         className={classNames(
                             'sticky top-[68px] z-10 mb-4',
                             currentStep === 1 && 'z-210',
+                            currentStep !== 1 &&
+                                styleOnboarding.wrapperSubjectFilter,
                         )}
                     >
                         <div
@@ -138,13 +155,14 @@ const Onboarding: React.FC = () => {
                 </div>
                 <aside className=" col-span-4 pt-3 flex flex-col gap-5">
                     <div
+                        data-tooltip-id="4"
                         className={classNames(
                             styleShowVideo.wrapper,
                             ' rounded-xl sticky top-[68px] px-4 py-3 flex flex-col gap-3',
                             currentStep === 4 && 'z-210',
                         )}
                     >
-                        <div className="w-full" data-tooltip-id="4">
+                        <div className="w-full">
                             <input
                                 className="hidden"
                                 type="checkbox"
@@ -188,7 +206,7 @@ const Onboarding: React.FC = () => {
                             >
                                 <img
                                     src="/icons/imageFilter.svg"
-                                    alt=""
+                                    alt="filter"
                                     className="w-5 h-5 block mr-3"
                                 />
                                 <span className="text-sm font-semibold cursor-pointer">
@@ -210,7 +228,8 @@ const Onboarding: React.FC = () => {
                             currentStep === 2 ||
                                 currentStep === 3 ||
                                 currentStep === 14 ||
-                                currentStep === 15
+                                currentStep === 15 ||
+                                currentStep === 16
                                 ? 'z-210'
                                 : '',
                         )}
@@ -225,23 +244,18 @@ const Onboarding: React.FC = () => {
                                     )}
                                     data-tooltip-id="14"
                                 >
-                                    Раздел
+                                    {t('onboarding.section')}
                                 </h2>
 
-                                {data.progress.map((item, index) => {
-                                    return (
-                                        <h3
-                                            key={item}
-                                            className={classNames(
-                                                styleStatus.nameSection,
-                                                'mb-3',
-                                                'font-semibold',
-                                            )}
-                                        >
-                                            {item}
-                                        </h3>
-                                    );
-                                })}
+                                <h3
+                                    className={classNames(
+                                        styleSectionBlock.nameSection,
+                                        'mb-3',
+                                        'font-semibold',
+                                    )}
+                                >
+                                    {t('onboarding.sectionName')}
+                                </h3>
                             </div>
                             <div className="flex grow-0 shrink-0 gap-2">
                                 <button
@@ -271,7 +285,174 @@ const Onboarding: React.FC = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2">fewfw</div>
+                        <div className="flex flex-col gap-2">
+                            {data.progress.map((item, index) => {
+                                return (
+                                    <button
+                                        key={item}
+                                        className={classNames(
+                                            'rounded-xl px-4 py-3 border-2 flex flex-col',
+                                            styleTopic.wrapper,
+                                            currentStep !== 15 &&
+                                                currentStep !== 16 &&
+                                                index === 0 &&
+                                                styleTopic.active,
+                                            currentStep === 16 &&
+                                                index === 1 &&
+                                                styleTopic.active,
+                                            currentStep === 15 &&
+                                                index === 1 &&
+                                                styleTopic.active,
+                                        )}
+                                    >
+                                        <div className="flex w-full justify-between items-center">
+                                            <h4 className="text-sm font-bold block">
+                                                {item}
+                                            </h4>
+                                            <img
+                                                src={
+                                                    currentStep === 16
+                                                        ? index === 1
+                                                            ? '/icons/sectionCheckActive.svg'
+                                                            : '/icons/sectionCheck.svg'
+                                                        : '/icons/sectionCheck.svg'
+                                                }
+                                                alt="check"
+                                            />
+                                        </div>
+                                        {currentStep !== 15 &&
+                                            currentStep !== 16 &&
+                                            index === 0 && (
+                                                <div className="w-full">
+                                                    <hr className="h-[2px] my-2" />
+                                                    <div className="flex items-center">
+                                                        <span
+                                                            className={classNames(
+                                                                styleTopic.percentage,
+                                                                'text-sm font-medium mr-2 leading-6',
+                                                            )}
+                                                        >
+                                                            {t(
+                                                                'onboarding.completed',
+                                                            )}{' '}
+                                                            50 %
+                                                        </span>
+                                                        <div className="flex gap-1 items-center">
+                                                            {data.star.map(
+                                                                (
+                                                                    item,
+                                                                    index,
+                                                                ) => {
+                                                                    return (
+                                                                        <img
+                                                                            key={
+                                                                                item
+                                                                            }
+                                                                            style={{
+                                                                                background:
+                                                                                    '#E9F0F3',
+                                                                            }}
+                                                                            className={`${
+                                                                                index ===
+                                                                                    4 &&
+                                                                                styleOnboarding.paddingStar
+                                                                            }`}
+                                                                            src={
+                                                                                item
+                                                                            }
+                                                                            alt="star"
+                                                                        />
+                                                                    );
+                                                                },
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        {index === 1 && currentStep === 15 && (
+                                            <div className="w-full">
+                                                <hr
+                                                    className="h-[2px] my-2"
+                                                    data-tooltip-id="15"
+                                                />
+                                                <div className="flex items-center">
+                                                    <span
+                                                        className={classNames(
+                                                            styleTopic.percentage,
+                                                            'text-sm font-medium mr-2 leading-6',
+                                                        )}
+                                                    >
+                                                        Выполнено 50 %
+                                                    </span>
+                                                    <div className="flex gap-1 items-center">
+                                                        {data.star.map(
+                                                            (item, index) => {
+                                                                return (
+                                                                    <img
+                                                                        key={
+                                                                            item
+                                                                        }
+                                                                        className={`${
+                                                                            index ===
+                                                                                4 &&
+                                                                            styleOnboarding.paddingStar
+                                                                        }`}
+                                                                        src={
+                                                                            item
+                                                                        }
+                                                                        alt="star"
+                                                                    />
+                                                                );
+                                                            },
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {index === 1 && currentStep === 16 && (
+                                            <div className="w-full">
+                                                <hr
+                                                    className="h-[2px] my-2"
+                                                    data-tooltip-id="16"
+                                                />
+                                                <div className="flex items-center">
+                                                    <span
+                                                        className={classNames(
+                                                            styleTopic.percentage,
+                                                            'text-sm font-medium mr-2 leading-6',
+                                                        )}
+                                                    >
+                                                        Выполнено 50 %
+                                                    </span>
+                                                    <div className="flex gap-1 items-center">
+                                                        {data.star.map(
+                                                            (item, index) => {
+                                                                return (
+                                                                    <img
+                                                                        key={
+                                                                            item
+                                                                        }
+                                                                        className={`${
+                                                                            index ===
+                                                                                4 &&
+                                                                            styleOnboarding.paddingStar
+                                                                        }`}
+                                                                        src={
+                                                                            item
+                                                                        }
+                                                                        alt="star"
+                                                                    />
+                                                                );
+                                                            },
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 </aside>
             </main>

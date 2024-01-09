@@ -29,14 +29,11 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step1.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transformY12,
-            classArrow: style.arrow1,
         },
         {
             currrenSection: 1,
             id: '2',
             place: 'left-start',
-            offset: 26,
             content: (
                 <div className={style.onBoarding}>
                     <span>1 {t('onboarding.outOf')} 5</span>
@@ -44,7 +41,8 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step2.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform22Y,
+            offset: 26,
+            classNameTooltip: style.transform2,
             classArrow: style.arrow2,
         },
         {
@@ -58,6 +56,7 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step3.paragraph')}</p>
                 </div>
             ),
+            offset: 15,
         },
         {
             currrenSection: 1,
@@ -70,13 +69,12 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step4.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform14,
-            classArrow: style.arrow5,
+            classArrow: style.arrow4,
         },
         {
             currrenSection: 2,
             id: '5',
-            place: 'left',
+            place: 'left-end',
             content: (
                 <div className={style.onBoarding}>
                     <span>2 {t('onboarding.outOf')} 5</span>
@@ -84,13 +82,14 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step5.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform17,
-            classArrow: style.arrow7,
+            offset: 26,
+            classNameTooltip: style.transform5,
+            classArrow: style.arrow5,
         },
         {
             currrenSection: 2,
             id: '6',
-            place: 'right',
+            place: 'right-end',
             content: (
                 <div className={style.onBoarding}>
                     <span>2 {t('onboarding.outOf')} 5</span>
@@ -98,8 +97,9 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step6.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform18,
-            classArrow: style.arrow7,
+            classNameTooltip: style.transform6,
+            classArrow: style.arrow6,
+            offset: 26,
         },
         {
             currrenSection: 3,
@@ -112,8 +112,7 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step7.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform19,
-            classArrow: style.arrow1,
+            classArrow: style.arrow7,
         },
         {
             currrenSection: 3,
@@ -126,7 +125,7 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step8.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform26,
+            classNameTooltip: style.transform8,
             classArrow: style.arrow8,
             offset: 26,
         },
@@ -141,8 +140,7 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step9.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform27,
-            classArrow: style.arrow1,
+            classArrow: style.arrow9,
             offset: 26,
         },
         {
@@ -155,23 +153,17 @@ export const getTranslatedTooltipContent = ({
                     <h2>{t('onboarding.step1011.title')}</h2>
                     <p>
                         {t('onboarding.step1011.paragraph')}
-                        <div
-                            className="flex"
-                            style={{
-                                gap: '8px',
-                                marginTop: '8px',
-                            }}
-                        >
+                        <div className="flex gap-2 mt-2">
                             {currentStep === 10 &&
-                                data.star.slice(0, 3).map((item: any) => (
+                                data.star.slice(0, 3).map(item => (
                                     <div key={item}>
-                                        <img src={item} alt="" />
+                                        <img src={item} alt="star" />
                                     </div>
                                 ))}
                             {currentStep === 11 &&
-                                data.starActive.slice(0, 3).map((item: any) => (
+                                data.starActive.slice(0, 3).map(item => (
                                     <div key={item}>
-                                        <img src={item} alt="" />
+                                        <img src={item} alt="star" />
                                     </div>
                                 ))}
                         </div>
@@ -179,38 +171,37 @@ export const getTranslatedTooltipContent = ({
                 </div>
             ),
             classNameTooltip: style.transform26,
-            classArrow: style.arrow2,
             offset: 26,
         },
-        {
-            currrenSection: 4,
-            id: activeAssessment || '12',
-            place: 'right',
-            content: (
-                <div className={style.onBoarding}>
-                    <span>4 {t('onboarding.outOf')} 5</span>
-                    <h2>{t('onboarding.step12.title')}</h2>
-                    <p>
-                        {t('onboarding.step12.paragraph')}
-                        <img
-                            src={
-                                currentStep === 12
-                                    ? '/static/icons/lightning.svg'
-                                    : '/static/icons/lightningActive.svg'
-                            }
-                            alt="star"
-                            style={{
-                                marginTop: '8px',
-                                width: '24px',
-                                height: '24px',
-                            }}
-                        />
-                    </p>
-                </div>
-            ),
-            classNameTooltip: style.transform25,
-            classArrow: style.arrow2,
-        },
+        // {
+        //     currrenSection: 4,
+        //     id: activeAssessment || '12',
+        //     place: 'right',
+        //     content: (
+        //         <div className={style.onBoarding}>
+        //             <span>4 {t('onboarding.outOf')} 5</span>
+        //             <h2>{t('onboarding.step12.title')}</h2>
+        //             <p>
+        //                 {t('onboarding.step12.paragraph')}
+        //                 <img
+        //                     src={
+        //                         currentStep === 12
+        //                             ? '/static/icons/lightning.svg'
+        //                             : '/static/icons/lightningActive.svg'
+        //                     }
+        //                     alt="star"
+        //                     style={{
+        //                         marginTop: '8px',
+        //                         width: '24px',
+        //                         height: '24px',
+        //                     }}
+        //                 />
+        //             </p>
+        //         </div>
+        //     ),
+        //     classNameTooltip: style.transform25,
+        //     classArrow: style.arrow2,
+        // },
         {
             currrenSection: 5,
             id: '14',
@@ -222,9 +213,9 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step14.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform16,
-            classArrow: style.arrow4,
-            offset: 26,
+            classNameTooltip: style.transform14,
+            classArrow: style.arrow14,
+            offset: 27,
         },
         {
             currrenSection: 5,
@@ -237,8 +228,7 @@ export const getTranslatedTooltipContent = ({
                     <p>{t('onboarding.step15.paragraph')}</p>
                 </div>
             ),
-            classNameTooltip: style.transform23,
-            classArrow: style.arrow8,
+            offset: 42,
         },
         {
             currrenSection: 5,
@@ -251,67 +241,62 @@ export const getTranslatedTooltipContent = ({
                     <p>
                         {t('onboarding.step16.paragraph')}
                         <img
-                            src={'/static/icons/lightningActive.svg'}
+                            src={'/icons/lightningActive.svg'}
                             alt="star"
-                            style={{
-                                width: '24px',
-                                height: '24px',
-                                marginTop: '8px',
-                            }}
+                            className="w-6 h-6 mt-2"
                         />
                     </p>
                 </div>
             ),
-            classNameTooltip: style.transform24,
-            classArrow: style.arrow8,
+            offset: 42,
         },
-        {
-            currrenSection: 5,
-            id: '17',
-            place: 'left',
-            content: (
-                <div className={style.onBoarding}>
-                    <span>5 {t('onboarding.outOf')} 5</span>
-                    <h2>{t('onboarding.step17.title')}</h2>
-                    <p>{t('onboarding.step17.paragraph')}</p>
-                </div>
-            ),
-            classNameTooltip: style.transform22,
-            classArrow: style.arrow4,
-        },
-        {
-            currrenSection: 5,
-            id: '18',
-            place: 'left',
-            content: (
-                <div className={style.onBoarding}>
-                    <span>5 {t('onboarding.outOf')} 5</span>
-                    <h2>{t('onboarding.step18.title')}</h2>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                        }}
-                    >
-                        {data.allStar.map((item: any) => (
-                            <div
-                                key={item}
-                                style={{
-                                    background: '#ECFCE4',
-                                    padding: '3px',
-                                }}
-                            >
-                                <img src={item} alt="" width={18} height={18} />
-                            </div>
-                        ))}
-                    </div>
-                    <p>{t('onboarding.step18.paragraph')}</p>
-                </div>
-            ),
-            classNameTooltip: style.transform22,
-            classArrow: style.arrow2,
-        },
+        // {
+        //     currrenSection: 5,
+        //     id: '17',
+        //     place: 'left',
+        //     content: (
+        //         <div className={style.onBoarding}>
+        //             <span>5 {t('onboarding.outOf')} 5</span>
+        //             <h2>{t('onboarding.step17.title')}</h2>
+        //             <p>{t('onboarding.step17.paragraph')}</p>
+        //         </div>
+        //     ),
+        //     classNameTooltip: style.transform22,
+        //     classArrow: style.arrow4,
+        // },
+        // {
+        //     currrenSection: 5,
+        //     id: '18',
+        //     place: 'left',
+        //     content: (
+        //         <div className={style.onBoarding}>
+        //             <span>5 {t('onboarding.outOf')} 5</span>
+        //             <h2>{t('onboarding.step18.title')}</h2>
+        //             <div
+        //                 style={{
+        //                     display: 'flex',
+        //                     alignItems: 'center',
+        //                     gap: '8px',
+        //                 }}
+        //             >
+        //                 {data.allStar.map((item: any) => (
+        //                     <div
+        //                         key={item}
+        //                         style={{
+        //                             background: '#ECFCE4',
+        //                             padding: '3px',
+        //                         }}
+        //                     >
+        //                         <img src={item} alt="" width={18} height={18} />
+        //                     </div>
+        //                 ))}
+        //             </div>
+        //             <p>{t('onboarding.step18.paragraph')}</p>
+        //         </div>
+        //     ),
+        //     classNameTooltip: style.transform22,
+        //     classArrow: style.arrow2,
+        // },
     ];
 
     return tooltipData;

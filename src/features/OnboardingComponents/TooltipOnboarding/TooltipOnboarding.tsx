@@ -8,7 +8,6 @@ import style from './TooltipOnboarding.module.scss';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export interface TooltipOnBoardingProps {
     currentStep: number;
@@ -27,7 +26,7 @@ const scrollToElement = (step: number): Promise<void> => {
         if (element) {
             const elementPosition =
                 element.getBoundingClientRect().y + window.scrollY;
-            const scrollLocation = step === 5 ? 300 : -200;
+            const scrollLocation = step === 5 ? 500 : -200;
             if (step !== 5) {
                 window.scrollTo({
                     top: elementPosition + scrollLocation,
@@ -42,7 +41,7 @@ const scrollToElement = (step: number): Promise<void> => {
                     });
                 }
                 resolve();
-            }, 600);
+            }, 1200);
         } else {
             resolve();
         }
@@ -60,8 +59,9 @@ export const TooltipOnBoarding = ({
     offset,
 }: TooltipOnBoardingProps) => {
     const navigate = useNavigate();
-    const { t } = useTranslation(['onboarding']);
-    const [isTooltipVisible, setIsTooltipVisible] = useState(true);
+
+    const { t } = useTranslation();
+
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (event.key === 'ArrowLeft' && currentStep > 1) {
@@ -89,7 +89,7 @@ export const TooltipOnBoarding = ({
             document.removeEventListener('keydown', handleKeyPress);
         };
     }, [currentStep]);
-    console.log(id, 123);
+
     console.log(currentStep, 123);
 
     return (
@@ -100,13 +100,11 @@ export const TooltipOnBoarding = ({
             classNameArrow={`${style.tooltip_arrow} ${
                 classArrow ? classArrow : ''
             }`}
-            isOpen={currentStep === +id && isTooltipVisible}
+            isOpen={currentStep === +id}
             place={place as PlacesType}
             offset={offset}
         >
-            <div
-                style={{ visibility: isTooltipVisible ? 'visible' : 'hidden' }}
-            >
+            <div>
                 <div>{content}</div>
                 <div className="flex justify-between">
                     <button
@@ -115,14 +113,15 @@ export const TooltipOnBoarding = ({
                             navigate(`/feed`);
                         }}
                     >
-                        {t('onboarding.close')}
+                        fewf
                     </button>
                     <div className="flex gap-3">
                         <div
-                            style={{
-                                cursor:
-                                    currentStep === 1 ? 'default' : 'pointer',
-                            }}
+                            className={`${
+                                currentStep === 1
+                                    ? 'cursor-default'
+                                    : 'cursor-pointer'
+                            }`}
                             onClick={() => {
                                 if (currentStep === 1) return;
                                 scrollToElement(currentStep - 1).then(() => {
@@ -142,10 +141,11 @@ export const TooltipOnBoarding = ({
                             />
                         </div>
                         <div
-                            style={{
-                                cursor:
-                                    currentStep === 18 ? 'default' : 'pointer',
-                            }}
+                            className={`${
+                                currentStep === 18
+                                    ? 'cursor-default'
+                                    : 'cursor-pointer'
+                            }`}
                             aria-disabled={currentStep === 18}
                             onClick={() => {
                                 if (currentStep === 18) return;

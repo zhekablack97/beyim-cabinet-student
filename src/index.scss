@@ -146,7 +146,7 @@ code {
             border: 2px solid var(--color-black-200, #cbdce7);
             flex-shrink: 0;
             flex-grow: 0;
-            background-image: url("../public/icons/buttonNext.svg");
+            background-image: url('../public/icons/buttonNext.svg');
             background-repeat: no-repeat;
             background-position: center;
             transform: rotate(180deg);
@@ -177,7 +177,7 @@ code {
             flex-grow: 0;
             background-repeat: no-repeat;
             background-position: center;
-            background-image: url("../public/icons/buttonNext.svg");
+            background-image: url('../public/icons/buttonNext.svg');
         }
     }
 }

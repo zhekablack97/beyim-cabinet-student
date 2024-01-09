@@ -1,21 +1,29 @@
-import classNames from 'classnames';
-import { Post } from '../../../types/GetContentsResponseApiType';
+import { useEffect, useState } from 'react';
 
-import style from '../../../features/VideoPost/VideoPost.module.scss';
-import styleBoarding from '../OnboardingComponents.module.scss';
+import classNames from 'classnames';
 
 import { HeaderPost } from '../../HeaderPost';
 import { BlockVideo } from '../../VideoPost/utils';
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
-import { useEffect, useState } from 'react';
+
+import style from '../../../features/VideoPost/VideoPost.module.scss';
+import styleBoarding from '../OnboardingComponents.module.scss';
+import styleLike from '../../../features/like/Like.module.scss';
+import styleBookmark from '../../../features/Bookmark/Bookmark.module.scss';
 
 export const VideoOnboarding: React.FC<{
     currentStep: number;
 }> = ({ currentStep }) => {
     const { t } = useTranslation();
+
     const data = getData();
+
     const [levelSame, setLevelSame] = useState('5');
+    const [activeLike, setActiveLike] = useState(false);
+    const [activeBookmark, setActiveBookmark] = useState(false);
+    const [activeButton, setActiveButton] = useState(false);
+
     useEffect(() => {
         if (currentStep === 5) {
             setLevelSame('5');
@@ -23,7 +31,26 @@ export const VideoOnboarding: React.FC<{
         if (currentStep === 6) {
             setLevelSame('6');
         }
+        if (currentStep === 5) {
+            setTimeout(() => {
+                setActiveLike(true);
+                setActiveBookmark(true);
+            }, 800);
+        }
+        if (currentStep === 6) {
+            setActiveButton(true);
+            setTimeout(() => {
+                setActiveButton(false);
+            }, 500);
+        }
+        if (currentStep !== 5 && currentStep !== 6) {
+            setActiveLike(false);
+            setActiveBookmark(false);
+        }
+        setActiveBookmark(false);
+        setActiveLike(false);
     }, [currentStep]);
+
     return (
         <article
             className={classNames(
@@ -60,18 +87,22 @@ export const VideoOnboarding: React.FC<{
                         className="flex gap-2 items-center h-7 justify-between"
                     >
                         <img
-                            src={'/icons/activeHeart.svg'}
+                            src={
+                                activeLike
+                                    ? '/icons/activeHeart.svg'
+                                    : '/icons/Heart.svg'
+                            }
                             alt=""
                             className="block h-7 w-7"
                         />{' '}
                         <span
                             className={classNames(
                                 'text-base font-bold ',
-                                style.count,
-                                style.active,
+                                styleLike.count,
+                                activeLike && styleLike.active,
                             )}
                         >
-                            0
+                            {activeLike ? '14' : '13'}
                         </span>
                     </button>{' '}
                     <button
@@ -79,26 +110,32 @@ export const VideoOnboarding: React.FC<{
                         className="flex gap-2 items-center h-7 justify-between"
                     >
                         <img
-                            src={'/icons/bookmarkActive.svg'}
+                            src={
+                                activeBookmark
+                                    ? '/icons/bookmarkActive.svg'
+                                    : '/icons/bookmark.svg'
+                            }
                             alt=""
                             className="block h-7 w-7"
                         />{' '}
                         <span
                             className={classNames(
                                 'text-base font-bold ',
-                                style.count,
-                                style.active,
+                                styleBookmark.count,
+                                activeBookmark && styleBookmark.active,
                             )}
                         >
-                            0
+                            {activeBookmark ? '32' : '31'}
                         </span>
                     </button>
                 </div>
                 <button
                     data-tooltip-id="6"
-                    className={`${styleBoarding.button_info} ${styleBoarding.button_info_text}`}
+                    className={`${styleBoarding.button_info} ${
+                        styleBoarding.button_info_text
+                    } ${activeButton ? styleBoarding.activeButton : ''}`}
                 >
-                    подробнее
+                    {t('onboarding.detail')}
                 </button>
             </footer>
         </article>

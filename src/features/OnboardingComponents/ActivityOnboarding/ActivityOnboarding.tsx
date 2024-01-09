@@ -75,10 +75,10 @@ export const ActivityOnboarding: React.FC<{
     return (
         <div
             className={classNames(
-                'p-4 rounded-2xl activity',
+                'p-4 rounded-2xl activity h-fit',
                 style.wrapper,
                 currentStep === 7 || currentStep === 10 || currentStep === 11
-                    ? 'z-210'
+                    ? 'z-210 pointer-events-none h-fit'
                     : '',
             )}
             id="step-7"
@@ -92,32 +92,26 @@ export const ActivityOnboarding: React.FC<{
 
             <div className="relative">
                 <Swiper
-                    autoHeight={true}
-                    modules={[Pagination, Navigation]}
-                    navigation={true}
-                    pagination={{
-                        type: 'fraction',
-                        renderFraction: (
-                            currentClass: string,
-                            totalClass: string,
-                        ) => {
-                            return (
-                                `<span class=" text-base font-bold ${style.pagination} ` +
-                                currentClass +
-                                '"></span>' +
-                                `<span class="text-base font-bold ${style.pagination}"> из </span> ` +
-                                `<span class=" text-base font-bold ${style.pagination} ` +
-                                totalClass +
-                                '"></span>'
-                            );
-                        },
-                    }}
-                    height={200}
-                    updateOnWindowResize={true}
+                    height={100}
+                    style={
+                        currentStep === 8 || currentStep === 9
+                            ? {
+                                  zIndex: 20000,
+                                  background: '#fff',
+                              }
+                            : {}
+                    }
                 >
                     {data.subjects.map((item, index: number) => (
                         <SwiperSlide key={index}>
-                            <div className="pb-16">
+                            {currentStep === 8 || currentStep === 9 ? (
+                                <div
+                                    className={styleOnboarding.overlay_progress}
+                                ></div>
+                            ) : (
+                                ''
+                            )}
+                            <div className="pb-6">
                                 <div className="question">
                                     <form>
                                         <h2 className="text-base font-bold mb-4 ">
@@ -190,7 +184,6 @@ export const ActivityOnboarding: React.FC<{
                                                 );
                                             },
                                         )}
-
                                         <div className="mb-4"></div>
                                         <div className="flex justify-between pb-1 items-center">
                                             <div className="flex gap-4">
@@ -282,16 +275,36 @@ export const ActivityOnboarding: React.FC<{
                                     </form>
                                 </div>
                             </div>
+                            <hr
+                                data-tooltip-id={numberStep}
+                                className={classNames(
+                                    'absolute h-[2px] bottom-12 w-full rounded-[10px] mb-2',
+                                    style.hr,
+                                )}
+                            />
+                            <div
+                                className={classNames(
+                                    `${
+                                        currentStep === 9 &&
+                                        'z-210 relative bg-white'
+                                    } flex justify-center w-full items-center gap-2 pt-1 pb-1 rounded-2xl font-bold`,
+                                    styleOnboarding.activityPagination,
+                                )}
+                            >
+                                <img
+                                    className={styleOnboarding.prevAndNextImg}
+                                    src="/icons/prevArrow.svg"
+                                    alt="prev"
+                                />
+                                1 {t('onboarding.outOf')} 2
+                                <img
+                                    className={`${styleOnboarding.prevAndNextImg} ${styleOnboarding.next}`}
+                                    src="/icons/nextArrow.svg"
+                                    alt="next"
+                                />
+                            </div>
                         </SwiperSlide>
                     ))}
-
-                    <hr
-                        data-tooltip-id={numberStep}
-                        className={classNames(
-                            'absolute h-[2px] bottom-12 w-full rounded-[10px]',
-                            style.hr,
-                        )}
-                    />
                 </Swiper>
             </div>
         </div>

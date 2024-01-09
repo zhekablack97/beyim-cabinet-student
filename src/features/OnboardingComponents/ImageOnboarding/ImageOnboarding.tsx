@@ -37,11 +37,13 @@ export const ImageOnboarding: React.FC<{
                 currentStep === 2 && 'z-210',
             )}
         >
-            <HeaderPost
-                iconUrl={data.subjects[0].url}
-                objective={data.subjects[0].objective}
-                subject={data.subjects[0].name}
-            />
+            <div data-tooltip-id="2">
+                <HeaderPost
+                    iconUrl={data.subjects[0].url}
+                    objective={data.subjects[0].objective}
+                    subject={data.subjects[0].name}
+                />
+            </div>
             <div>
                 <div className="mb-3">
                     <Swiper
