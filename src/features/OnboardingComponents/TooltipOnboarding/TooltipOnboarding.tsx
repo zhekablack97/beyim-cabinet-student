@@ -26,8 +26,8 @@ const scrollToElement = (step: number): Promise<void> => {
         if (element) {
             const elementPosition =
                 element.getBoundingClientRect().y + window.scrollY;
-            const scrollLocation = step === 5 ? 400 : -200;
-            if (step !== 5) {
+            const scrollLocation = step === 5 ? 300 : -200;
+            if (step !== 5 && step !== 10) {
                 window.scrollTo({
                     top: elementPosition + scrollLocation,
                     behavior: 'smooth',
@@ -73,7 +73,7 @@ export const TooltipOnBoarding = ({
                 currentStep < 18 &&
                 currentStep > 0
             ) {
-                if (currentStep === 6) {
+                if (currentStep === 6 || currentStep === 11) {
                     setCurrentStep(currentStep + 1);
                     scrollToElement(currentStep + 1);
                 } else {

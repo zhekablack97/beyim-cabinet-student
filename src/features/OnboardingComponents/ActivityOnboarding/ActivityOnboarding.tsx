@@ -81,14 +81,17 @@ export const ActivityOnboarding: React.FC<{
                     ? 'z-210 pointer-events-none h-fit'
                     : '',
             )}
-            id="step-7"
             data-tooltip-id="7"
         >
-            <HeaderPost
-                iconUrl={data.subjects[0].url}
-                objective={data.subjects[0].objective}
-                subject={data.subjects[0].name}
-            />
+            <div id="step-7">
+                <div id={`step-${activeActivity}`}>
+                    <HeaderPost
+                        iconUrl={data.subjects[0].url}
+                        objective={data.subjects[0].objective}
+                        subject={data.subjects[0].name}
+                    />
+                </div>
+            </div>
 
             <div className="relative">
                 <Swiper

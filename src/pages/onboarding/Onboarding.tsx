@@ -19,6 +19,9 @@ import styleShowVideo from '../../features/WithVideoOrImage/WithVideoOrImage.mod
 import styleStatus from '../../features/SectionStatus/SectionStatus.module.scss';
 import styleSectionBlock from '../../features/SectionStatus/utils/SectionBlock/SectionBlock.module.scss';
 import styleTopic from '../../features/SectionStatus/utils/TopicBlock/TopicBlock.module.scss';
+import { AssessmentFooterButton } from '../../features/OnboardingComponents/AssessmentStartingBlock/AssessmentFooterButton/AssessmentFooterButton';
+import { AssessmentStartingBlock } from '../../features/OnboardingComponents/AssessmentStartingBlock/AssessmentStartingBlock/AssessmentStartingBlock';
+import { Link } from 'react-router-dom';
 
 const Onboarding: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -27,11 +30,15 @@ const Onboarding: React.FC = () => {
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [activeActivity, setActiveActivity] = useState('10');
     const [changeProgress, setChangeProgress] = useState('15');
+    const [activeAssessment, setActiveAssessment] = useState('12');
+    const [progressFinished, setProgressFinished] = useState('17');
+    const [buttonStart, setButtonStart] = useState(false);
+
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const data = getData();
     const tooltipData = getTranslatedTooltipContent({
         currentStep: currentStep,
-        activeAssessment: '1',
+        activeAssessment: activeAssessment,
         activeActivity,
     });
     useEffect(() => {
@@ -40,6 +47,18 @@ const Onboarding: React.FC = () => {
         }
         if (currentStep === 16) {
             setChangeProgress('16');
+        }
+        if (currentStep === 12) {
+            setActiveAssessment('12');
+        }
+        if (currentStep === 13) {
+            setActiveAssessment('13');
+        }
+        if (currentStep === 17) {
+            setProgressFinished('17');
+        }
+        if (currentStep === 18) {
+            setProgressFinished('18');
         }
     }, [currentStep]);
     useEffect(() => {
@@ -53,12 +72,24 @@ const Onboarding: React.FC = () => {
         }
     }, [withVideo]);
     useEffect(() => {
+        if (currentStep === 12) {
+            setTimeout(() => {
+                setCurrentStep(prev => (prev >= 12 ? currentStep + 1 : prev));
+            }, 1000);
+        }
         if (currentStep === 4) {
             setTimeout(() => {
                 setWithVideo(true);
             }, 400);
         } else {
             setWithVideo(false);
+        }
+        if (currentStep === 18) {
+            setTimeout(() => {
+                setButtonStart(false);
+            }, 400);
+            setProgressFinished('18');
+            setButtonStart(true);
         }
     }, [currentStep]);
 
@@ -77,7 +108,7 @@ const Onboarding: React.FC = () => {
     return (
         <div className={classNames('min-h-screen', style.wrapper)}>
             <div className={styleOnboarding.overlay}></div>
-            {tooltipData.slice(0, 14).map(item => {
+            {tooltipData.map(item => {
                 return (
                     <div
                         key={item.id}
@@ -150,6 +181,32 @@ const Onboarding: React.FC = () => {
                             setCurrentStep={setCurrentStep}
                             activeActivity={activeActivity}
                             setActiveActivity={setActiveActivity}
+                        />
+                        <AssessmentStartingBlock
+                            activeAssessment={activeAssessment}
+                            currentStep={currentStep}
+                            assessmentType={'topic'}
+                            title={t('onboarding.post.assessmentTitle')}
+                            pointerNone={style.postOnBoarding}
+                            metricsData={{
+                                points: 50,
+                                questionsCount: {
+                                    total: 12,
+                                    correct: currentStep === 13 ? 8 : 0,
+                                },
+                                time: 32,
+                            }}
+                            state={currentStep === 13 ? 'success' : 'default'}
+                            footer={
+                                <>
+                                    <AssessmentFooterButton
+                                        href=""
+                                        variant="info"
+                                    >
+                                        {t('onboarding.watch')}
+                                    </AssessmentFooterButton>
+                                </>
+                            }
                         />
                     </div>
                 </div>
@@ -229,12 +286,21 @@ const Onboarding: React.FC = () => {
                                 currentStep === 3 ||
                                 currentStep === 14 ||
                                 currentStep === 15 ||
-                                currentStep === 16
+                                currentStep === 16 ||
+                                currentStep === 17 ||
+                                currentStep === 18
                                 ? 'z-210'
                                 : '',
                         )}
                         data-tooltip-id="3"
                     >
+                        <div
+                            className={
+                                currentStep === 17
+                                    ? styleOnboarding.overlay_progress
+                                    : ''
+                            }
+                        ></div>
                         <div className="flex justify-between items-start">
                             <div>
                                 <h2
@@ -315,7 +381,9 @@ const Onboarding: React.FC = () => {
                                                         ? index === 1
                                                             ? '/icons/sectionCheckActive.svg'
                                                             : '/icons/sectionCheck.svg'
-                                                        : '/icons/sectionCheck.svg'
+                                                        : currentStep === 18
+                                                          ? '/icons/sectionCheckActive.svg'
+                                                          : '/icons/sectionCheck.svg'
                                                 }
                                                 alt="check"
                                             />
@@ -382,7 +450,10 @@ const Onboarding: React.FC = () => {
                                                             'text-sm font-medium mr-2 leading-6',
                                                         )}
                                                     >
-                                                        Выполнено 50 %
+                                                        {t(
+                                                            'onboarding.completed',
+                                                        )}{' '}
+                                                        50 %
                                                     </span>
                                                     <div className="flex gap-1 items-center">
                                                         {data.star.map(
@@ -422,7 +493,10 @@ const Onboarding: React.FC = () => {
                                                             'text-sm font-medium mr-2 leading-6',
                                                         )}
                                                     >
-                                                        Выполнено 50 %
+                                                        {t(
+                                                            'onboarding.completed',
+                                                        )}{' '}
+                                                        50 %
                                                     </span>
                                                     <div className="flex gap-1 items-center">
                                                         {data.star.map(
@@ -430,7 +504,11 @@ const Onboarding: React.FC = () => {
                                                                 return (
                                                                     <img
                                                                         key={
-                                                                            item
+                                                                            index ===
+                                                                            4
+                                                                                ? item +
+                                                                                  '1'
+                                                                                : item
                                                                         }
                                                                         className={`${
                                                                             index ===
@@ -438,7 +516,10 @@ const Onboarding: React.FC = () => {
                                                                             styleOnboarding.paddingStar
                                                                         }`}
                                                                         src={
-                                                                            item
+                                                                            index ===
+                                                                            4
+                                                                                ? '/icons/lightningActive.svg'
+                                                                                : item
                                                                         }
                                                                         alt="star"
                                                                     />
@@ -452,6 +533,72 @@ const Onboarding: React.FC = () => {
                                     </button>
                                 );
                             })}
+                            <div
+                                className={`${styleOnboarding.assessmentThem} ${
+                                    currentStep === 17 && 'z-210'
+                                }`}
+                                data-tooltip-id={progressFinished}
+                            >
+                                <div>
+                                    <span
+                                        className={
+                                            styleOnboarding.assessmentTitle
+                                        }
+                                    >
+                                        {t('assessment.page-title')}{' '}
+                                        {t('assessment.for')}{' '}
+                                        {t('assessment.type.section')}
+                                    </span>
+                                    {currentStep !== 17 &&
+                                    currentStep !== 18 &&
+                                    currentStep === 19 ? (
+                                        progressFinished ? (
+                                            <p
+                                                className={`${styleOnboarding.assessmentDescription} ${styleOnboarding.descriptionSuccess}`}
+                                            >
+                                                {t('assessment.pointsEarned')}:
+                                                50 % ({t('assessment.covered')})
+                                            </p>
+                                        ) : (
+                                            <p
+                                                className={`${styleOnboarding.assessmentDescription} ${styleOnboarding.descriptionFail}`}
+                                            >
+                                                {t('assessment.pointsEarned')}:
+                                                50 % (
+                                                {t('assessment.notCovered')})
+                                            </p>
+                                        )
+                                    ) : (
+                                        <p
+                                            className={`${styleOnboarding.assessmentDescription}`}
+                                        >
+                                            {t('assessment.passing')} 50%{' '}
+                                            {t('assessment.orMore')}
+                                        </p>
+                                    )}
+                                </div>
+                                {currentStep === 18 ? (
+                                    <button
+                                        data-tooltip-id="6"
+                                        className={`${
+                                            styleOnboarding.button_infoAss
+                                        } ${styleOnboarding.button_info_text} ${
+                                            buttonStart
+                                                ? styleOnboarding.activeButton
+                                                : ''
+                                        }`}
+                                    >
+                                        {t('assessment.pass')}
+                                    </button>
+                                ) : (
+                                    <img
+                                        src={'/icons/locked.svg'}
+                                        alt="locked"
+                                        width={24}
+                                        height={24}
+                                    />
+                                )}
+                            </div>
                         </div>
                     </div>
                 </aside>
