@@ -317,7 +317,7 @@ const Onboarding: React.FC = () => {
                                     className={classNames(
                                         styleSectionBlock.nameSection,
                                         'mb-3',
-                                        'font-semibold',
+                                        'font-semibold m-0',
                                     )}
                                 >
                                     {t('onboarding.sectionName')}
@@ -372,7 +372,7 @@ const Onboarding: React.FC = () => {
                                         )}
                                     >
                                         <div className="flex w-full justify-between items-center">
-                                            <h4 className="text-sm font-bold block">
+                                            <h4 className="text-sm font-bold block m-0">
                                                 {item}
                                             </h4>
                                             <img
