@@ -12,6 +12,8 @@ import styleQuestion from '../../../features/ActivityPost/utils/Question/Questio
 import { useTranslation } from 'react-i18next';
 import { getData } from '../utils/data';
 import styleOnboarding from '../OnboardingComponents.module.scss';
+import styleLike from '../../like/Like.module.scss';
+import styleBookmark from '../../Bookmark/Bookmark.module.scss';
 
 export const ActivityOnboarding: React.FC<{
     currentStep: number;
@@ -196,17 +198,14 @@ export const ActivityOnboarding: React.FC<{
                                                     className="flex gap-2 items-center h-7 justify-between"
                                                 >
                                                     <img
-                                                        src={
-                                                            '/icons/activeHeart.svg'
-                                                        }
+                                                        src={'/icons/Heart.svg'}
                                                         alt=""
                                                         className="block h-7 w-7"
                                                     />{' '}
                                                     <span
                                                         className={classNames(
                                                             'text-base font-bold ',
-                                                            style.count,
-                                                            style.active,
+                                                            styleLike.count,
                                                         )}
                                                     >
                                                         32
@@ -218,7 +217,7 @@ export const ActivityOnboarding: React.FC<{
                                                 >
                                                     <img
                                                         src={
-                                                            '/icons/bookmarkActive.svg'
+                                                            '/icons/bookmark.svg'
                                                         }
                                                         alt=""
                                                         className="block h-7 w-7"
@@ -226,8 +225,7 @@ export const ActivityOnboarding: React.FC<{
                                                     <span
                                                         className={classNames(
                                                             'text-base font-bold ',
-                                                            style.count,
-                                                            style.active,
+                                                            styleBookmark.count,
                                                         )}
                                                     >
                                                         14
