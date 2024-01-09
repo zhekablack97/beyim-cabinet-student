@@ -24,6 +24,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { HeaderPost } from '../../features/HeaderPost';
 import { ActivityPost } from '../../features/ActivityPost/ActivityPost';
 import { useGetAnswerQuery } from '../../api/beyimProgress';
+import { Element, scroller } from 'react-scroll';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -44,14 +45,19 @@ const Feed: React.FC = () => {
     });
     const [isLastPage, setIsLastPage] = useState<boolean>(false);
     const [posts, setPosts] = useState<Post[]>([]);
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false); //для дозагрузки обычной ленты
+    const [isVisibleNextThemIndicator, setIsVisibleNextThemIndicator] =
+        useState(false); //для дозагрузки активити ленты
     const [withVideo, setWithVideo] = useState<boolean>(true);
     const [withPicture, setWithPicture] = useState<boolean>(true);
     const [sectionId, setSectionId] = useState<string>('');
 
     //для специальной ленты
-    const [searchParams] = useSearchParams();
-    const { data: dataSectionsBySubject } = useGetSectionsBySubjectQuery({
+    const [searchParams, setSearchParams] = useSearchParams();
+    const {
+        data: dataSectionsBySubject,
+        isFetching: isFetchingSectionsBySubject,
+    } = useGetSectionsBySubjectQuery({
         subject_id: searchParams.get('subject') || '',
         limit: 100,
     });
@@ -78,16 +84,20 @@ const Feed: React.FC = () => {
         dataSectionsBySubject?.data.sections[0]?.children[0]?.id, //выбор самой первой доступной темы
     ]);
 
-    const { data: dataFeedMicrotopics } = useGetFeedMicrotopicsQuery({
+    const {
+        data: dataFeedMicrotopics,
+        isFetching: isFetchingDataFeedMicrotopics,
+    } = useGetFeedMicrotopicsQuery({
         section_id: sectionId,
         limit: 100,
     });
 
-    const { data: dataCustomFeed } = useGetCustomFeedQuery({
-        microtopicIds: dataFeedMicrotopics?.data.result.ids || [],
-        include: [withPicture ? 'image' : '', withVideo ? 'video' : ''],
-        locale,
-    });
+    const { data: dataCustomFeed, isFetching: isFetchingCustomFeed } =
+        useGetCustomFeedQuery({
+            microtopicIds: dataFeedMicrotopics?.data.result.ids || [],
+            include: [withPicture ? 'image' : '', withVideo ? 'video' : ''],
+            locale,
+        });
 
     const handleChangeFilter = (type?: 'video' | 'image') => {
         if (type === 'image') {
@@ -112,6 +122,38 @@ const Feed: React.FC = () => {
                     setWithPicture(false);
                 }
             }
+        }
+    };
+
+    const changeTopic = () => {
+        if (
+            searchParams.get('subject') &&
+            !isFetchingCustomFeed &&
+            !isFetchingSectionsBySubject &&
+            !isFetchingDataFeedMicrotopics &&
+            dataCustomFeed &&
+            dataCustomFeed?.data?.data?.length > 0
+        ) {
+            setSearchParams(prev => {
+                const index =
+                    dataSectionsBySubject?.data.sections[0]?.children.findIndex(
+                        children => String(children.id) === sectionId,
+                    ) || 0;
+
+                return {
+                    idContent: prev.get('idContent') || '',
+                    fromSearch: prev.get('fromSearch') || '',
+                    subject: prev.get('subject') || '',
+                    sectionsBySubject: prev.get('sectionsBySubject') || '',
+                    them: String(
+                        dataSectionsBySubject?.data.sections[0]?.children[
+                            index + 1
+                        ]?.id ||
+                            dataSectionsBySubject?.data.sections[0]?.children[0]
+                                ?.id,
+                    ),
+                };
+            });
         }
     };
 
@@ -168,25 +210,65 @@ const Feed: React.FC = () => {
 
     //------------------------------
 
-    const handleScroll = () => {
-        console.log('Скролл произошел!');
-        // Ваш код обработки скролла
-    };
+    // const nextThemIndicator = useRef(null);
 
-    useEffect(() => {
-        // Добавляем обработчик события скролла при монтировании компонента
-        window.addEventListener('scroll', handleScroll);
+    // useEffect(() => {
+    //     if (
+    //         searchParams.get('subject') &&
+    //         nextThemIndicator &&
+    //         isVisibleNextThemIndicator &&
+    //         !isFetchingCustomFeed &&
+    //         !isFetchingSectionsBySubject &&
+    //         !isFetchingDataFeedMicrotopics &&
+    //         dataCustomFeed &&
+    //         dataCustomFeed?.data?.data?.length > 0
+    //     ) {
+    //         console.log('меняем тему');
+    //         setSearchParams(prev => {
+    //             return {
+    //                 idContent: prev.get('idContent') || '',
+    //                 fromSearch: prev.get('fromSearch') || '',
+    //                 subject: prev.get('subject') || '',
+    //                 sectionsBySubject: prev.get('sectionsBySubject') || '',
+    //                 them: sectionId,
+    //             };
+    //         });
+    //     }
+    // }, [
+    //     searchParams.get('subject'),
+    //     isVisibleNextThemIndicator,
+    //     dataCustomFeed,
+    //     nextThemIndicator,
+    //     isFetchingCustomFeed,
+    //     isFetchingSectionsBySubject,
+    //     isFetchingDataFeedMicrotopics,
+    // ]);
 
-        // Убираем обработчик при размонтировании компонента, чтобы избежать утечек памяти
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver(
+    //         entries => {
+    //             entries.forEach(entry => {
+    //                 setIsVisibleNextThemIndicator(entry.isIntersecting);
+    //             });
+    //         },
+    //         { threshold: 0.9 }, // Порог видимости (от 0 до 1)
+    //     );
+
+    //     if (nextThemIndicator.current) {
+    //         observer.observe(nextThemIndicator.current);
+    //     }
+
+    //     return () => {
+    //         if (nextThemIndicator.current) {
+    //             observer.unobserve(nextThemIndicator.current);
+    //         }
+    //     };
+    // }, []);
 
     return (
-        <div className={classNames(' min-h-screen', style.wrapper)}>
+        <div className={classNames(' min-h-screen  ', style.wrapper)}>
             <Header />
-            <main className="container  grid gap-4  grid-cols-12">
+            <main className="container  grid gap-x-4 relative grid-cols-12 ">
                 <nav className=" col-span-2"> Меню боковое </nav>
 
                 <div className=" col-span-6 flex flex-col gap-4">
@@ -201,6 +283,11 @@ const Feed: React.FC = () => {
                     <div className="flex flex-col gap-4">
                         {searchParams.get('subject')
                             ? sectionId !== '' &&
+                              !isFetchingCustomFeed &&
+                              !isFetchingSectionsBySubject &&
+                              !isFetchingDataFeedMicrotopics &&
+                              dataCustomFeed &&
+                              dataCustomFeed?.data?.data?.length > 0 &&
                               dataCustomFeed?.data.data?.map(
                                   itemActivityFeed => {
                                       const post = {
@@ -308,10 +395,6 @@ const Feed: React.FC = () => {
                               })}
                     </div>
 
-                    {!(searchParams.get('subject')) && (
-                        <div ref={loaderIndicator}> </div>
-                    )}
-
                     <More />
                 </div>
 
@@ -326,6 +409,31 @@ const Feed: React.FC = () => {
                         data={dataSectionsBySubject?.data.sections || []}
                     />
                 </aside>
+                {searchParams.get('subject') &&
+                    !isFetchingCustomFeed &&
+                    !isFetchingSectionsBySubject &&
+                    !isFetchingDataFeedMicrotopics &&
+                    dataCustomFeed &&
+                    dataCustomFeed?.data?.data?.length > 0 && (
+                        <div className=" col-span-12 h-36 overflow-hidden">
+                            <div className="w-full h-full overflow-hidden">
+                                <div
+                                    className="h-full w-[calc(100%_+_20px)] overflow-y-scroll"
+                                    onScroll={() => {
+                                        changeTopic();
+                                    }}
+                                    onClick={() => {
+                                        console.log('грузим другую тему ');
+                                    }}
+                                >
+                                    <div className="h-48 ">
+                                        {searchParams.get('subject') &&
+                                            'Сделайте скролл или клик чтобы переключиться на слудующую тему'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
             </main>
         </div>
     );
