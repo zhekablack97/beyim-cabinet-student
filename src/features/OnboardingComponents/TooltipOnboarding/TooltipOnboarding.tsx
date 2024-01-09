@@ -26,7 +26,7 @@ const scrollToElement = (step: number): Promise<void> => {
         if (element) {
             const elementPosition =
                 element.getBoundingClientRect().y + window.scrollY;
-            const scrollLocation = step === 5 ? 300 : -200;
+            const scrollLocation = step === 5 ? 300 : -170;
             if (step !== 5 && step !== 10) {
                 window.scrollTo({
                     top: elementPosition + scrollLocation,
