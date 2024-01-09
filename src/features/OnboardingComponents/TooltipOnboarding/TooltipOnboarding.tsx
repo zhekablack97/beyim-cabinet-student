@@ -26,7 +26,7 @@ const scrollToElement = (step: number): Promise<void> => {
         if (element) {
             const elementPosition =
                 element.getBoundingClientRect().y + window.scrollY;
-            const scrollLocation = step === 5 ? 500 : -200;
+            const scrollLocation = step === 5 ? 400 : -200;
             if (step !== 5) {
                 window.scrollTo({
                     top: elementPosition + scrollLocation,
@@ -113,7 +113,7 @@ export const TooltipOnBoarding = ({
                             navigate(`/feed`);
                         }}
                     >
-                        fewf
+                        {t('onboarding.close')}
                     </button>
                     <div className="flex gap-3">
                         <div
