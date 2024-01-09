@@ -168,6 +168,21 @@ const Feed: React.FC = () => {
 
     //------------------------------
 
+    const handleScroll = () => {
+        console.log('Скролл произошел!');
+        // Ваш код обработки скролла
+    };
+
+    useEffect(() => {
+        // Добавляем обработчик события скролла при монтировании компонента
+        window.addEventListener('scroll', handleScroll);
+
+        // Убираем обработчик при размонтировании компонента, чтобы избежать утечек памяти
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
         <div className={classNames(' min-h-screen', style.wrapper)}>
             <Header />
@@ -292,7 +307,10 @@ const Feed: React.FC = () => {
                                   }
                               })}
                     </div>
-                    <div ref={loaderIndicator}> </div>
+
+                    {!(searchParams.get('subject')) && (
+                        <div ref={loaderIndicator}> </div>
+                    )}
 
                     <More />
                 </div>

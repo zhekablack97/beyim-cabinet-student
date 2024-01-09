@@ -1,0 +1,46 @@
+.wrapper {
+    background-color: #e9f0f3;
+}
+
+.titleWrapper {
+    background-color: #fff;
+}
+
+.subTitle {
+    color: #577487;
+}
+
+.filter {
+    background-color: #fff;
+}
+
+.activeFavorite {
+    background-color: #e4f3fb;
+    color: #36a0d0;
+}
+
+.divide {
+    background-color: #e9f0f3;
+}
+
+.openButton {
+    color: #678aa1;
+}
+
+.typeFilter {
+    input:checked {
+        & + label {
+            span {
+                border-color: #55BBEB;
+                background-image: url('../../../public/icons/checkboxActive.svg');
+                
+            }
+        }
+    }
+
+    label {
+        span {
+            border-color: #e3e5ea;
+        }
+    }
+}

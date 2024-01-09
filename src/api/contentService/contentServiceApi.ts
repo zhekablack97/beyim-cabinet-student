@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import {
     GetContentsResponseApiType,
     GetCustomFeedRequestApiType,
+    GetLikesFeedResponseApiType,
     GetOneContentResponseApiType,
     GetOneResponseApiType,
     getContentsRequestApiType,
@@ -12,11 +13,11 @@ import {
 
 export const contentServiceApi = createApi({
     reducerPath: 'contentServiceApi',
-    tagTypes: ['Subjects'],
+    tagTypes: ['Subjects', 'likes', 'bookmart', 'feed'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.REACT_APP_CONTENT_SERVICE_URL}/api/v1/`,
         prepareHeaders: headers => {
-            const token = Cookies.get('access__token');
+            const token = Cookies.get('access_token');
             const id_token = Cookies.get('id_token');
 
             // If we have a token set in state, let's assume that we should be passing it.
@@ -24,6 +25,8 @@ export const contentServiceApi = createApi({
                 headers.set('authorization', `Bearer ${token}`);
                 headers.set('X-Api-Key', id_token);
             }
+
+            headers.set('Access-Control-Allow-Headers', 'Authorization');
             return headers;
         },
     }),
@@ -84,6 +87,72 @@ export const contentServiceApi = createApi({
                 };
             },
         }),
+
+        getLikesFeed: build.query<
+            GetLikesFeedResponseApiType,
+            {
+                include?: string[];
+                locale?: 'ru' | 'kk' | 'en';
+                page?: number;
+                limit?: number;
+                subjectIds?: number[];
+            }
+        >({
+            query: ({
+                locale = 'kk',
+                include = ['image', 'video', 'activity'],
+                page = 0,
+                subjectIds = [],
+                limit = 10,
+            }) => {
+                return {
+                    url: `feed/likes?${limit ? `limit=${limit}` : ''}${
+                        include.length < 1
+                            ? ''
+                            : `&include=${include.join(',')}`
+                    }${page >= 0 ? `&offset=${page * limit}` : ''}${
+                        subjectIds.length > 0
+                            ? `&subjectIds=${subjectIds.join(',')}`
+                            : ''
+                    }`,
+                };
+            },
+            providesTags: ['feed', 'likes'],
+        }),
+
+        getBookmarksFeed: build.query<
+            GetLikesFeedResponseApiType,
+            {
+                include?: string[];
+                locale?: 'ru' | 'kk' | 'en';
+                page?: number;
+                limit?: number;
+                subjectIds?: number[];
+            }
+        >({
+            query: ({
+                locale = 'kk',
+                include = ['image', 'video', 'activity'],
+                page = 0,
+                subjectIds = [],
+                limit = 10,
+            }) => {
+                return {
+                    url: `feed/bookmarks?${
+                        page >= 0 ? `offset=${page * limit}` : ''
+                    }${
+                        include.length < 1
+                            ? ''
+                            : `&include=${include.join(',')}`
+                    }${limit ? `&limit=${limit}` : ''}${
+                        subjectIds.length > 0
+                            ? `&subjectIds=${subjectIds.join(',')}`
+                            : ''
+                    }`,
+                };
+            },
+            providesTags: ['feed', 'likes'],
+        }),
     }),
 });
 
@@ -96,4 +165,8 @@ export const {
     useGetCustomFeedQuery,
     useLazyGetCustomFeedQuery,
     useLazyGetOnePostQuery,
+    useGetBookmarksFeedQuery,
+    useGetLikesFeedQuery,
+    useLazyGetBookmarksFeedQuery,
+    useLazyGetLikesFeedQuery,
 } = contentServiceApi;
