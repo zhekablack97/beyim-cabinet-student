@@ -40,7 +40,7 @@ export const SearchItem: React.FC<ISearchItem> = ({
         <article
             className={classNames(
                 style.wrapper,
-                'flex  p-4 gap-[14px] rounded-2xl border-2 border-solid',
+                'flex  p-4 gap-[14px] rounded-2xl border-2 border-solid ',
                 isOpenPost ? 'h-fit' : 'h-40',
             )}
             key={data.id}
@@ -103,7 +103,7 @@ export const SearchItem: React.FC<ISearchItem> = ({
                         </h2>
                         <span
                             className={classNames(
-                                'overflow-hidden whitespace-nowrap text-ellipsis block text-sm font-medium',
+                                'overflow-hidden whitespace-nowrap text-ellipsis block text-sm font-medium leading-[17px]',
                                 style.subTitle,
                             )}
                         >
@@ -111,10 +111,10 @@ export const SearchItem: React.FC<ISearchItem> = ({
                         </span>
                     </div>
                 </header>
-                <div className="flex flex-col items-start">
+                <div className="flex flex-col items-start ">
                     <h3
                         className={classNames(
-                            'overflow-hidden whitespace-nowrap text-ellipsis block text-base font-semibold mb-1',
+                            'overflow-hidden whitespace-nowrap text-ellipsis block text-base font-semibold mb-1 mt-2 leading-[19px]',
                             style.microtopic,
                         )}
                     >
@@ -123,7 +123,8 @@ export const SearchItem: React.FC<ISearchItem> = ({
                     <div
                         className={classNames(
                             'overflow-hidden text-ellipsis block text-sm w-full ',
-                            isOpenPost ? 'h-fit' : 'h-[42px]',
+                            isOpenPost ? 'h-fit' : 'h-[40px]',
+                            style.lexical
                         )}
                     >
                         <LexcialEditor fieldData={data.description} />
@@ -132,7 +133,7 @@ export const SearchItem: React.FC<ISearchItem> = ({
                         onClick={() => {
                             setIsOpenPost(prev => !prev);
                         }}
-                        className={classNames('text-sm mb-2 block', style.more)}
+                        className={classNames('text-sm block', style.more)}
                     >
                         {isOpenPost ? 'скрыть' : '...см ещё'}
                     </button>
