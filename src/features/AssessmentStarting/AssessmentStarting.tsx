@@ -3,13 +3,18 @@ import { useGetAssessmentInfoQuery } from '../../api/beyimAssessmentApi';
 import style from './AssessmentStarting.module.scss';
 import { useTranslation } from 'react-i18next';
 import { AssessmentBlockMetricsSection } from './AssessmentBlockMetricsSection';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Locale } from '../../types/common';
+
 export const AssessmentStarting: React.FC = () => {
-    const { t } = useTranslation();
+    const [searchParams] = useSearchParams();
+
+    const { t, i18n } = useTranslation();
+
     const { data: assessmentInfo } = useGetAssessmentInfoQuery({
-        locale: 'ru',
-        section_id: 227,
-        subject_id: 402,
+        locale: i18n.language as Locale,
+        section_id: Number(searchParams.get('them')) ?? null,
+        subject_id: Number(searchParams.get('subject')) ?? null,
     });
     const state = assessmentInfo?.data.assessment.progress
         ? assessmentInfo?.data.assessment.progress.percentage >=
@@ -32,7 +37,7 @@ export const AssessmentStarting: React.FC = () => {
                 : assessmentInfo?.data?.assessment?.duration) ?? 0,
     };
 
-    return (
+    return assessmentInfo?.success ? (
         <article
             className={classNames(
                 'rounded-2xl flex flex-col gap-4 pl-4 pr-4 pt-6 pb-4',
@@ -81,5 +86,5 @@ export const AssessmentStarting: React.FC = () => {
                 </Link>
             </footer>
         </article>
-    );
+    ) : null;
 };
