@@ -19,7 +19,7 @@ export const LexcialEditor = ({ fieldData }: Props) => {
     const locale = i18n.translator.language;
     return (
         <div className={style.root}>
-            {/* <BeyimDocs
+            <BeyimDocs
                 locale={locale as Locale}
                 useFunctions={[
                     'UNDO',
@@ -50,7 +50,7 @@ export const LexcialEditor = ({ fieldData }: Props) => {
                 ]}
                 mode="READ_SINGLE_FIELD"
                 fieldData={fieldData}
-            /> */}
+            />
         </div>
     );
 };

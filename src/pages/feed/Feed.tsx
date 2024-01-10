@@ -29,6 +29,26 @@ import { AssessmentFooterButton } from '../../features/OnboardingComponents/Asse
 import { AssessmentStarting } from '../../features/AssessmentStarting';
 import { Element, scroller } from 'react-scroll';
 
+const debounce = (
+    mainFunction: (arg0: any) => void,
+    delay: number | undefined,
+) => {
+    // Declare a variable called 'timer' to store the timer ID
+    let timer: string | number | NodeJS.Timeout | undefined;
+
+    // Return an anonymous function that takes in any number of arguments
+    return function (...args: any) {
+        // Clear the previous timer to prevent the execution of 'mainFunction'
+        clearTimeout(timer);
+
+        // Set a new timer that will execute 'mainFunction' after the specified delay
+        timer = setTimeout(() => {
+            //@ts-ignore
+            mainFunction(...args);
+        }, delay);
+    };
+};
+
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
 
@@ -54,6 +74,7 @@ const Feed: React.FC = () => {
     const [withVideo, setWithVideo] = useState<boolean>(true);
     const [withPicture, setWithPicture] = useState<boolean>(true);
     const [sectionId, setSectionId] = useState<string>('');
+    const [keyForScroll, setKeyForScroll] = useState(nanoid());
 
     //для специальной ленты
     const [searchParams, setSearchParams] = useSearchParams();
@@ -128,7 +149,7 @@ const Feed: React.FC = () => {
         }
     };
 
-    const changeTopic = () => {
+    const changeTopic = debounce(() => {
         if (
             searchParams.get('subject') &&
             !isFetchingCustomFeed &&
@@ -157,8 +178,10 @@ const Feed: React.FC = () => {
                     ),
                 };
             });
+
+            setKeyForScroll(nanoid());
         }
-    };
+    }, 1000);
 
     const loaderIndicator = useRef(null);
 
@@ -212,6 +235,21 @@ const Feed: React.FC = () => {
     }, [isVisible, isFetching, dataFeed]);
 
     //------------------------------
+
+    const handleScroll = () => {
+        console.log('Скролл произошел!');
+        // Ваш код обработки скролла
+    };
+
+    useEffect(() => {
+        // Добавляем обработчик события скролла при монтировании компонента
+        window.addEventListener('scroll', handleScroll);
+
+        // Убираем обработчик при размонтировании компонента, чтобы избежать утечек памяти
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     // const nextThemIndicator = useRef(null);
 
@@ -422,7 +460,10 @@ const Feed: React.FC = () => {
                     !isFetchingDataFeedMicrotopics &&
                     dataCustomFeed &&
                     dataCustomFeed?.data?.data?.length > 0 && (
-                        <div className=" col-span-12 h-36 overflow-hidden">
+                        <div
+                            className=" col-span-12 h-36 overflow-hidden"
+                            key={keyForScroll}
+                        >
                             <div className="w-full h-full overflow-hidden">
                                 <div
                                     className="h-full w-[calc(100%_+_20px)] overflow-y-scroll"
@@ -430,7 +471,7 @@ const Feed: React.FC = () => {
                                         changeTopic();
                                     }}
                                     onClick={() => {
-                                        console.log('грузим другую тему ');
+                                        changeTopic();
                                     }}
                                 >
                                     <div className="h-48 ">
