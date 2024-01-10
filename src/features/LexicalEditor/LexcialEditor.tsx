@@ -4,15 +4,23 @@ import { Content } from '../../types/GetOneContentResponseApiType';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { BeyimDocs } from 'beyim-docs';
 import 'beyim-docs/dist/style.css';
+import { useTranslation } from 'react-i18next';
+import { Locale } from '../../types/common';
 
 type Props = {
     fieldData?: string;
 };
 
 export const LexcialEditor = ({ fieldData }: Props) => {
+    const { t, i18n } = useTranslation();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    const locale = i18n.translator.language;
     return (
         <div className={style.root}>
             <BeyimDocs
+                locale={locale as Locale}
                 useFunctions={[
                     'UNDO',
                     'REDO',
