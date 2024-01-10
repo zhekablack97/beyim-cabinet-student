@@ -13,8 +13,8 @@ export const AssessmentStarting: React.FC = () => {
 
     const { data: assessmentInfo } = useGetAssessmentInfoQuery({
         locale: i18n.language as Locale,
-        section_id: Number(searchParams.get('them')) ?? null,
-        subject_id: Number(searchParams.get('subject')) ?? null,
+        section_id: Number(searchParams.get('them')) ?? '',
+        subject_id: Number(searchParams.get('subject')) ?? '',
     });
     const state = assessmentInfo?.data.assessment.progress
         ? assessmentInfo?.data.assessment.progress.percentage >=
