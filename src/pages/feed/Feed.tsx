@@ -24,6 +24,9 @@ import { nanoid } from '@reduxjs/toolkit';
 import { HeaderPost } from '../../features/HeaderPost';
 import { ActivityPost } from '../../features/ActivityPost/ActivityPost';
 import { useGetAnswerQuery } from '../../api/beyimProgress';
+import { AssessmentStartingBlock } from '../../features/OnboardingComponents/AssessmentStartingBlock/AssessmentStartingBlock/AssessmentStartingBlock';
+import { AssessmentFooterButton } from '../../features/OnboardingComponents/AssessmentStartingBlock/AssessmentFooterButton/AssessmentFooterButton';
+import { AssessmentStarting } from '../../features/AssessmentStarting';
 
 const Feed: React.FC = () => {
     const { t, i18n } = useTranslation();
@@ -307,8 +310,8 @@ const Feed: React.FC = () => {
                                   }
                               })}
                     </div>
-
-                    {!(searchParams.get('subject')) && (
+                    <AssessmentStarting />
+                    {!searchParams.get('subject') && (
                         <div ref={loaderIndicator}> </div>
                     )}
 

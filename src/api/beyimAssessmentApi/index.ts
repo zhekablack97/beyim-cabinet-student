@@ -1,0 +1,1 @@
+export {useGetAssessmentInfoQuery, useLazyGetAssessmentInfoQuery} from './beyimAssessmentApi';

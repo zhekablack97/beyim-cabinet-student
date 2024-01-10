@@ -6,6 +6,7 @@ import { contentServiceApi } from './api/contentService';
 import { contentInteractionApi } from './api/contentInteractionApi/';
 import { beyimProgressApi } from './api/beyimProgress';
 import { assessmentServiceApi } from './api/assessmentService';
+import { beyimAssessmentApi } from './api/beyimAssessmentApi/beyimAssessmentApi';
 // ...
 
 const store = configureStore({
@@ -18,6 +19,7 @@ const store = configureStore({
         [contentInteractionApi.reducerPath]: contentInteractionApi.reducer,
         [beyimProgressApi.reducerPath]: beyimProgressApi.reducer,
         [assessmentServiceApi.reducerPath]: assessmentServiceApi.reducer,
+        [beyimAssessmentApi.reducerPath]: beyimAssessmentApi.reducer,
     },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
@@ -28,7 +30,8 @@ const store = configureStore({
             .concat(contentServiceApi.middleware)
             .concat(contentInteractionApi.middleware)
             .concat(beyimProgressApi.middleware)
-            .concat(assessmentServiceApi.middleware),
+            .concat(assessmentServiceApi.middleware)
+            .concat(beyimAssessmentApi.middleware),
 });
 
 export default store;
