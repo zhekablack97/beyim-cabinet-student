@@ -1,0 +1,43 @@
+.wrapper {
+    background-color: #fff;
+}
+.success {
+    border: 2px solid var(--color-green-300, #cee8c2) !important;
+    background: var(--color-green-100, #ecfce4) !important;
+}
+.fail {
+    border: 2px solid var(--color-red-200, #f8dddd) !important;
+    background: var(--color-red-100, #ffefef) !important;
+}
+
+.color-success {
+    color: #65a845 !important;
+}
+.color-fail {
+    color: #e55959 !important;
+}
+
+.title {
+    color: #232f37;
+    line-height: 24px;
+    font-style: normal;
+}
+.type {
+    color: #36a0d0;
+    line-height: 24px;
+}
+.button-info {
+    background: #55bbeb !important;
+    box-shadow: 0px 4px 0px 0px #0b638c !important;
+    color: #fff;
+    transition: 0.2s;
+    padding: 14px 24px 14px;
+    &:hover {
+        background: var(--background-accent-active, #36a0d0) !important;
+        box-shadow: 0px 4px 0px 0px #08425c !important;
+    }
+    &:active {
+        box-shadow: none !important;
+        transform: translateY(4px);
+    }
+}

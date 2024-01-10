@@ -1,0 +1,11 @@
+.logo {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 64.286px;
+    border: 1.905px solid var(--Stroke, #e3e5ea);
+    background: #fff;
+}
